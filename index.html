@@ -19,7 +19,7 @@
             background-color: var(--dark-bg);
             color: #fff;
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
+            min-height: 100vh; overflow: hidden;
         }
 
         .bg-animate {
@@ -55,9 +55,13 @@
             box-sizing: border-box;
         }
 
-        .btn-login { background: var(--discord); color: white; }
+        .btn-login { background: var(--discord); color: white; box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3); }
+        .btn-login:hover { transform: translateY(-2px); background: #4752c4; }
+
         .btn-prime { background: rgba(212, 175, 55, 0.05); color: var(--gold); border: 2px solid var(--gold); }
-        .btn-logout { background: #ff4444; color: white; margin-top: 20px; font-size: 0.8rem; }
+        .btn-prime:hover { background: var(--gold); color: black; transform: translateY(-2px); }
+
+        .btn-logout { background: #ff4444; color: white; margin-top: 20px; font-size: 0.8rem; padding: 10px; }
 
         .dashboard-card { text-align: left; animation: fadeIn 0.8s ease; }
         .user-info { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 25px; }
@@ -73,64 +77,73 @@
 
     <div id="guest-view" class="main-card" style="display: block;">
         <h1>PRIME <span>RP</span></h1>
+        <p style="color: #888; margin-top: 10px;">Witamy w systemie zarządzania obywatelem.</p>
         <div class="nav-buttons">
-            <button id="login-btn" class="btn btn-login">
+            <button onclick="loginWithDiscord()" class="btn btn-login">
                 <i class="fab fa-discord"></i> Zaloguj przez Discord
             </button>
+
             <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-prime">
                 <i class="fas fa-users"></i> Społeczność Discord
             </a>
-            <a href="#" class="btn btn-prime" style="opacity: 0.5;">Sklep Serwera</a>
-            <a href="#" class="btn btn-prime" style="opacity: 0.5;">Regulamin Wyspy</a>
+
+            <a href="#" class="btn btn-prime" onclick="alert('Sklep będzie dostępny wkrótce!')">
+                <i class="fas fa-shopping-cart"></i> Sklep Serwera
+            </a>
+
+            <a href="#" class="btn btn-prime" onclick="alert('Regulamin jest aktualizowany!')">
+                <i class="fas fa-book"></i> Regulamin Wyspy
+            </a>
         </div>
     </div>
 
     <div id="user-view" class="dashboard-card">
         <div class="user-info">
-            <img id="user-avatar" class="avatar" src="" alt="">
+            <img id="user-avatar" class="avatar" src="" alt="Avatar">
             <div>
-                <div style="font-size: 0.8rem; color: #888;">Witaj,</div>
-                <div id="user-name" style="font-weight: 900; font-size: 1.4rem; color: #fff;">Gracz</div>
+                <div style="font-size: 0.8rem; color: #888; text-transform: uppercase;">Status: Obywatel</div>
+                <div id="user-name" style="font-weight: 900; font-size: 1.4rem; color: #fff;">...</div>
             </div>
         </div>
+        
         <div class="status-badge">
-            <h3 style="margin-top: 0; color: var(--gold);">Panel Obywatela</h3>
-            Zalogowano pomyślnie. Twoje dane są bezpieczne w systemie Prime RP.
+            <h3 style="margin-top: 0; color: var(--gold); font-size: 1rem;">Panel Zarządzania</h3>
+            Witaj w systemie! Jesteś zalogowany poprawnie. Twój panel jest w trakcie konfiguracji.
         </div>
-        <button id="logout-btn" class="btn btn-logout">Wyloguj się</button>
+
+        <button onclick="logout()" class="btn btn-logout">
+            <i class="fas fa-sign-out-alt"></i> Wyloguj się
+        </button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // TUTAJ MUSISZ WKLEIĆ SWÓJ URL Z SUPABASE (Settings -> API -> Project URL)
+        // TUTAJ WKLEJ SWÓJ URL Z ZAKŁADKI SETTINGS -> API
         const SUPABASE_URL = 'https://TWOJE_ID.supabase.co'; 
-        const SUPABASE_ANON_KEY = 'sb_publishable_Qy_e6UKTPyFhb17sUez4LQ_E3TLC2f1o_969cc4821a364177247738096350d7503487c674';
-
+        const SUPABASE_ANON_KEY = 'sb_publishable_Qy_e6UKTPyFhb17sUez4LQ_E3TLC2f1o_969cc4821a364177247738096350d7503487c674'; 
+        
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Funkcja logowania
-        document.getElementById('login-btn').onclick = async () => {
+        async function loginWithDiscord() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'discord',
-                options: { redirectTo: 'https://wirtualnysystemrp.pl' }
+                options: { redirectTo: window.location.origin }
             });
-            if (error) alert("Błąd logowania: " + error.message);
-        };
+            if (error) alert('Błąd logowania: ' + error.message);
+        }
 
-        // Funkcja wylogowania
-        document.getElementById('logout-btn').onclick = async () => {
+        async function logout() {
             await supabase.auth.signOut();
             window.location.reload();
-        };
+        }
 
-        // Sprawdzanie sesji
         window.onload = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 const user = session.user.user_metadata;
                 document.getElementById('guest-view').style.display = 'none';
                 document.getElementById('user-view').style.display = 'block';
-                document.getElementById('user-name').innerText = user.full_name;
+                document.getElementById('user-name').innerText = user.full_name || user.custom_claims?.global_name || "Obywatel";
                 document.getElementById('user-avatar').src = user.avatar_url;
             }
         };
