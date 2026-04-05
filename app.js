@@ -1,53 +1,80 @@
+// Importy z CDN dla GitHub Pages
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// TWOJA KONFIGURACJA FIREBASE (Wklej ją tutaj)
+// Twoja konfiguracja Firebase
 const firebaseConfig = {
-    apiKey: "TWÓJ_KLUCZ",
-    authDomain: "TWÓJ_PROJEKT.firebaseapp.com",
-    projectId: "TWÓJ_PROJEKT",
-    storageBucket: "TWÓJ_PROJEKT.appspot.com",
-    messagingSenderId: "ID",
-    appId: "APP_ID"
+  apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
+  authDomain: "primerp-login.firebaseapp.com",
+  projectId: "primerp-login",
+  storageBucket: "primerp-login.firebasestorage.app",
+  messagingSenderId: "137742617587",
+  appId: "1:137742617587:web:be0b0cd85411f555f4a086",
+  measurementId: "G-S27SYQM1KM"
 };
 
+// Inicjalizacja
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Elementy DOM
-const authSection = document.getElementById('auth-section');
-const dashboardSection = document.getElementById('dashboard-section');
-const loader = document.getElementById('loader');
+// Elementy interfejsu (UI)
+const heroSec = document.getElementById('hero-section');
+const authSec = document.getElementById('auth-section');
+const dashSec = document.getElementById('dashboard-section');
 
-// Ukrywanie loadera po załadowaniu
-window.onload = () => loader.style.display = 'none';
+// --- LOGIKA NAWIGACJI ---
 
-// Logowanie
-document.getElementById('login-btn').onclick = async () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+// Przejście z wyboru do logowania
+document.getElementById('trigger-login').onclick = () => {
+    heroSec.classList.remove('active');
+    authSec.classList.add('active');
+};
 
-    if(!email || !password) return alert("Uzupełnij pola!");
+// Powrót z logowania do wyboru
+document.getElementById('back-to-hero').onclick = () => {
+    authSec.classList.remove('active');
+    heroSec.classList.add('active');
+};
+
+// --- LOGIKA FIREBASE ---
+
+// Funkcja logowania
+document.getElementById('login-execute').onclick = async () => {
+    const emailField = document.getElementById('email').value;
+    const passField = document.getElementById('password').value;
+    
+    // Jeśli gracz wpisuje tylko nick, automatycznie dodajemy domenę
+    const fullEmail = emailField.includes('@') ? emailField : `${emailField.toLowerCase().trim()}@wirtualnysystemrp.pl`;
 
     try {
-        await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-        alert("Błąd logowania: Sprawdź dane.");
-        console.error(error);
+        await signInWithEmailAndPassword(auth, fullEmail, passField);
+    } catch (err) {
+        console.error(err);
+        alert("Błąd: Nieprawidłowy login lub hasło.");
     }
 };
 
-// Wylogowanie
-document.getElementById('logout-btn').onclick = () => signOut(auth);
+// Funkcja wylogowania
+document.getElementById('logout-btn').onclick = () => {
+    signOut(auth).then(() => {
+        window.location.reload();
+    });
+};
 
-// Monitorowanie stanu użytkownika
+// Monitor stanu zalogowania
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        authSection.style.display = 'none';
-        dashboardSection.style.display = 'flex';
-        document.getElementById('user-email').innerText = user.email;
+        // Użytkownik zalogowany - pokaż dashboard
+        heroSec.classList.remove('active');
+        authSec.classList.remove('active');
+        dashSec.classList.add('active');
+        
+        // Wyświetlanie nazwy użytkownika (wycinamy z maila)
+        const nick = user.email.split('@')[0].toUpperCase();
+        document.getElementById('user-name').innerText = nick;
     } else {
-        authSection.style.display = 'flex';
-        dashboardSection.style.display = 'none';
+        // Użytkownik wylogowany - pokaż ekran główny
+        dashSec.classList.remove('active');
+        heroSec.classList.add('active');
     }
 });
