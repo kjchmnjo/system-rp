@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } 
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } 
 from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -14,6 +14,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+// WYMUSZENIE BRAKU AUTOMATYCZNEGO LOGOWANIA
+// Czyścimy sesję przy każdym odświeżeniu strony
+signOut(auth); 
 
 const startScreen = document.getElementById('start-screen');
 const loginScreen = document.getElementById('login-screen');
@@ -44,27 +48,38 @@ const formatEmail = (login) => login.toLowerCase().trim() + "@primerp.pl";
 document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-    if(!login || !pass) return alert("Wypełnij wszystkie pola!");
-    try { 
-        await signInWithEmailAndPassword(auth, formatEmail(login), pass); 
-    } catch (e) { 
-        alert("Błąd logowania! Sprawdź dane."); 
+    
+    if(!login || !pass) return alert("Wpisz dane!");
+
+    try {
+        // Ustawiamy trwałość sesji tylko na czas trwania karty przeglądarki
+        await setPersistence(auth, browserSessionPersistence);
+        await signInWithEmailAndPassword(auth, formatEmail(login), pass);
+    } catch (e) {
+        alert("Błędny login lub hasło!");
     }
 };
 
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-    if(!login || pass.length < 6) return alert("Login wymagany, hasło min. 6 znaków!");
-    try { 
-        await createUserWithEmailAndPassword(auth, formatEmail(login), pass); 
-        alert("Konto utworzone!");
-    } catch (e) { 
-        alert("Błąd rejestracji. Użytkownik może już istnieć."); 
+    if(pass.length < 6) return alert("Hasło min. 6 znaków!");
+    try {
+        await createUserWithEmailAndPassword(auth, formatEmail(login), pass);
+        alert("Konto stworzone! Teraz możesz się zalogować.");
+        hideAll();
+        startScreen.style.display = 'block';
+        startScreen.classList.add('active');
+    } catch (e) {
+        alert("Błąd rejestracji.");
     }
 };
 
-document.getElementById('logout-btn').onclick = () => signOut(auth);
+document.getElementById('logout-btn').onclick = () => {
+    signOut(auth).then(() => {
+        location.reload(); // Przeładowanie strony po wylogowaniu dla pewności
+    });
+};
 
 onAuthStateChanged(auth, (user) => {
     hideAll();
