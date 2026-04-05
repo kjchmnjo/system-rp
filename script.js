@@ -35,7 +35,7 @@ document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
     try { await signInWithEmailAndPassword(auth, formatEmail(login), pass); } 
-    catch (e) { alert("Błąd danych!"); }
+    catch (e) { alert("Błąd logowania!"); }
 };
 
 document.getElementById('register-btn').onclick = async () => {
