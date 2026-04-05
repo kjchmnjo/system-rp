@@ -1,40 +1,46 @@
-// Konfiguracja Twojego Supabase
-const SUPABASE_URL = 'https://TWOJE_ID.supabase.co'; 
+// --- KONFIGURACJA SUPABASE ---
+const SUPABASE_URL = 'https://TWOJE_ID.supabase.co'; // PODMIEŃ NA SWÓJ URL!
 const SUPABASE_ANON_KEY = 'sb_publishable_Qy_e6UKTPyFhb17sUez4LQ_E3TLC2f1o_969cc4821a364177247738096350d7503487c674'; 
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Nawigacja między oknami
-function showLogin() {
-    document.getElementById('start-screen').style.display = 'none';
-    document.getElementById('login-screen').style.display = 'block';
-}
+// --- PRZEŁĄCZANIE EKRANÓW (FIX) ---
+const startScreen = document.getElementById('start-screen');
+const loginScreen = document.getElementById('login-screen');
+const userScreen = document.getElementById('user-view');
 
-function showStart() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('start-screen').style.display = 'block';
-}
+document.getElementById('go-to-login').onclick = () => {
+    startScreen.style.display = 'none';
+    loginScreen.style.display = 'block';
+};
 
-// Funkcja pomocnicza do formatowania loginu na maila
+document.getElementById('go-to-start').onclick = () => {
+    loginScreen.style.display = 'none';
+    startScreen.style.display = 'block';
+};
+
+// --- LOGIKA LOGOWANIA ---
 function formatEmail(login) {
     return login.toLowerCase().trim() + "@primerp.local";
 }
 
-// LOGOWANIE
+// Logowanie
 document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
+
+    if (!login || !pass) return alert("Wypełnij dane!");
 
     const { data, error } = await supabase.auth.signInWithPassword({
         email: formatEmail(login),
         password: pass
     });
 
-    if (error) alert("Błąd: Niepoprawny login lub hasło.");
+    if (error) alert("Błąd: Nieprawidłowy login lub hasło.");
     else window.location.reload();
 };
 
-// REJESTRACJA
+// Rejestracja
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
@@ -48,23 +54,23 @@ document.getElementById('register-btn').onclick = async () => {
     });
 
     if (error) alert("Błąd: " + error.message);
-    else alert("Konto stworzone pomyślnie! Teraz możesz się zalogować.");
+    else alert("Konto stworzone! Możesz się teraz zalogować.");
 };
 
-// WYLOGOWANIE
+// Wylogowanie
 document.getElementById('logout-btn').onclick = async () => {
     await supabase.auth.signOut();
     window.location.reload();
 };
 
-// SPRAWDZANIE SESJI (Czy gracz już jest zalogowany)
+// Sprawdzanie sesji przy starcie
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     
     if (session) {
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('user-view').style.display = 'block';
+        startScreen.style.display = 'none';
+        loginScreen.style.display = 'none';
+        userScreen.style.display = 'block';
         
         const nick = session.user.email.split('@')[0];
         document.getElementById('display-nick').innerText = nick.toUpperCase();
