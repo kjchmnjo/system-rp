@@ -1,38 +1,60 @@
 /* --- FUNDAMENTY --- */
 :root {
     --gold: #ffcc00;
+    --gold-dim: #e6b800;
+    --gold-fade: rgba(255, 204, 0, 0.1);
+    --gold-glow: rgba(255, 204, 0, 0.3);
     --discord: #5865F2;
-    --bg: #000000;
+    --bg-base: #000000;
+    --bg-accent: #050505;
     --card-bg: #0c0c0c;
     --border: #1a1a1a;
-    --mrok-glow: rgba(255, 204, 0, 0.1);
+    --mrok-glow: rgba(255, 204, 0, 0.05);
 }
 
 body, html {
     margin: 0; padding: 0;
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg);
+    background-color: var(--bg-base);
     color: #fff;
     height: 100vh; width: 100vw;
     display: flex; justify-content: center; align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
-/* --- ANIMOWANE TŁO GŁĘBI --- */
-.bg-glow {
+/* --- ULEPSZONE, ANIMOWANE TŁO GŁĘBI --- */
+.bg-container {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    /* Pulsujący gradient mroku */
-    background: radial-gradient(circle at center, #111 0%, #000 100%);
     z-index: -1;
+    overflow: hidden;
+}
+
+/* Tekstura Mroku (Surowy Karbon) */
+.bg-carbon-weave {
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    /* Subtelny wzór karbonu (pętla) */
+    background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    opacity: 0.15;
+    animation: textureTextureTextureMove 100s linear infinite;
+}
+
+/* Pulsująca "mgła mroku" z gradientem */
+.bg-glow-pool {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+    opacity: 0.8;
     animation: bgBreathe 15s ease-in-out infinite;
 }
 
 @keyframes bgBreathe {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.05); }
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
 }
 
-/* --- KARTA (CARD) Z ANIMACJĄ WEJŚCIA --- */
+@keyframes textureTextureTextureMove { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- KARTA (CARD) Z ANIMACJĄ I BLASKIEM --- */
 .card {
     background: var(--card-bg);
     padding: 45px 35px;
@@ -41,8 +63,19 @@ body, html {
     width: 380px;
     border: 1px solid var(--border);
     display: none;
+    position: relative;
+    /* Surowy mrok */
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    opacity: 0; /* Domyślnie niewidoczna */
+    opacity: 0;
+}
+
+/* Subtelny, mroczny glow dla karty */
+.card-glow {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 20px;
+    z-index: -1;
+    box-shadow: 0 0 15px var(--gold-glow);
+    animation: cardBreatheGlow 3s ease-in-out infinite;
 }
 
 /* Klasa aktywująca z animacją mroku */
@@ -56,20 +89,21 @@ body, html {
     100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } 
 }
 
+@keyframes cardBreatheGlow { 0%, 100% { box-shadow: 0 0 15px var(--gold-glow); } 50% { box-shadow: 0 0 30px rgba(255, 204, 0, 0.5); } }
+
 /* --- ELEMENTY KARTY --- */
 .badge {
-    background: var(--gold);
+    background: linear-gradient(90deg, var(--gold), #ffaa00);
     color: #000; padding: 4px 14px; border-radius: 20px;
     font-size: 0.65rem; font-weight: 900; text-transform: uppercase;
     display: inline-block; margin-bottom: 20px;
-    /* Delikatny blask badge */
+    box-shadow: 0 0 5px var(--gold-glow);
     animation: goldGlowPulse 3s ease-in-out infinite;
 }
 
 h1 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 1px; }
 h1 span { 
     color: var(--gold); 
-    /* Pulsujący tekst złoty */
     animation: goldTextGlow 3s ease-in-out infinite;
 }
 
@@ -92,15 +126,11 @@ p.desc { color: #666; font-size: 0.8rem; line-height: 1.5; margin-bottom: 30px; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
 }
 
-.animated-hover:active { transform: translateY(0); }
-
 .btn-discord { background: var(--discord); color: #fff; }
 .btn-gold { background: var(--gold); color: #000; }
+.btn-gold:hover { background: var(--gold-dim); box-shadow: 0 0 15px var(--gold-dim); }
 .btn-outline { background: #151515; color: #fff; border: 1px solid var(--border); }
-
-/* Interakcje dla surowego stylu */
 .btn-outline:hover { border-color: #333; background: #1a1a1a; }
-.btn-gold:hover { background: #e6b800; box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
 
 /* --- FORMULARZ --- */
 input {
@@ -109,7 +139,7 @@ input {
     width: calc(100% - 28px); transition: 0.3s;
 }
 
-input:focus { border-color: #333; background: #0a0a0a; box-shadow: 0 0 10px rgba(255,255,255,0.01); }
+input:focus { border-color: #333; background: #0a0a0a; }
 
 /* --- LINKI I STATUS --- */
 .back-link { margin-top: 15px; font-size: 0.7rem; color: #444; cursor: pointer; text-decoration: underline; transition: 0.3s; }
@@ -126,6 +156,6 @@ input:focus { border-color: #333; background: #0a0a0a; box-shadow: 0 0 10px rgba
 }
 
 /* --- DEFINICJE ANIMACJI --- */
-@keyframes goldGlowPulse { 0%, 100% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.3); } 50% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.5); } }
+@keyframes goldGlowPulse { 0%, 100% { box-shadow: 0 0 5px var(--gold-glow); } 50% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.5); } }
 @keyframes goldTextGlow { 0%, 100% { text-shadow: 0 0 5px rgba(255, 204, 0, 0.1); } 50% { text-shadow: 0 0 15px rgba(255, 204, 0, 0.4); } }
 @keyframes pulseStatus { 0% { transform: scale(1); opacity: 1; box-shadow: 0 0 5px #ffaa00; } 50% { transform: scale(1.1); opacity: 0.7; box-shadow: 0 0 10px #ffaa00; } 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 5px #ffaa00; } }
