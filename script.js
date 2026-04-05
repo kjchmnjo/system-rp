@@ -1,14 +1,28 @@
-// Konfiguracja pod Twoje dane ze zdjęć
-const SUPABASE_URL = 'https://bqvowqzfxsbuprvsprqh.supabase.co'; 
-const SUPABASE_ANON_KEY = 'sb_publishable_Qy_e6UKTPyFhb17sUez4LQ_E3TLC2f1o_969cc4821a364177247738096350d7503487c674'; 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } 
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Twoja konfiguracja Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
+  authDomain: "primerp-login.firebaseapp.com",
+  projectId: "primerp-login",
+  storageBucket: "primerp-login.firebasestorage.app",
+  messagingSenderId: "137742617587",
+  appId: "1:137742617587:web:be0b0cd85411f555f4a086",
+  measurementId: "G-S27SYQM1KM"
+};
 
-// Nawigacja między oknami
+// Inicjalizacja
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Elementy DOM
 const startScreen = document.getElementById('start-screen');
 const loginScreen = document.getElementById('login-screen');
 const userScreen = document.getElementById('user-view');
 
+// Nawigacja
 document.getElementById('go-to-login').onclick = () => {
     startScreen.style.display = 'none';
     loginScreen.style.display = 'block';
@@ -19,62 +33,54 @@ document.getElementById('go-to-start').onclick = () => {
     startScreen.style.display = 'block';
 };
 
-// Funkcja zamieniająca Login na udawany E-mail
-function formatEmail(login) {
-    return login.toLowerCase().trim() + "@primerp.local";
-}
+// Formatowanie loginu na format email (wymóg Firebase)
+const formatEmail = (login) => login.toLowerCase().trim() + "@primerp.pl";
 
-// Obsługa Logowania
+// LOGOWANIE
 document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
 
-    if (!login || !pass) return alert("Wpisz login i hasło!");
+    if (!login || !pass) return alert("Wypełnij wszystkie pola!");
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: formatEmail(login),
-        password: pass
-    });
-
-    if (error) alert("Błąd: Nieprawidłowy login lub hasło.");
-    else window.location.reload();
+    try {
+        await signInWithEmailAndPassword(auth, formatEmail(login), pass);
+    } catch (error) {
+        alert("Błąd: Nieprawidłowy login lub hasło.");
+    }
 };
 
-// Obsługa Rejestracji
+// REJESTRACJA
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
 
-    if (login.length < 3) return alert("Login musi mieć min. 3 znaki!");
     if (pass.length < 6) return alert("Hasło musi mieć min. 6 znaków!");
 
-    const { data, error } = await supabase.auth.signUp({
-        email: formatEmail(login),
-        password: pass
-    });
-
-    if (error) alert("Błąd: " + error.message);
-    else alert("Konto stworzone! Możesz się teraz zalogować.");
+    try {
+        await createUserWithEmailAndPassword(auth, formatEmail(login), pass);
+        alert("Konto założone! Teraz możesz się zalogować.");
+    } catch (error) {
+        alert("Błąd rejestracji: " + error.message);
+    }
 };
 
-// Wylogowanie
-document.getElementById('logout-btn').onclick = async () => {
-    await supabase.auth.signOut();
-    window.location.reload();
+// WYLOGOWANIE
+document.getElementById('logout-btn').onclick = () => {
+    signOut(auth);
 };
 
-// Sprawdzanie czy użytkownik jest już zalogowany
-async function checkSession() {
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (session) {
+// MONITOROWANIE STANU SESJI
+onAuthStateChanged(auth, (user) => {
+    if (user) {
         startScreen.style.display = 'none';
         loginScreen.style.display = 'none';
         userScreen.style.display = 'block';
         
-        const nick = session.user.email.split('@')[0];
+        const nick = user.email.split('@')[0];
         document.getElementById('display-nick').innerText = nick.toUpperCase();
+    } else {
+        userScreen.style.display = 'none';
+        startScreen.style.display = 'block';
     }
-}
-
-checkSession();
+});
