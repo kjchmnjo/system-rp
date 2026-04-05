@@ -37,17 +37,16 @@ document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
     try { await signInWithEmailAndPassword(auth, formatEmail(login), pass); } 
-    catch (e) { alert("Błędny login lub hasło!"); }
+    catch (e) { alert("Błąd logowania!"); }
 };
 
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-    if(pass.length < 6) { alert("Hasło min. 6 znaków!"); return; }
     try { 
         await createUserWithEmailAndPassword(auth, formatEmail(login), pass); 
-        alert("Konto zostało utworzone!");
-    } catch (e) { alert("Błąd podczas rejestracji!"); }
+        alert("Konto utworzone!");
+    } catch (e) { alert("Błąd rejestracji!"); }
 };
 
 document.getElementById('logout-btn').onclick = () => signOut(auth);
@@ -56,8 +55,7 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         startScreen.style.display = 'none';
         loginScreen.style.display = 'none';
-        userScreen.style.display = 'block';
-        userScreen.classList.add('active');
+        userScreen.style.display = 'flex'; // Używamy Flex dla Dashboardu
         document.getElementById('display-nick').innerText = user.email.split('@')[0].toUpperCase();
     } else {
         userScreen.style.display = 'none';
