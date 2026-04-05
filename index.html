@@ -16,67 +16,75 @@
     </div>
 
     <div id="start-screen" class="card active glass">
-        <div class="card-glow"></div>
         <div class="badge">Sezon 2</div>
         <h1>PRIME <span>RP</span></h1>
-        <p class="desc">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość. Najwyższy poziom immersji i profesjonalna administracja.</p>
-        
+        <p class="desc">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość.</p>
         <div class="nav-buttons">
-            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-discord animated-hover">
-                <i class="fab fa-discord"></i> DOŁĄCZ NA DISCORD
-            </a>
             <button id="go-to-login" class="btn btn-gold animated-hover">
                 <i class="fas fa-id-card"></i> ZALOGUJ DO SYSTEMU
             </button>
-            <button class="btn btn-outline no-click">
-                <i class="fas fa-shopping-cart"></i> SKLEP SERWERA
-            </button>
-        </div>
-        <div class="status">
-            <span class="dot"></span> STATUS: PRACE KONFIGURACYJNE
+            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-discord animated-hover">
+                <i class="fab fa-discord"></i> DISCORD
+            </a>
         </div>
     </div>
 
     <div id="login-screen" class="card glass">
-        <div class="card-glow"></div>
         <div class="badge">Autoryzacja</div>
         <h1>ZALOGUJ <span>SIĘ</span></h1>
-        <p class="desc">Zaloguj się do swojego konta obywatela.</p>
-        
         <div class="nav-buttons">
             <input type="text" id="auth-login" placeholder="Login">
             <input type="password" id="auth-password" placeholder="Hasło">
-            <button id="login-btn" class="btn btn-gold animated-hover">ZALOGUJ</button>
+            <button id="login-btn" class="btn btn-gold animated-hover">WEJDŹ</button>
             <button id="register-btn" class="btn btn-outline animated-hover">REJESTRACJA</button>
             <div id="go-to-start" class="back-link">POWRÓT</div>
         </div>
     </div>
 
-    <div id="user-view" class="card glass panel-wide">
-        <div class="card-glow"></div>
-        <div class="badge">WITAJ, <span id="display-nick">...</span></div>
-        <h1>PRIME RP <span>SEZON 2</span></h1>
-        <p class="desc">Witamy na oficjalnej stronie Prime RP. Sezon drugi właśnie trwa. Jesteś gotowy na nową przygodę?</p>
-        
-        <div class="nav-buttons">
-            <button class="btn btn-gold animated-hover">
-                <i class="fas fa-play"></i> POŁĄCZ Z SERWEREM
-            </button>
-            <div class="grid-buttons">
-                <button class="btn btn-outline animated-hover"><i class="fas fa-user"></i> POSTAĆ</button>
-                <button class="btn btn-outline animated-hover"><i class="fas fa-book"></i> LOGI</button>
+    <div id="user-view" class="full-dashboard">
+        <header class="dashboard-header">
+            <div class="logo-top">PRIME RP <span>SEZON 2</span></div>
+            <div class="user-info">
+                <span id="display-nick">...</span>
+                <button id="logout-btn" class="logout-mini"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <button class="btn btn-outline no-click">
-                <i class="fas fa-shopping-cart"></i> SKLEP (WKRÓTCE)
-            </button>
-            <button id="logout-btn" class="btn btn-logout animated-hover">
-                <i class="fas fa-sign-out-alt"></i> WYLOGUJ
-            </button>
-        </div>
+        </header>
 
-        <div class="status">
-            <span class="dot pulse"></span> SERWER ONLINE | SEZON 2 W TOKU
-        </div>
+        <main class="dashboard-content">
+            <div class="welcome-section">
+                <h2>WITAJ W SYSTEMIE</h2>
+                <p>Wszystkie funkcje obywatela są teraz dostępne w jednym miejscu.</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="grid-item glass animated-hover">
+                    <i class="fas fa-play"></i>
+                    <h3>GRAJ</h3>
+                    <p>Połącz z serwerem</p>
+                </div>
+                <div class="grid-item glass animated-hover">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>POSTAĆ</h3>
+                    <p>Statystyki i ekwipunek</p>
+                </div>
+                <div class="grid-item glass animated-hover">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>SKLEP</h3>
+                    <p>Wkrótce dostępne</p>
+                </div>
+                <div class="grid-item glass animated-hover">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>REGULAMIN</h3>
+                    <p>Zasady wyspy</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="dashboard-footer">
+            <div class="status-bar">
+                <span class="dot pulse"></span> SERWER ONLINE | 2026 PRIME RP
+            </div>
+        </footer>
     </div>
 
     <script type="module" src="script.js"></script>
