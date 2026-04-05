@@ -4,60 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirtualny System RP | Panel Obywatela</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
+    <div class="overlay-bg"></div>
 
     <section id="hero-section" class="active">
         <div class="container">
-            <header class="header-main">
+            <header class="main-header">
                 <h1>WIRTUALNY<span>SYSTEM</span></h1>
-                <p>Wybierz kierunek swojej przygody</p>
+                <p>Witaj w oficjalnym panelu zarządzania obywatelami</p>
             </header>
 
-            <div class="button-grid">
-                <a href="https://discord.gg/TWOJ-LINK" target="_blank" class="card discord">
+            <div class="main-grid">
+                <a href="https://discord.gg/TWOJ_LINK_DISCORD" target="_blank" class="main-card discord">
                     <i class="fab fa-discord"></i>
                     <h3>DISCORD</h3>
-                    <p>Społeczność i pomoc</p>
+                    <span>Społeczność i wsparcie</span>
                 </a>
 
-                <a href="#" class="card rules">
-                    <i class="fas fa-file-signature"></i>
+                <a href="#" class="main-card rules">
+                    <i class="fas fa-gavel"></i>
                     <h3>REGULAMIN</h3>
-                    <p>Zasady panujące na wyspie</p>
+                    <span>Zasady wyspy</span>
                 </a>
 
-                <div id="trigger-login" class="card login">
+                <div id="trigger-login" class="main-card login">
                     <i class="fas fa-user-shield"></i>
                     <h3>LOGIN</h3>
-                    <p>Dostęp do systemu RP</p>
+                    <span>Dostęp do panelu</span>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="auth-section">
-        <div class="auth-card">
-            <button id="back-to-hero" class="btn-back"><i class="fas fa-arrow-left"></i> Powrót</button>
-            <h2>AUTORYZACJA</h2>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Email gracza">
-                <input type="password" id="password" placeholder="Hasło">
+        <div class="auth-box">
+            <button id="back-to-hero" class="btn-back">
+                <i class="fas fa-chevron-left"></i> POWRÓT
+            </button>
+            
+            <div class="auth-title">
+                <h2>AUTORYZACJA <span>RP</span></h2>
+                <p>Podaj dane swojego obywatela</p>
             </div>
-            <button id="login-execute" class="btn-gold">ZALOGUJ</button>
+
+            <div class="auth-form">
+                <div class="field">
+                    <label>NICK OBYWATELA</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="login-input" placeholder="np. Jan_Kowalski">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>HASŁO</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password-input" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <button id="login-execute" class="btn-login">ZALOGUJ DO SYSTEMU</button>
+                <div id="auth-error" class="error-msg"></div>
+            </div>
         </div>
     </section>
 
     <section id="dashboard-section">
-        <div class="dashboard-content">
-            <h1>Witaj w systemie, <span id="user-name">Graczu</span>!</h1>
-            <p>Twój panel jest gotowy.</p>
-            <button id="logout-btn" class="btn-logout">Wyloguj się</button>
+        <div class="dashboard-box">
+            <div class="dash-header">
+                <h2>Witaj, <span id="display-nick">Obywatelu</span></h2>
+                <button id="logout-btn" class="btn-logout"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+            <div class="dash-grid">
+                <div class="dash-card">
+                    <h3>STATUS</h3>
+                    <p class="online">ZATWIERDZONY</p>
+                </div>
+                <div class="dash-card">
+                    <h3>ID POSTACI</h3>
+                    <p>Wkrótce</p>
+                </div>
+            </div>
         </div>
     </section>
 
