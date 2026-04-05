@@ -19,7 +19,6 @@ const startScreen = document.getElementById('start-screen');
 const loginScreen = document.getElementById('login-screen');
 const userScreen = document.getElementById('user-view');
 
-// Funkcja czyszcząca widoki
 const hideAll = () => {
     startScreen.style.display = 'none';
     startScreen.classList.remove('active');
@@ -45,6 +44,7 @@ const formatEmail = (login) => login.toLowerCase().trim() + "@primerp.pl";
 document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
+    if(!login || !pass) return alert("Wypełnij wszystkie pola!");
     try { 
         await signInWithEmailAndPassword(auth, formatEmail(login), pass); 
     } catch (e) { 
@@ -55,12 +55,12 @@ document.getElementById('login-btn').onclick = async () => {
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-    if(pass.length < 6) { alert("Hasło musi mieć min. 6 znaków."); return; }
+    if(!login || pass.length < 6) return alert("Login wymagany, hasło min. 6 znaków!");
     try { 
         await createUserWithEmailAndPassword(auth, formatEmail(login), pass); 
         alert("Konto utworzone!");
     } catch (e) { 
-        alert("Błąd rejestracji."); 
+        alert("Błąd rejestracji. Użytkownik może już istnieć."); 
     }
 };
 
@@ -69,7 +69,7 @@ document.getElementById('logout-btn').onclick = () => signOut(auth);
 onAuthStateChanged(auth, (user) => {
     hideAll();
     if (user) {
-        userScreen.style.display = 'flex'; // Dashboard na Flex
+        userScreen.style.display = 'flex';
         document.getElementById('display-nick').innerText = user.email.split('@')[0].toUpperCase();
     } else {
         startScreen.style.display = 'block';
