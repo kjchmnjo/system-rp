@@ -26,7 +26,7 @@
             <button id="go-to-login" class="btn btn-gold">
                 <i class="fas fa-id-card"></i> Zaloguj do systemu
             </button>
-            <button class="btn btn-outline" onclick="window.open('https://discord.com', '_blank')">
+            <button class="btn btn-outline" style="cursor: default;">
                 <i class="fas fa-shopping-cart"></i> Sklep Serwera
             </button>
             <button class="btn btn-outline" onclick="alert('Regulamin wkrótce!')">
@@ -40,27 +40,26 @@
     </div>
 
     <div id="login-screen" class="card">
-        <div class="badge">System Access</div>
-        <h1>WITAJ <span>PONOWNIE</span></h1>
-        <p class="desc">Podaj dane dostępowe, aby przejść do swojego profilu obywatela.</p>
+        <div class="badge">Autoryzacja</div>
+        <h1>ZALOGUJ <span>SIĘ</span></h1>
+        <p class="desc">Użyj swoich danych, aby wejść do systemu Prime RP.</p>
         
         <div class="nav-buttons">
-            <input type="text" id="auth-login" placeholder="Login użytkownika">
-            <input type="password" id="auth-password" placeholder="Hasło dostępu">
+            <input type="text" id="auth-login" placeholder="Login">
+            <input type="password" id="auth-password" placeholder="Hasło">
             
-            <button id="login-btn" class="btn btn-gold">Autoryzuj dostęp</button>
-            <button id="register-btn" class="btn btn-outline">Zarejestruj się</button>
-            <div id="go-to-start" class="back-link">Wróć do startu</div>
+            <button id="login-btn" class="btn btn-gold">Zaloguj</button>
+            <button id="register-btn" class="btn btn-outline">Rejestracja</button>
+            <div id="go-to-start" class="back-link">Powrót</div>
         </div>
     </div>
 
     <div id="user-view" class="card">
-        <div class="badge">Zalogowano</div>
-        <h1>CZEŚĆ, <span id="display-nick">...</span></h1>
-        <p class="desc">Twój profil jest aktywny. Możesz teraz korzystać ze wszystkich funkcji systemu Prime RP.</p>
+        <div class="badge">System</div>
+        <h1>WITAJ, <span id="display-nick">...</span></h1>
+        <p class="desc">Sesja aktywna. Witamy w systemie zarządzania obywatelem.</p>
         <div class="nav-buttons">
-            <button class="btn btn-gold"><i class="fas fa-user-edit"></i> Zarządzaj Postacią</button>
-            <button id="logout-btn" class="btn btn-outline" style="border-color: #ff4444; color: #ff4444;">Zakończ sesję</button>
+            <button id="logout-btn" class="btn btn-outline" style="border-color: #ff4444; color: #ff4444;">Wyloguj</button>
         </div>
     </div>
 
