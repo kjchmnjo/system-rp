@@ -6,37 +6,103 @@
     <title>Prime RP | System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --gold: #d4af37; --dark-bg: #050505; --card-bg: rgba(15, 15, 15, 0.95); }
-        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--dark-bg); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .main-card, .dashboard-card { background: var(--card-bg); padding: 40px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center; width: 350px; display: none; }
-        h1 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 900; }
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #050505;
+            --card-bg: rgba(15, 15, 15, 0.98);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: #fff;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow: hidden;
+        }
+
+        .bg-animate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, #1a1505, transparent),
+                        radial-gradient(circle at bottom left, #0a0a0a, transparent);
+            z-index: -1;
+        }
+
+        /* WSPÓLNY STYL KART */
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 1);
+            width: 350px;
+            display: none; /* Ukryte domyślnie */
+            animation: fadeIn 0.5s ease;
+        }
+
+        h1 { font-size: 2.5rem; margin: 0 0 20px 0; font-weight: 900; }
         h1 span { color: var(--gold); }
-        .nav-buttons { display: flex; flex-direction: column; gap: 10px; }
-        input { padding: 15px; border-radius: 10px; border: 1px solid #333; background: #000; color: #fff; outline: none; }
-        input:focus { border-color: var(--gold); }
-        .btn { padding: 15px; border-radius: 10px; font-weight: 700; cursor: pointer; border: none; text-transform: uppercase; }
-        .btn-prime { background: var(--gold); color: #000; }
-        .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
-        .btn-logout { background: #ff4444; color: #fff; margin-top: 20px; width: 100%; }
+
+        .nav-buttons { display: flex; flex-direction: column; gap: 12px; }
+
+        .btn {
+            padding: 16px; border-radius: 12px;
+            text-decoration: none; font-weight: 700;
+            text-transform: uppercase; transition: 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; font-size: 0.85rem; cursor: pointer; border: none;
+        }
+
+        .btn-gold { background: var(--gold); color: #000; }
+        .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
+        .btn-back { background: transparent; color: #666; font-size: 0.7rem; margin-top: 10px; }
+
+        input {
+            padding: 15px; border-radius: 10px; border: 1px solid #333;
+            background: #000; color: #fff; outline: none; margin-bottom: 10px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <div id="guest-view" class="main-card" style="display: block;">
+    <div class="bg-animate"></div>
+
+    <div id="start-screen" class="card" style="display: block;">
         <h1>PRIME <span>RP</span></h1>
         <div class="nav-buttons">
-            <input type="text" id="auth-login" placeholder="Twój Login (Nick)">
-            <input type="password" id="auth-password" placeholder="Hasło">
-            
-            <button id="login-btn" class="btn btn-prime">Zaloguj się</button>
-            <button id="register-btn" class="btn btn-outline">Stwórz konto</button>
+            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-outline">
+                <i class="fab fa-discord"></i> Discord Invite
+            </a>
+            <button onclick="alert('Regulamin w trakcie edycji')" class="btn btn-outline">
+                <i class="fas fa-book"></i> Regulamin
+            </button>
+            <button onclick="showLogin()" class="btn btn-gold">
+                <i class="fas fa-sign-in-alt"></i> Zaloguj do systemu
+            </button>
         </div>
     </div>
 
-    <div id="user-view" class="dashboard-card">
-        <h1>Witaj, <span id="display-nick">Obywatelu</span></h1>
-        <p>Jesteś zalogowany do systemu Prime RP.</p>
-        <button id="logout-btn" class="btn btn-logout">Wyloguj</button>
+    <div id="login-screen" class="card">
+        <h1>LOGOWANIE</h1>
+        <div class="nav-buttons">
+            <input type="text" id="auth-login" placeholder="Twój Login">
+            <input type="password" id="auth-password" placeholder="Hasło">
+            
+            <button id="login-btn" class="btn btn-gold">Wejdź do systemu</button>
+            <button id="register-btn" class="btn btn-outline">Załóż konto</button>
+            
+            <button onclick="showStart()" class="btn btn-back">Powrót</button>
+        </div>
+    </div>
+
+    <div id="user-view" class="card">
+        <h1>WITAJ, <span id="display-nick" style="color: var(--gold);">...</span></h1>
+        <p style="color: #888;">System Prime RP załadowany poprawnie.</p>
+        <button id="logout-btn" class="btn btn-gold" style="background: #ff4444; color: white;">Wyloguj</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
