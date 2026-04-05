@@ -3,87 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime RP | System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Prime RP | System Sezon 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="bg-container">
-        <div class="bg-black"></div>
-        <div class="bg-particles"></div>
-    </div>
+    <div class="overlay"></div>
+    <div class="particles" id="particles-js"></div>
 
-    <div id="start-screen" class="card active glass">
-        <div class="badge">Sezon 2</div>
-        <h1>PRIME RP</h1>
-        <p class="desc">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość.</p>
-        <div class="nav-buttons">
-            <button id="go-to-login" class="btn btn-gold animated-hover">
-                <i class="fas fa-id-card"></i> ZALOGUJ DO SYSTEMU
-            </button>
-            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-discord animated-hover">
-                <i class="fab fa-discord"></i> DISCORD
-            </a>
-        </div>
-    </div>
-
-    <div id="login-screen" class="card glass">
-        <div class="badge">Autoryzacja</div>
-        <h1>ZALOGUJ <span>SIĘ</span></h1>
-        <div class="nav-buttons">
-            <input type="text" id="auth-login" placeholder="Login">
-            <input type="password" id="auth-password" placeholder="Hasło">
-            <button id="login-btn" class="btn btn-gold animated-hover">WEJDŹ</button>
-            <div id="go-to-start" class="back-link">POWRÓT</div>
-        </div>
-    </div>
-
-    <div id="user-view" class="dashboard-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-small">PRIME <span>RP</span></div>
+    <section id="auth-container" class="auth-wrapper">
+        
+        <div id="start-screen" class="auth-card active">
+            <div class="glass-morph"></div>
+            <div class="card-content">
+                <span class="badge">SYSTEM V2</span>
+                <h1 class="logo-text">PRIME <span>RP</span></h1>
+                <p class="slogan">Najwyższy poziom immersji, autorskie skrypty i profesjonalna administracja.</p>
+                
+                <div class="auth-buttons">
+                    <button id="go-to-login" class="btn-main btn-gold">
+                        <i class="fas fa-sign-in-alt"></i> ZALOGUJ SIĘ
+                    </button>
+                    <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn-main btn-discord">
+                        <i class="fab fa-discord"></i> DISCORD
+                    </a>
+                </div>
             </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-group">
-                    <p class="group-title">Menu Główne</p>
-                    <div class="nav-item active"><i class="fas fa-home"></i> Przegląd</div>
-                    <div class="nav-item" onclick="alert('Sekcja O Nas w przygotowaniu!')">
-                        <i class="fas fa-info-circle"></i> O Nas
+        </div>
+
+        <div id="login-screen" class="auth-card">
+            <div class="glass-morph"></div>
+            <div class="card-content">
+                <h2 class="section-title">AUTORYZACJA</h2>
+                <div class="input-group">
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="auth-login" placeholder="Twój login">
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="auth-password" placeholder="Hasło">
                     </div>
                 </div>
+                <button id="login-btn" class="btn-main btn-gold">WEJDŹ DO SYSTEMU</button>
+                <p id="go-to-start" class="back-btn">← Wróć do menu</p>
+            </div>
+        </div>
+    </section>
 
-                <div class="nav-group">
-                    <p class="group-title">Konto</p>
-                    <div class="nav-item"><i class="fas fa-user"></i> Profil: <span id="display-nick">...</span></div>
-                    <div id="logout-btn" class="nav-item logout-item"><i class="fas fa-sign-out-alt"></i> Wyloguj</div>
+    <div id="user-view" class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">P</div>
+                <div class="brand-name">PRIME <span>RP</span></div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <p class="nav-label">GŁÓWNE</p>
+                    <div class="nav-link active"><i class="fas fa-columns"></i> Przegląd</div>
+                    <div class="nav-link"><i class="fas fa-info-circle"></i> O Nas</div>
+                </div>
+
+                <div class="nav-section">
+                    <p class="nav-label">TWOJE KONTO</p>
+                    <div class="nav-user">
+                        <img src="https://ui-avatars.com/api/?name=User&background=FFC800&color=000" id="user-avatar" alt="Avatar">
+                        <div class="user-meta">
+                            <span id="display-nick">GRACZ</span>
+                            <small>Obywatel</small>
+                        </div>
+                    </div>
+                    <button id="logout-btn" class="nav-link logout-btn"><i class="fas fa-power-off"></i> Wyloguj</button>
                 </div>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="grid-container">
-                <a href="fivem://connect/ADRES" class="grid-item glass-dark animated-hover">
-                    <i class="fas fa-play icon-gold"></i>
-                    <h3>GRAJ</h3>
-                    <p>Połącz z serwerem FiveM</p>
-                </a>
-                <div class="grid-item glass-dark animated-hover">
-                    <i class="fas fa-user-shield icon-gold"></i>
-                    <h3>POSTAĆ</h3>
-                    <p>Statystyki obywatela</p>
+            <header class="content-header">
+                <h2>Panel Obywatela</h2>
+                <div class="server-status">
+                    <span class="status-dot"></span> Serwer Online
                 </div>
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="grid-item glass-dark animated-hover">
-                    <i class="fab fa-discord icon-gold"></i>
-                    <h3>DISCORD</h3>
-                    <p>Dołącz do społeczności</p>
+            </header>
+
+            <div class="tiles-grid">
+                <a href="fivem://connect/ADRES_IP" class="tile-card">
+                    <div class="tile-icon"><i class="fas fa-play"></i></div>
+                    <div class="tile-info">
+                        <h3>GRAJ TERAZ</h3>
+                        <p>Połącz się bezpośrednio z serwerem FiveM.</p>
+                    </div>
                 </a>
-                <div class="grid-item glass-dark animated-hover">
-                    <i class="fas fa-file-invoice icon-gold"></i>
-                    <h3>REGULAMIN</h3>
-                    <p>Zasady wyspy</p>
+
+                <div class="tile-card">
+                    <div class="tile-icon"><i class="fas fa-id-card"></i></div>
+                    <div class="tile-info">
+                        <h3>MOJA POSTAĆ</h3>
+                        <p>Sprawdź portfel, ekwipunek i licencje.</p>
+                    </div>
+                </div>
+
+                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="tile-card">
+                    <div class="tile-icon"><i class="fab fa-discord"></i></div>
+                    <div class="tile-info">
+                        <h3>SPOŁECZNOŚĆ</h3>
+                        <p>Dołącz do rozmów na naszym Discordzie.</p>
+                    </div>
+                </a>
+
+                <div class="tile-card">
+                    <div class="tile-icon"><i class="fas fa-gavel"></i></div>
+                    <div class="tile-info">
+                        <h3>REGULAMIN</h3>
+                        <p>Zasady panujące na wyspie Prime RP.</p>
+                    </div>
                 </div>
             </div>
         </main>
