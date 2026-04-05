@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } 
 from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// Firebase Config
 const firebaseConfig = {
     apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
     authDomain: "primerp-login.firebaseapp.com",
@@ -15,60 +14,57 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Elements
+// WYMUSZENIE RĘCZNEGO LOGOWANIA
+signOut(auth);
+
 const startScreen = document.getElementById('start-screen');
 const loginScreen = document.getElementById('login-screen');
 const userView = document.getElementById('user-view');
 const authContainer = document.getElementById('auth-container');
 
-// View Switcher
-const switchView = (target) => {
-    [startScreen, loginScreen].forEach(el => el.classList.remove('active'));
-    target.classList.add('active');
+// FUNKCJA NAPRAWIAJĄCA PRZEŁĄCZANIE
+const showScreen = (screen) => {
+    startScreen.classList.remove('active');
+    loginScreen.classList.remove('active');
+    
+    // Używamy setTimeout, aby animacja i display: block zadziałały poprawnie
+    setTimeout(() => {
+        screen.classList.add('active');
+    }, 50);
 };
 
-document.getElementById('go-to-login').onclick = () => switchView(loginScreen);
-document.getElementById('go-to-start').onclick = () => switchView(startScreen);
+// Nawigacja
+document.getElementById('go-to-login-btn').onclick = () => showScreen(loginScreen);
+document.getElementById('back-to-start').onclick = () => showScreen(startScreen);
 
-// Login Logic
+// Logowanie
 document.getElementById('login-btn').onclick = async () => {
-    const btn = document.getElementById('login-btn');
-    const login = document.getElementById('auth-login').value.trim();
+    const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-
-    if (!login || !pass) return alert("Uzupełnij wszystkie dane!");
-
-    btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> LOGOWANIE...`;
-    btn.disabled = true;
+    
+    if(!login || !pass) return alert("Wpisz dane!");
 
     try {
         await setPersistence(auth, browserSessionPersistence);
-        await signInWithEmailAndPassword(auth, `${login.toLowerCase()}@primerp.pl`, pass);
-    } catch (error) {
-        alert("Błąd: Niepoprawny login lub hasło.");
-        btn.innerHTML = "WEJDŹ DO SYSTEMU";
-        btn.disabled = false;
+        await signInWithEmailAndPassword(auth, `${login.toLowerCase().trim()}@primerp.pl`, pass);
+    } catch (e) {
+        alert("Błąd: Nieprawidłowy login lub hasło.");
     }
 };
 
-// Logout Logic
 document.getElementById('logout-btn').onclick = () => {
-    signOut(auth).then(() => {
-        window.location.reload();
-    });
+    signOut(auth).then(() => window.location.reload());
 };
 
-// Global Auth State
+// Monitor stanu sesji
 onAuthStateChanged(auth, (user) => {
     if (user) {
         authContainer.style.display = 'none';
         userView.style.display = 'flex';
-        const nick = user.email.split('@')[0].toUpperCase();
-        document.getElementById('display-nick').innerText = nick;
-        document.getElementById('user-avatar').src = `https://ui-avatars.com/api/?name=${nick}&background=FFC800&color=000`;
+        document.getElementById('display-nick').innerText = user.email.split('@')[0].toUpperCase();
     } else {
         authContainer.style.display = 'flex';
         userView.style.display = 'none';
-        switchView(startScreen);
+        showScreen(startScreen);
     }
 });
