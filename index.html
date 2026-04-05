@@ -57,7 +57,7 @@
 
         .btn-gold { background: var(--gold); color: #000; }
         .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
-        .btn-back { background: transparent; color: #888; font-size: 0.75rem; margin-top: 10px; text-decoration: underline; }
+        .btn-back { background: transparent; color: #888; font-size: 0.75rem; margin-top: 10px; text-decoration: underline; cursor: pointer; }
 
         input {
             padding: 15px; border-radius: 10px; border: 1px solid #333;
@@ -78,7 +78,7 @@
             <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-outline">
                 <i class="fab fa-discord"></i> Discord Invite
             </a>
-            <button class="btn btn-outline" onclick="alert('Regulamin zostanie dodany wkrótce!')">
+            <button class="btn btn-outline" onclick="alert('Regulamin wkrótce!')">
                 <i class="fas fa-book"></i> Regulamin
             </button>
             <button id="go-to-login" class="btn btn-gold">
@@ -96,17 +96,16 @@
             <button id="login-btn" class="btn btn-gold">Wejdź do systemu</button>
             <button id="register-btn" class="btn btn-outline">Załóż konto</button>
             
-            <button id="go-to-start" class="btn btn-back">Powrót</button>
+            <div id="go-to-start" class="btn-back">Powrót</div>
         </div>
     </div>
 
     <div id="user-view" class="card">
         <h1>WITAJ, <span id="display-nick" style="color: var(--gold);">...</span></h1>
-        <p style="color: #888;">Panel obywatela Prime RP załadowany.</p>
+        <p style="color: #888;">System Prime RP załadowany poprawnie.</p>
         <button id="logout-btn" class="btn btn-gold" style="background: #ff4444; color: white;">Wyloguj</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
