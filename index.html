@@ -3,107 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime RP | System Zaawansowany</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <title>Wirtualny System RP | Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="background-effects">
-        <div class="gradient-bg"></div>
-        <div class="particles"></div>
+    <div id="loader" class="loader-wrapper">
+        <div class="spinner"></div>
     </div>
 
-    <div id="auth-container" class="full-center">
-        <div id="start-screen" class="auth-card active">
-            <div class="badge">SEZON 2</div>
-            <h1 class="main-logo">PRIME <span>RP</span></h1>
-            <p class="slogan">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość.</p>
-            
-            <div class="button-stack">
-                <button id="go-to-login-btn" class="btn btn-gold">
-                    <i class="fas fa-sign-in-alt"></i> ZALOGUJ DO SYSTEMU
-                </button>
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-discord">
-                    <i class="fab fa-discord"></i> DOŁĄCZ NA DISCORD
-                </a>
+    <main id="auth-section" class="full-screen">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>WIRTUALNY<span>SYSTEM</span></h1>
+                <p>System Zarządzania Obywatelem</p>
             </div>
-        </div>
-
-        <div id="login-screen" class="auth-card">
-            <h2 class="title">LOGOWANIE</h2>
-            <div class="input-group">
-                <div class="field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="auth-login" placeholder="Twój login">
+            <div class="auth-form">
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email (np. gracz@wsrp.pl)">
                 </div>
-                <div class="field">
+                <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="auth-password" placeholder="Hasło">
+                    <input type="password" id="password" placeholder="Hasło">
+                </div>
+                <button id="login-btn" class="btn-primary">ZALOGUJ SIĘ</button>
+                <div class="auth-footer">
+                    <a href="https://discord.gg/TWOJ-LINK" target="_blank"><i class="fab fa-discord"></i> Pomoc na Discordzie</a>
                 </div>
             </div>
-            <button id="login-btn" class="btn btn-gold">POTWIERDŹ</button>
-            <p id="back-to-start" class="link-btn">← Powrót</p>
         </div>
-    </div>
+    </main>
 
-    <div id="user-view" class="dashboard-wrapper">
+    <main id="dashboard-section" class="dashboard-layout" style="display: none;">
         <aside class="sidebar">
-            <div class="sidebar-top">
-                <div class="mini-logo">P<span>R</span></div>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-group">
-                    <span class="group-label">GŁÓWNE</span>
-                    <div class="nav-item active"><i class="fas fa-home"></i> Pulpit</div>
-                    <div class="nav-item" onclick="alert('O Nas: Jesteśmy serwerem z pasją...')">
-                        <i class="fas fa-users"></i> O Nas
-                    </div>
-                </div>
-
-                <div class="nav-group user-section">
-                    <span class="group-label">KONTO</span>
-                    <div class="user-pill">
-                        <span id="display-nick">GRACZ</span>
-                    </div>
-                    <div id="logout-btn" class="nav-item logout"><i class="fas fa-power-off"></i> Wyloguj</div>
-                </div>
+            <div class="sidebar-logo">WS<span>RP</span></div>
+            <nav>
+                <div class="nav-item active"><i class="fas fa-home"></i> Pulpit</div>
+                <div class="nav-item"><i class="fas fa-id-card"></i> Moja Postać</div>
+                <div class="nav-item"><i class="fas fa-book"></i> Regulamin</div>
             </nav>
+            <div class="sidebar-footer">
+                <span id="user-email">użytkownik</span>
+                <button id="logout-btn" class="btn-logout"><i class="fas fa-power-off"></i></button>
+            </div>
         </aside>
 
-        <main class="main-content">
-            <header class="main-header">
-                <h1>WITAJ W SYSTEMIE</h1>
-                <p>Zarządzaj swoją postacią i sprawdzaj aktualności.</p>
+        <section class="main-content">
+            <header class="top-bar">
+                <h2>Panel Obywatela</h2>
+                <div class="server-status"><span class="dot"></span> Serwer Online</div>
             </header>
 
-            <div class="tiles-container">
-                <a href="fivem://connect/IP" class="tile">
-                    <i class="fas fa-play gold-icon"></i>
-                    <h3>GRAJ</h3>
-                    <p>Połącz z serwerem FiveM</p>
+            <div class="grid-container">
+                <a href="fivem://connect/TWOJE_IP" class="stat-card action">
+                    <i class="fas fa-play"></i>
+                    <div class="info">
+                        <h3>Graj teraz</h3>
+                        <p>Połącz z serwerem</p>
+                    </div>
                 </a>
-                <div class="tile">
-                    <i class="fas fa-user-shield gold-icon"></i>
-                    <h3>POSTAĆ</h3>
-                    <p>Statystyki obywatela</p>
+                <div class="stat-card">
+                    <i class="fas fa-wallet"></i>
+                    <div class="info">
+                        <h3>Portfel</h3>
+                        <p>$0.00</p>
+                    </div>
                 </div>
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="tile">
-                    <i class="fab fa-discord gold-icon"></i>
-                    <h3>DISCORD</h3>
-                    <p>Dołącz do społeczności</p>
-                </a>
-                <div class="tile">
-                    <i class="fas fa-file-invoice gold-icon"></i>
-                    <h3>REGULAMIN</h3>
-                    <p>Zasady wyspy</p>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="info">
+                        <h3>Czas gry</h3>
+                        <p>0h</p>
+                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </section>
+    </main>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
