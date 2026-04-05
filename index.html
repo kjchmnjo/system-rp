@@ -10,14 +10,14 @@
 </head>
 <body>
 
-    <div class="bg-container">
-        <div class="bg-carbon-weave"></div>
-        <div class="bg-glow-pool"></div>
+    <div class="bg-dynamic">
+        <div class="bg-gradient-pulse"></div>
+        <div class="bg-texture"></div>
     </div>
 
-    <div id="start-screen" class="card active">
-        <div class="card-glow"></div>
-        <div class="badge">SEZON 2</div>
+    <div id="start-screen" class="card active glass">
+        <div class="card-background-glow"></div>
+        <div class="badge">Sezon 2</div>
         <h1>PRIME <span>RP</span></h1>
         <p class="desc">
             Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość. Najwyższy poziom immersji, autorskie skrypty i profesjonalna administracja.
@@ -30,7 +30,7 @@
             <button id="go-to-login" class="btn btn-gold animated-hover">
                 <i class="fas fa-id-card"></i> ZALOGUJ DO SYSTEMU
             </button>
-            <button class="btn btn-outline" style="cursor: default;">
+            <button class="btn btn-outline" style="cursor: default; opacity: 0.5;">
                 <i class="fas fa-shopping-cart"></i> SKLEP SERWERA
             </button>
             <button class="btn btn-outline animated-hover" onclick="alert('Regulamin wkrótce!')">
@@ -43,8 +43,8 @@
         </div>
     </div>
 
-    <div id="login-screen" class="card">
-        <div class="card-glow"></div>
+    <div id="login-screen" class="card glass">
+        <div class="card-background-glow"></div>
         <div class="badge">AUTORYZACJA</div>
         <h1>ZALOGUJ <span>SIĘ</span></h1>
         <p class="desc">Użyj swoich danych, aby wejść do systemu Prime RP.</p>
@@ -59,11 +59,11 @@
         </div>
     </div>
 
-    <div id="user-view" class="card">
-        <div class="card-glow"></div>
+    <div id="user-view" class="card glass">
+        <div class="card-background-glow"></div>
         <div class="badge">SYSTEM</div>
         <h1>WITAJ, <span id="display-nick">...</span></h1>
-        <p class="desc">Sesja aktywna. Witamy w systemie zarządzania obywatelem.</p>
+        <p class="desc">Sesja aktywna. Witamy w systemie zarządzania obywatelem Prime RP.</p>
         <div class="nav-buttons">
             <button id="logout-btn" class="btn btn-outline animated-hover" style="border-color: #ff4444; color: #ff4444;">WYLOGUJ</button>
         </div>
