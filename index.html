@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime RP | System Sezon 2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>Prime RP | System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,9 +16,11 @@
     </div>
 
     <div id="start-screen" class="card active glass">
+        <div class="card-glow"></div>
         <div class="badge">Sezon 2</div>
-        <h1>PRIME <span>RP</span></h1>
+        <h1>PRIME RP</h1>
         <p class="desc">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość.</p>
+        
         <div class="nav-buttons">
             <button id="go-to-login" class="btn btn-gold animated-hover">
                 <i class="fas fa-id-card"></i> ZALOGUJ DO SYSTEMU
@@ -30,6 +32,7 @@
     </div>
 
     <div id="login-screen" class="card glass">
+        <div class="card-glow"></div>
         <div class="badge">Autoryzacja</div>
         <h1>ZALOGUJ <span>SIĘ</span></h1>
         <div class="nav-buttons">
@@ -51,16 +54,18 @@
                 </button>
             </div>
         </header>
+
         <main class="dashboard-content">
             <div class="welcome-section">
                 <h2>WITAJ W SYSTEMIE</h2>
                 <p>Zarządzaj swoją postacią i sprawdzaj aktualności serwerowe.</p>
             </div>
+
             <div class="grid-container">
-                <a href="fivem://connect/ADRES_IP" class="grid-item glass animated-hover">
+                <a href="fivem://connect/ADRES_IP_SERWERA" class="grid-item glass animated-hover">
                     <i class="fas fa-play"></i>
                     <h3>GRAJ</h3>
-                    <p>Połącz z serwerem</p>
+                    <p>Połącz z serwerem FiveM</p>
                 </a>
                 <div class="grid-item glass animated-hover" onclick="alert('Wkrótce!')">
                     <i class="fas fa-user-shield"></i>
@@ -70,7 +75,7 @@
                 <a href="https://discord.gg/MecNqskCTu" target="_blank" class="grid-item glass animated-hover">
                     <i class="fab fa-discord"></i>
                     <h3>DISCORD</h3>
-                    <p>Społeczność</p>
+                    <p>Dołącz do społeczności</p>
                 </a>
                 <div class="grid-item glass animated-hover" onclick="alert('Na Discordzie!')">
                     <i class="fas fa-file-invoice"></i>
@@ -79,6 +84,12 @@
                 </div>
             </div>
         </main>
+
+        <footer class="dashboard-footer">
+            <div class="status-bar">
+                <span class="dot pulse"></span> SERWER ONLINE | 2026 PRIME RP
+            </div>
+        </footer>
     </div>
 
     <script type="module" src="script.js"></script>
