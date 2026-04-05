@@ -1,99 +1,41 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wirtualny System RP | Panel Obywatela</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<section id="dashboard-section">
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="mini-logo">PRIME<span>RP</span></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-group">
+                    <span class="group-label">GŁÓWNE</span>
+                    <div class="nav-item active" data-target="pulpit"><i class="fas fa-home"></i> Pulpit</div>
+                    <div class="nav-item" data-target="profil"><i class="fas fa-user"></i> Mój Profil</div>
+                </div>
+                <div class="nav-group">
+                    <span class="group-label">SERWER</span>
+                    <div class="nav-item" data-target="regulamin"><i class="fas fa-book"></i> Regulamin</div>
+                    <div class="nav-item" data-target="frakcje"><i class="fas fa-users-cog"></i> Frakcje</div>
+                </div>
+                <div class="nav-group logout-group">
+                    <button id="logout-btn" class="nav-item logout"><i class="fas fa-power-off"></i> Wyloguj</button>
+                </div>
+            </nav>
+        </aside>
 
-    <div class="overlay-bg"></div>
-
-    <section id="hero-section" class="active">
-        <div class="container">
-            <header class="main-header">
-                <h1>WIRTUALNY<span>SYSTEM</span></h1>
-                <p>Witaj w oficjalnym panelu zarządzania obywatelami</p>
+        <main class="dash-main">
+            <header class="dash-top-bar">
+                <div class="welcome-text">
+                    <h1>Witamy w <span>PrimeRP</span></h1>
+                    <p>Zalogowano jako: <strong id="display-nick">...</strong></p>
+                </div>
             </header>
 
-            <div class="main-grid">
-                <a href="https://discord.gg/TWOJ_LINK_DISCORD" target="_blank" class="main-card discord">
-                    <i class="fab fa-discord"></i>
-                    <h3>DISCORD</h3>
-                    <span>Społeczność i wsparcie</span>
-                </a>
-
-                <a href="#" class="main-card rules">
-                    <i class="fas fa-gavel"></i>
-                    <h3>REGULAMIN</h3>
-                    <span>Zasady wyspy</span>
-                </a>
-
-                <div id="trigger-login" class="main-card login">
-                    <i class="fas fa-user-shield"></i>
-                    <h3>LOGIN</h3>
-                    <span>Dostęp do panelu</span>
+            <div class="dash-content-area">
+                <div class="welcome-card">
+                    <i class="fas fa-star gold-icon"></i>
+                    <h2>Dostęp do systemu przyznany</h2>
+                    <p>Wybierz kategorię z menu po lewej, aby zarządzać swoją postacią lub sprawdzić informacje o serwerze.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="auth-section">
-        <div class="auth-box">
-            <button id="back-to-hero" class="btn-back">
-                <i class="fas fa-chevron-left"></i> POWRÓT
-            </button>
-            
-            <div class="auth-title">
-                <h2>AUTORYZACJA <span>RP</span></h2>
-                <p>Podaj dane swojego obywatela</p>
-            </div>
-
-            <div class="auth-form">
-                <div class="field">
-                    <label>NICK OBYWATELA</label>
-                    <div class="input-icon">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="login-input" placeholder="np. Jan_Kowalski">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label>HASŁO</label>
-                    <div class="input-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password-input" placeholder="••••••••">
-                    </div>
-                </div>
-
-                <button id="login-execute" class="btn-login">ZALOGUJ DO SYSTEMU</button>
-                <div id="auth-error" class="error-msg"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="dashboard-section">
-        <div class="dashboard-box">
-            <div class="dash-header">
-                <h2>Witaj, <span id="display-nick">Obywatelu</span></h2>
-                <button id="logout-btn" class="btn-logout"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
-            <div class="dash-grid">
-                <div class="dash-card">
-                    <h3>STATUS</h3>
-                    <p class="online">ZATWIERDZONY</p>
-                </div>
-                <div class="dash-card">
-                    <h3>ID POSTACI</h3>
-                    <p>Wkrótce</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script type="module" src="app.js"></script>
-</body>
-</html>
+        </main>
+    </div>
+</section>
