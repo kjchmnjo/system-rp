@@ -1,8 +1,6 @@
-// Importy z CDN dla GitHub Pages
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// Twoja konfiguracja Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
   authDomain: "primerp-login.firebaseapp.com",
@@ -13,67 +11,62 @@ const firebaseConfig = {
   measurementId: "G-S27SYQM1KM"
 };
 
-// Inicjalizacja
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Elementy interfejsu (UI)
+// ELEMENTY UI
 const heroSec = document.getElementById('hero-section');
 const authSec = document.getElementById('auth-section');
 const dashSec = document.getElementById('dashboard-section');
+const errorMsg = document.getElementById('auth-error');
 
-// --- LOGIKA NAWIGACJI ---
-
-// Przejście z wyboru do logowania
+// NAWIGACJA
 document.getElementById('trigger-login').onclick = () => {
     heroSec.classList.remove('active');
     authSec.classList.add('active');
 };
 
-// Powrót z logowania do wyboru
 document.getElementById('back-to-hero').onclick = () => {
     authSec.classList.remove('active');
     heroSec.classList.add('active');
+    errorMsg.innerText = "";
 };
 
-// --- LOGIKA FIREBASE ---
-
-// Funkcja logowania
+// LOGOWANIE
 document.getElementById('login-execute').onclick = async () => {
-    const emailField = document.getElementById('email').value;
-    const passField = document.getElementById('password').value;
-    
-    // Jeśli gracz wpisuje tylko nick, automatycznie dodajemy domenę
-    const fullEmail = emailField.includes('@') ? emailField : `${emailField.toLowerCase().trim()}@wirtualnysystemrp.pl`;
+    const login = document.getElementById('login-input').value.trim();
+    const pass = document.getElementById('password-input').value;
+
+    if(!login || !pass) {
+        errorMsg.innerText = "Wprowadź wszystkie dane!";
+        return;
+    }
+
+    // Jeśli wpiszesz "Jan_Kowalski", system zaloguje "jan_kowalski@wirtualnysystemrp.pl"
+    const email = login.includes('@') ? login : `${login.toLowerCase()}@wirtualnysystemrp.pl`;
+    errorMsg.style.color = "var(--gold)";
+    errorMsg.innerText = "Trwa autoryzacja...";
 
     try {
-        await signInWithEmailAndPassword(auth, fullEmail, passField);
-    } catch (err) {
-        console.error(err);
-        alert("Błąd: Nieprawidłowy login lub hasło.");
+        await signInWithEmailAndPassword(auth, email, pass);
+    } catch (error) {
+        errorMsg.style.color = "#ff4444";
+        errorMsg.innerText = "Błąd: Niepoprawny login lub hasło.";
+        console.error(error.code);
     }
 };
 
-// Funkcja wylogowania
-document.getElementById('logout-btn').onclick = () => {
-    signOut(auth).then(() => {
-        window.location.reload();
-    });
-};
+// WYLOGOWANIE
+document.getElementById('logout-btn').onclick = () => signOut(auth);
 
-// Monitor stanu zalogowania
+// MONITOR STANU ZALOGOWANIA
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // Użytkownik zalogowany - pokaż dashboard
         heroSec.classList.remove('active');
         authSec.classList.remove('active');
         dashSec.classList.add('active');
-        
-        // Wyświetlanie nazwy użytkownika (wycinamy z maila)
-        const nick = user.email.split('@')[0].toUpperCase();
-        document.getElementById('user-name').innerText = nick;
+        document.getElementById('display-nick').innerText = user.email.split('@')[0].toUpperCase();
     } else {
-        // Użytkownik wylogowany - pokaż ekran główny
         dashSec.classList.remove('active');
         heroSec.classList.add('active');
     }
