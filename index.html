@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime RP | System</title>
+    <title>Prime RP | System Sezon 2</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -16,56 +16,66 @@
     </div>
 
     <div id="start-screen" class="card active glass">
-        <div class="card-background-glow"></div>
+        <div class="card-glow"></div>
         <div class="badge">Sezon 2</div>
         <h1>PRIME <span>RP</span></h1>
-        <p class="desc">
-            Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość. Najwyższy poziom immersji, autorskie skrypty i profesjonalna administracja.
-        </p>
+        <p class="desc">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość. Najwyższy poziom immersji i profesjonalna administracja.</p>
         
         <div class="nav-buttons">
             <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-discord animated-hover">
-                <i class="fab fa-discord"></i> DOŁĄCZ NA SERWER DISCORD
+                <i class="fab fa-discord"></i> DOŁĄCZ NA DISCORD
             </a>
             <button id="go-to-login" class="btn btn-gold animated-hover">
                 <i class="fas fa-id-card"></i> ZALOGUJ DO SYSTEMU
             </button>
-            <button class="btn btn-outline" style="cursor: default; opacity: 0.5;">
+            <button class="btn btn-outline no-click">
                 <i class="fas fa-shopping-cart"></i> SKLEP SERWERA
             </button>
-            <button class="btn btn-outline animated-hover" onclick="alert('Regulamin wkrótce!')">
-                <i class="fas fa-file-alt"></i> REGULAMIN
-            </button>
         </div>
-
         <div class="status">
-            <span class="dot pulse"></span> STATUS: PRACE KONFIGURACYJNE
+            <span class="dot"></span> STATUS: PRACE KONFIGURACYJNE
         </div>
     </div>
 
     <div id="login-screen" class="card glass">
-        <div class="card-background-glow"></div>
-        <div class="badge">AUTORYZACJA</div>
+        <div class="card-glow"></div>
+        <div class="badge">Autoryzacja</div>
         <h1>ZALOGUJ <span>SIĘ</span></h1>
-        <p class="desc">Użyj swoich danych, aby wejść do systemu Prime RP.</p>
+        <p class="desc">Zaloguj się do swojego konta obywatela.</p>
         
         <div class="nav-buttons">
             <input type="text" id="auth-login" placeholder="Login">
             <input type="password" id="auth-password" placeholder="Hasło">
-            
             <button id="login-btn" class="btn btn-gold animated-hover">ZALOGUJ</button>
             <button id="register-btn" class="btn btn-outline animated-hover">REJESTRACJA</button>
             <div id="go-to-start" class="back-link">POWRÓT</div>
         </div>
     </div>
 
-    <div id="user-view" class="card glass">
-        <div class="card-background-glow"></div>
-        <div class="badge">SYSTEM</div>
-        <h1>WITAJ, <span id="display-nick">...</span></h1>
-        <p class="desc">Sesja aktywna. Witamy w systemie zarządzania obywatelem Prime RP.</p>
+    <div id="user-view" class="card glass panel-wide">
+        <div class="card-glow"></div>
+        <div class="badge">WITAJ, <span id="display-nick">...</span></div>
+        <h1>PRIME RP <span>SEZON 2</span></h1>
+        <p class="desc">Witamy na oficjalnej stronie Prime RP. Sezon drugi właśnie trwa. Jesteś gotowy na nową przygodę?</p>
+        
         <div class="nav-buttons">
-            <button id="logout-btn" class="btn btn-outline animated-hover" style="border-color: #ff4444; color: #ff4444;">WYLOGUJ</button>
+            <button class="btn btn-gold animated-hover">
+                <i class="fas fa-play"></i> POŁĄCZ Z SERWEREM
+            </button>
+            <div class="grid-buttons">
+                <button class="btn btn-outline animated-hover"><i class="fas fa-user"></i> POSTAĆ</button>
+                <button class="btn btn-outline animated-hover"><i class="fas fa-book"></i> LOGI</button>
+            </div>
+            <button class="btn btn-outline no-click">
+                <i class="fas fa-shopping-cart"></i> SKLEP (WKRÓTCE)
+            </button>
+            <button id="logout-btn" class="btn btn-logout animated-hover">
+                <i class="fas fa-sign-out-alt"></i> WYLOGUJ
+            </button>
+        </div>
+
+        <div class="status">
+            <span class="dot pulse"></span> SERWER ONLINE | SEZON 2 W TOKU
         </div>
     </div>
 
