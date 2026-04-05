@@ -3,138 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wirtualny System RP | Oficjalna Strona</title>
+    <title>Prime RP | Edycja 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00f2ff;
-            --secondary: #7000ff;
-            --bg: #0a0b10;
-            --card-bg: rgba(255, 255, 255, 0.05);
+            --gold: #d4af37;
+            --gold-bright: #f9d976;
+            --dark-bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: white;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        /* Animowane tło */
-        body::before {
-            content: "";
+        /* Animowane tło w pętli */
+        .bg-animate {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1b26 0%, #0a0b10 100%);
+            background: radial-gradient(circle at top right, #1a1505, transparent),
+                        radial-gradient(circle at bottom left, #0a0a0a, transparent);
             z-index: -1;
         }
 
-        .container {
-            text-align: center;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
+        .main-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .edition-badge {
+            background: var(--gold);
+            color: #000;
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            font-size: 3rem;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff, #888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 3px;
         }
 
-        .status-tag {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(0, 242, 255, 0.1);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-weight: bold;
+        h1 span {
+            color: var(--gold);
+            -webkit-text-fill-color: var(--gold);
         }
 
-        p {
+        .description {
+            color: #aaa;
+            margin: 20px 0 40px 0;
+            font-size: 1rem;
             line-height: 1.6;
-            color: #a0a0b0;
-            margin-bottom: 30px;
         }
 
-        .buttons {
-            display: flex;
+        .nav-buttons {
+            display: grid;
             gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
         }
 
         .btn {
+            padding: 15px 30px;
+            border-radius: 12px;
             text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 242, 255, 0.5);
-        }
-
-        .btn-outline {
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .btn-discord {
+            background: #5865F2;
             color: white;
         }
 
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
+        .btn-discord:hover {
+            background: #4752c4;
+            transform: scale(1.03);
         }
 
-        .footer {
-            margin-top: 40px;
-            font-size: 0.7rem;
-            color: #505060;
-            letter-spacing: 1px;
+        .btn-prime {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-prime:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .server-status {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #ffaa00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffaa00;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="status-tag">System: Prace techniczne</div>
-        <h1>Wirtualny System RP</h1>
-        <p>Witaj w sercu nowej generacji RolePlay. Tworzymy unikalne doświadczenie, w którym Twoja historia nie ma granic. Nasze systemy są obecnie optymalizowane.</p>
-        
-        <div class="buttons">
-            <a href="https://discord.gg/TWÓJ-KOD" class="btn btn-primary">Dołącz na Discord</a>
-            <a href="#store" class="btn btn-outline">Sklep Serwera</a>
+    <div class="bg-animate"></div>
+
+    <div class="main-card">
+        <div class="edition-badge">Edycja 2</div>
+        <h1>PRIME <span>RP</span></h1>
+        <p class="description">
+            Wracamy z podwójną siłą. Nowe skrypty, dopracowana ekonomia i najwyższy poziom RolePlay. Twoja historia zaczyna się tutaj na nowo.
+        </p>
+
+        <div class="nav-buttons">
+            <a href="https://discord.gg/TWOJ_KOD" class="btn btn-discord">
+                <i class="fab fa-discord"></i> Dołącz na Discord
+            </a>
+            <a href="#" class="btn btn-prime">
+                <i class="fas fa-shopping-cart"></i> Sklep Serwera
+            </a>
+            <a href="#" class="btn btn-prime">
+                <i class="fas fa-book"></i> Regulamin
+            </a>
         </div>
 
-        <div class="footer">
-            &copy; 2026 WIRTUALNYSYSTEMRP.PL - ALL RIGHTS RESERVED
+        <div class="server-status">
+            <div class="dot"></div> STATUS: TRWAJĄ PRACE KONFIGURACYJNE
         </div>
     </div>
 
