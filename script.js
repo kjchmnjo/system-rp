@@ -15,8 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// WYMUSZENIE BRAKU AUTOMATYCZNEGO LOGOWANIA
-// Czyścimy sesję przy każdym odświeżeniu strony
+// WYMUSZENIE BRAKU AUTOMATYCZNEGO LOGOWANIA - Czyścimy sesję przy każdym odświeżeniu
 signOut(auth); 
 
 const startScreen = document.getElementById('start-screen');
@@ -31,6 +30,7 @@ const hideAll = () => {
     userScreen.style.display = 'none';
 };
 
+// NAPRAWIONE: Przycisk Zaloguj teraz poprawnie przenosi do formularza
 document.getElementById('go-to-login').onclick = () => {
     hideAll();
     loginScreen.style.display = 'block';
@@ -52,7 +52,7 @@ document.getElementById('login-btn').onclick = async () => {
     if(!login || !pass) return alert("Wpisz dane!");
 
     try {
-        // Ustawiamy trwałość sesji tylko na czas trwania karty przeglądarki
+        // Ustawiamy trwałość sesji tylko na czas trwania karty
         await setPersistence(auth, browserSessionPersistence);
         await signInWithEmailAndPassword(auth, formatEmail(login), pass);
     } catch (e) {
@@ -77,7 +77,7 @@ document.getElementById('register-btn').onclick = async () => {
 
 document.getElementById('logout-btn').onclick = () => {
     signOut(auth).then(() => {
-        location.reload(); // Przeładowanie strony po wylogowaniu dla pewności
+        location.reload(); // Przeładowanie po wylogowaniu
     });
 };
 
