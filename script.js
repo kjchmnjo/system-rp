@@ -20,13 +20,15 @@ const loginScreen = document.getElementById('login-screen');
 const userScreen = document.getElementById('user-view');
 
 document.getElementById('go-to-login').onclick = () => {
-    startScreen.classList.remove('active'); startScreen.style.display = 'none';
-    loginScreen.style.display = 'block'; loginScreen.classList.add('active');
+    startScreen.style.display = 'none';
+    loginScreen.style.display = 'block';
+    loginScreen.classList.add('active');
 };
 
 document.getElementById('go-to-start').onclick = () => {
-    loginScreen.classList.remove('active'); loginScreen.style.display = 'none';
-    startScreen.style.display = 'block'; startScreen.classList.add('active');
+    loginScreen.style.display = 'none';
+    startScreen.style.display = 'block';
+    startScreen.classList.add('active');
 };
 
 const formatEmail = (login) => login.toLowerCase().trim() + "@primerp.pl";
@@ -35,26 +37,31 @@ document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
     try { await signInWithEmailAndPassword(auth, formatEmail(login), pass); } 
-    catch (e) { alert("Błąd logowania!"); }
+    catch (e) { alert("Błędny login lub hasło!"); }
 };
 
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
+    if(pass.length < 6) { alert("Hasło min. 6 znaków!"); return; }
     try { 
         await createUserWithEmailAndPassword(auth, formatEmail(login), pass); 
-        alert("Utworzono konto!");
-    } catch (e) { alert("Błąd rejestracji!"); }
+        alert("Konto zostało utworzone!");
+    } catch (e) { alert("Błąd podczas rejestracji!"); }
 };
 
 document.getElementById('logout-btn').onclick = () => signOut(auth);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        startScreen.style.display = 'none'; loginScreen.style.display = 'none';
-        userScreen.style.display = 'block'; userScreen.classList.add('active');
+        startScreen.style.display = 'none';
+        loginScreen.style.display = 'none';
+        userScreen.style.display = 'block';
+        userScreen.classList.add('active');
         document.getElementById('display-nick').innerText = user.email.split('@')[0].toUpperCase();
     } else {
-        userScreen.style.display = 'none'; startScreen.style.display = 'block'; startScreen.classList.add('active');
+        userScreen.style.display = 'none';
+        startScreen.style.display = 'block';
+        startScreen.classList.add('active');
     }
 });
