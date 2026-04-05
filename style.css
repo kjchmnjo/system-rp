@@ -1,184 +1,98 @@
-/* --- FUNDAMENTY I ZMIENNE --- */
 :root {
     --gold: #ffcc00;
-    --gold-dim: #e6b800;
     --gold-glow: rgba(255, 204, 0, 0.3);
-    --gold-fade: rgba(255, 204, 0, 0.05);
-    
     --discord: #5865F2;
-    
-    /* Głęboka czerń tła */
     --bg-black: #000000;
-    
-    /* Kolory Glassmorphismu */
-    --glass-bg: rgba(18, 18, 18, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.03);
-    
-    --text-main: #ffffff;
-    --text-muted: #666666;
+    --glass: rgba(15, 15, 15, 0.85);
+    --border: rgba(255, 255, 255, 0.05);
 }
 
 body, html {
     margin: 0; padding: 0;
     font-family: 'Montserrat', sans-serif;
     background-color: var(--bg-black);
-    color: var(--text-main);
+    color: #fff;
     height: 100vh; width: 100vw;
     display: flex; justify-content: center; align-items: center;
     overflow: hidden;
-    position: relative;
 }
 
-/* --- TŁO Z CZĄSTECZKAMI (PARTICLES) --- */
-.bg-container {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.bg-black {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--bg-black);
-}
-
-/* Subtelne, białe cząsteczki pulsujące */
+/* --- TŁO Z CZĄSTECZKAMI --- */
+.bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+.bg-black { position: absolute; width: 100%; height: 100%; background: #000; }
 .bg-particles {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    position: absolute; width: 100%; height: 100%;
     background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
-        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
-    background-size: 550px 550px, 350px 350px, 250px 250px;
-    background-position: 0 0, 40px 60px, 130px 270px;
-    opacity: 0.6;
-    animation: particlesBreathe 10s ease-in-out infinite;
+        radial-gradient(circle, #fff 1px, transparent 1px),
+        radial-gradient(circle, #fff 1px, transparent 1px);
+    background-size: 50px 50px, 100px 100px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.15;
+    animation: moveParticles 20s linear infinite;
+}
+@keyframes moveParticles {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
 }
 
-@keyframes particlesBreathe {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(1.02); }
-}
-
-/* --- KARTA (CARD) Z EFEKTEM GLASSMORPHISMU --- */
+/* --- KARTA --- */
 .card {
-    background: var(--glass-bg);
-    padding: 45px 35px;
-    border-radius: 20px;
+    background: var(--glass);
+    padding: 50px 40px;
+    border-radius: 25px;
     text-align: center;
     width: 380px;
-    
-    /* Efekt Oszronionego Szkła (Glassmorphism) */
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
     display: none;
     position: relative;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    opacity: 0;
-    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,1);
+}
+.panel-wide { width: 440px; }
+.active { display: block; animation: slideUp 0.6s ease-out forwards; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.card-glow {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; box-shadow: 0 0 30px rgba(255, 204, 0, 0.05);
 }
 
-/* Subtelna poświata unosząca się za kartą */
-.card-background-glow {
-    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    z-index: -1;
-    background: radial-gradient(circle at center, var(--gold-fade) 0%, rgba(0,0,0,0) 70%);
-    animation: glowBreatheCard 4s ease-in-out infinite;
-}
-
-@keyframes glowBreatheCard {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
-}
-
-/* Klasa aktywująca z animacją mroku */
-.active { 
-    display: block; 
-    animation: fadeInMrokNowoczesny 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; 
-}
-
-@keyframes fadeInMrokNowoczesny { 
-    0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(3px); } 
-    100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } 
-}
-
-/* --- ELEMENTY KARTY --- */
 .badge {
-    background: linear-gradient(90deg, var(--gold), #ffaa00);
-    color: #000; padding: 4px 14px; border-radius: 20px;
+    background: var(--gold); color: #000; padding: 6px 16px; border-radius: 50px;
     font-size: 0.65rem; font-weight: 900; text-transform: uppercase;
-    display: inline-block; margin-bottom: 20px;
-    box-shadow: 0 0 10px var(--gold-glow);
-    animation: goldBadgePulse 3s ease-in-out infinite;
+    display: inline-block; margin-bottom: 25px;
 }
 
-h1 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
-h1 span { 
-    color: var(--gold); 
-    animation: goldTextGlowNowoczesny 3s ease-in-out infinite;
-}
+h1 { font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; }
+h1 span { color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); }
+p.desc { color: #888; font-size: 0.85rem; line-height: 1.6; margin-bottom: 30px; }
 
-p.desc { color: var(--text-muted); font-size: 0.8rem; line-height: 1.6; margin-bottom: 30px; font-weight: 300; }
-
-/* --- PRZYCISKI (BUTTONS) Z ANIMACJĄ --- */
+/* --- PRZYCISKI --- */
 .nav-buttons { display: flex; flex-direction: column; gap: 12px; }
+.grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 .btn {
-    padding: 14px; border-radius: 8px;
-    font-weight: 700; font-size: 0.75rem; text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center;
-    gap: 10px; cursor: pointer; transition: 0.3s all cubic-bezier(0.23, 1, 0.32, 1); border: none;
-    text-decoration: none; position: relative; overflow: hidden;
+    padding: 16px; border-radius: 12px; font-weight: 800; font-size: 0.75rem;
+    text-transform: uppercase; display: flex; align-items: center; justify-content: center;
+    gap: 10px; cursor: pointer; transition: 0.3s; border: none; text-decoration: none;
 }
-
-/* Nowoczesny stan hover z uniesieniem */
-.animated-hover:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
-}
-
-.animated-hover:active { transform: translateY(0); }
-
 .btn-discord { background: var(--discord); color: #fff; }
 .btn-gold { background: var(--gold); color: #000; }
-.btn-gold:hover { background: var(--gold-dim); box-shadow: 0 0 20px var(--gold-glow); }
+.btn-outline { background: rgba(255,255,255,0.03); color: #fff; border: 1px solid var(--border); }
+.btn-logout { background: rgba(255, 50, 50, 0.1); color: #ff3232; border: 1px solid rgba(255, 50, 50, 0.2); }
 
-.btn-outline { 
-    background: rgba(255, 255, 255, 0.03); 
-    color: #fff; border: 1px solid rgba(255,255,255,0.05); 
-}
-.btn-outline:hover { border-color: #444; background: rgba(255, 255, 255, 0.05); }
+.animated-hover:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+.no-click { cursor: default; opacity: 0.4; }
 
-/* Sklep nieaktywny */
-.btn-outline[style*="cursor: default"] {
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-/* --- FORMULARZ --- */
 input {
-    padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
-    background: rgba(0,0,0,0.5); color: #fff; outline: none; margin-bottom: 8px;
-    width: calc(100% - 28px); transition: 0.3s;
+    padding: 16px; border-radius: 12px; background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border); color: #fff; outline: none; margin-bottom: 10px; width: calc(100% - 34px);
 }
 
-input:focus { border-color: #333; background: rgba(0,0,0,0.8); box-shadow: 0 0 10px rgba(255,255,255,0.01); }
+.back-link { margin-top: 15px; font-size: 0.7rem; color: #444; cursor: pointer; text-decoration: underline; }
 
-/* --- LINKI I STATUS --- */
-.back-link { margin-top: 15px; font-size: 0.7rem; color: #444; cursor: pointer; text-decoration: underline; transition: 0.3s; }
-.back-link:hover { color: #888; }
-
-.status { margin-top: 30px; font-size: 0.6rem; color: #333; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
-
-/* Intensywna kropka statusu */
-.dot { height: 6px; width: 6px; background: #555; border-radius: 50%; }
-.dot.pulse {
-    background: #ffaa00; 
-    box-shadow: 0 0 5px #ffaa00;
-    animation: statusPulseIntensity 1.5s ease-in-out infinite;
-}
-
-/* --- DEFINICJE ANIMACJI --- */
-@keyframes goldBadgePulse { 0%, 100% { box-shadow: 0 0 10px var(--gold-glow); } 50% { box-shadow: 0 0 20px rgba(255, 204, 0, 0.6); } }
-@keyframes goldTextGlowNowoczesny { 0%, 100% { text-shadow: 0 0 5px rgba(255, 204, 0, 0.1); } 50% { text-shadow: 0 0 15px rgba(255, 204, 0, 0.4); } }
-@keyframes statusPulseIntensity { 0% { transform: scale(1); opacity: 1; box-shadow: 0 0 5px #ffaa00; } 50% { transform: scale(1.1); opacity: 0.7; box-shadow: 0 0 10px #ffaa00; } 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 5px #ffaa00; } }
+/* --- STATUS --- */
+.status { margin-top: 30px; font-size: 0.65rem; color: #555; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; }
+.dot { height: 7px; width: 7px; background: #333; border-radius: 50%; }
+.pulse { background: #ffaa00; box-shadow: 0 0 10px #ffaa00; animation: pStatus 1.5s infinite; }
+@keyframes pStatus { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
