@@ -3,85 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wirtualny System RP | Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <title>Wirtualny System RP | Panel Obywatela</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="loader" class="loader-wrapper">
-        <div class="spinner"></div>
-    </div>
+    <div class="bg-overlay"></div>
 
-    <main id="auth-section" class="full-screen">
-        <div class="auth-card">
-            <div class="auth-header">
+    <section id="hero-section" class="active">
+        <div class="container">
+            <header class="header-main">
                 <h1>WIRTUALNY<span>SYSTEM</span></h1>
-                <p>System Zarządzania Obywatelem</p>
-            </div>
-            <div class="auth-form">
-                <div class="input-field">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" placeholder="Email (np. gracz@wsrp.pl)">
-                </div>
-                <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Hasło">
-                </div>
-                <button id="login-btn" class="btn-primary">ZALOGUJ SIĘ</button>
-                <div class="auth-footer">
-                    <a href="https://discord.gg/TWOJ-LINK" target="_blank"><i class="fab fa-discord"></i> Pomoc na Discordzie</a>
+                <p>Wybierz kierunek swojej przygody</p>
+            </header>
+
+            <div class="button-grid">
+                <a href="https://discord.gg/TWOJ-LINK" target="_blank" class="card discord">
+                    <i class="fab fa-discord"></i>
+                    <h3>DISCORD</h3>
+                    <p>Społeczność i pomoc</p>
+                </a>
+
+                <a href="#" class="card rules">
+                    <i class="fas fa-file-signature"></i>
+                    <h3>REGULAMIN</h3>
+                    <p>Zasady panujące na wyspie</p>
+                </a>
+
+                <div id="trigger-login" class="card login">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>LOGIN</h3>
+                    <p>Dostęp do systemu RP</p>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <main id="dashboard-section" class="dashboard-layout" style="display: none;">
-        <aside class="sidebar">
-            <div class="sidebar-logo">WS<span>RP</span></div>
-            <nav>
-                <div class="nav-item active"><i class="fas fa-home"></i> Pulpit</div>
-                <div class="nav-item"><i class="fas fa-id-card"></i> Moja Postać</div>
-                <div class="nav-item"><i class="fas fa-book"></i> Regulamin</div>
-            </nav>
-            <div class="sidebar-footer">
-                <span id="user-email">użytkownik</span>
-                <button id="logout-btn" class="btn-logout"><i class="fas fa-power-off"></i></button>
+    <section id="auth-section">
+        <div class="auth-card">
+            <button id="back-to-hero" class="btn-back"><i class="fas fa-arrow-left"></i> Powrót</button>
+            <h2>AUTORYZACJA</h2>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email gracza">
+                <input type="password" id="password" placeholder="Hasło">
             </div>
-        </aside>
+            <button id="login-execute" class="btn-gold">ZALOGUJ</button>
+        </div>
+    </section>
 
-        <section class="main-content">
-            <header class="top-bar">
-                <h2>Panel Obywatela</h2>
-                <div class="server-status"><span class="dot"></span> Serwer Online</div>
-            </header>
-
-            <div class="grid-container">
-                <a href="fivem://connect/TWOJE_IP" class="stat-card action">
-                    <i class="fas fa-play"></i>
-                    <div class="info">
-                        <h3>Graj teraz</h3>
-                        <p>Połącz z serwerem</p>
-                    </div>
-                </a>
-                <div class="stat-card">
-                    <i class="fas fa-wallet"></i>
-                    <div class="info">
-                        <h3>Portfel</h3>
-                        <p>$0.00</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-clock"></i>
-                    <div class="info">
-                        <h3>Czas gry</h3>
-                        <p>0h</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    <section id="dashboard-section">
+        <div class="dashboard-content">
+            <h1>Witaj w systemie, <span id="user-name">Graczu</span>!</h1>
+            <p>Twój panel jest gotowy.</p>
+            <button id="logout-btn" class="btn-logout">Wyloguj się</button>
+        </div>
+    </section>
 
     <script type="module" src="app.js"></script>
 </body>
