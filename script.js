@@ -1,10 +1,10 @@
-// --- KONFIGURACJA SUPABASE ---
-const SUPABASE_URL = 'https://TWOJE_ID.supabase.co'; // PODMIEŃ NA SWÓJ URL!
+// Konfiguracja pod Twoje dane ze zdjęć
+const SUPABASE_URL = 'https://bqvowqzfxsbuprvsprqh.supabase.co'; 
 const SUPABASE_ANON_KEY = 'sb_publishable_Qy_e6UKTPyFhb17sUez4LQ_E3TLC2f1o_969cc4821a364177247738096350d7503487c674'; 
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// --- PRZEŁĄCZANIE EKRANÓW (FIX) ---
+// Nawigacja między oknami
 const startScreen = document.getElementById('start-screen');
 const loginScreen = document.getElementById('login-screen');
 const userScreen = document.getElementById('user-view');
@@ -19,17 +19,17 @@ document.getElementById('go-to-start').onclick = () => {
     startScreen.style.display = 'block';
 };
 
-// --- LOGIKA LOGOWANIA ---
+// Funkcja zamieniająca Login na udawany E-mail
 function formatEmail(login) {
     return login.toLowerCase().trim() + "@primerp.local";
 }
 
-// Logowanie
+// Obsługa Logowania
 document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
 
-    if (!login || !pass) return alert("Wypełnij dane!");
+    if (!login || !pass) return alert("Wpisz login i hasło!");
 
     const { data, error } = await supabase.auth.signInWithPassword({
         email: formatEmail(login),
@@ -40,7 +40,7 @@ document.getElementById('login-btn').onclick = async () => {
     else window.location.reload();
 };
 
-// Rejestracja
+// Obsługa Rejestracji
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
@@ -63,7 +63,7 @@ document.getElementById('logout-btn').onclick = async () => {
     window.location.reload();
 };
 
-// Sprawdzanie sesji przy starcie
+// Sprawdzanie czy użytkownik jest już zalogowany
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     
