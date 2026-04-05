@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } 
 from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// Twoja konfiguracja Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
   authDomain: "primerp-login.firebaseapp.com",
@@ -20,56 +19,42 @@ const startScreen = document.getElementById('start-screen');
 const loginScreen = document.getElementById('login-screen');
 const userScreen = document.getElementById('user-view');
 
-// Przełączanie kart z animacją
-function switchCard(hide, show) {
-    hide.classList.remove('active');
-    setTimeout(() => {
-        hide.style.display = 'none';
-        show.style.display = 'block';
-        setTimeout(() => show.classList.add('active'), 50);
-    }, 500);
-}
+document.getElementById('go-to-login').onclick = () => {
+    startScreen.classList.remove('active'); startScreen.style.display = 'none';
+    loginScreen.style.display = 'block'; loginScreen.classList.add('active');
+};
 
-document.getElementById('go-to-login').onclick = () => switchCard(startScreen, loginScreen);
-document.getElementById('go-to-start').onclick = () => switchCard(loginScreen, startScreen);
+document.getElementById('go-to-start').onclick = () => {
+    loginScreen.classList.remove('active'); loginScreen.style.display = 'none';
+    startScreen.style.display = 'block'; startScreen.classList.add('active');
+};
 
-// Firebase potrzebuje formatu email
 const formatEmail = (login) => login.toLowerCase().trim() + "@primerp.pl";
 
-// Logowanie
 document.getElementById('login-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-    try {
-        await signInWithEmailAndPassword(auth, formatEmail(login), pass);
-    } catch (e) { alert("Błąd: Nieprawidłowe dane logowania."); }
+    try { await signInWithEmailAndPassword(auth, formatEmail(login), pass); } 
+    catch (e) { alert("Błąd danych!"); }
 };
 
-// Rejestracja
 document.getElementById('register-btn').onclick = async () => {
     const login = document.getElementById('auth-login').value;
     const pass = document.getElementById('auth-password').value;
-    if(pass.length < 6) return alert("Hasło musi mieć min. 6 znaków!");
-    try {
-        await createUserWithEmailAndPassword(auth, formatEmail(login), pass);
-        alert("Konto utworzone!");
-    } catch (e) { alert("Błąd rejestracji: " + e.message); }
+    try { 
+        await createUserWithEmailAndPassword(auth, formatEmail(login), pass); 
+        alert("Utworzono konto!");
+    } catch (e) { alert("Błąd rejestracji!"); }
 };
 
-// Wylogowanie
 document.getElementById('logout-btn').onclick = () => signOut(auth);
 
-// Obsługa stanu użytkownika
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        startScreen.style.display = 'none';
-        loginScreen.style.display = 'none';
-        userScreen.style.display = 'block';
-        userScreen.classList.add('active');
+        startScreen.style.display = 'none'; loginScreen.style.display = 'none';
+        userScreen.style.display = 'block'; userScreen.classList.add('active');
         document.getElementById('display-nick').innerText = user.email.split('@')[0].toUpperCase();
     } else {
-        userScreen.style.display = 'none';
-        startScreen.style.display = 'block';
-        startScreen.classList.add('active');
+        userScreen.style.display = 'none'; startScreen.style.display = 'block'; startScreen.classList.add('active');
     }
 });
