@@ -11,19 +11,16 @@
             --gold-bright: #f9d976;
             --dark-bg: #050505;
             --card-bg: rgba(15, 15, 15, 0.9);
+            --discord: #5865F2;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Montserrat', sans-serif;
             background-color: var(--dark-bg);
             color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow: hidden;
         }
 
         .bg-animate {
@@ -42,8 +39,7 @@
             text-align: center;
             backdrop-filter: blur(20px);
             box-shadow: 0 0 60px rgba(0, 0, 0, 1);
-            max-width: 500px;
-            width: 90%;
+            max-width: 500px; width: 90%;
             animation: fadeIn 1.2s ease-out;
         }
 
@@ -60,60 +56,47 @@
             font-weight: 900;
             font-size: 0.75rem;
             letter-spacing: 2px;
-            display: inline-block;
-            margin-bottom: 20px;
+            display: inline-block; margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin: 0;
-            font-weight: 900;
-            letter-spacing: -2px;
+            font-size: 3.5rem; margin: 0;
+            font-weight: 900; letter-spacing: -2px;
             background: linear-gradient(to bottom, #ffffff 30%, #a0a0a0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        h1 span {
-            color: var(--gold);
-            -webkit-text-fill-color: var(--gold);
-        }
+        h1 span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
 
         .description {
-            color: #ccc;
-            margin: 20px 0 35px 0;
-            font-size: 1rem;
-            line-height: 1.6;
+            color: #ccc; margin: 20px 0 35px 0;
+            font-size: 1rem; line-height: 1.6;
         }
 
-        .nav-buttons {
-            display: grid;
-            gap: 12px;
-        }
+        .nav-buttons { display: grid; gap: 12px; }
 
         .btn {
-            padding: 14px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            transition: 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 0.9rem;
+            padding: 14px 30px; border-radius: 12px;
+            text-decoration: none; font-weight: 700;
+            text-transform: uppercase; transition: 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; font-size: 0.9rem; cursor: pointer; border: none;
+            width: 100%;
         }
 
-        .btn-discord {
-            background: #5865F2;
+        /* Przycisk Logowania przez Discord */
+        .btn-login {
+            background: var(--discord);
             color: white;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.3);
         }
 
-        .btn-discord:hover {
+        .btn-login:hover {
             background: #4752c4;
             transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.5);
         }
 
         .btn-prime {
@@ -128,33 +111,23 @@
             transform: translateY(-2px);
         }
 
-        .btn-login {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-login:hover {
-            background: var(--gold-bright);
-            transform: translateY(-2px);
-        }
-
         .server-status {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            margin-top: 30px; font-size: 0.8rem;
+            color: #666; display: flex;
+            align-items: center; justify-content: center; gap: 8px;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
-            background: #ffaa00;
-            border-radius: 50%;
+            width: 8px; height: 8px;
+            background: #ffaa00; border-radius: 50%;
             box-shadow: 0 0 10px #ffaa00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 170, 0, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 170, 0, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 170, 0, 0); }
         }
     </style>
 </head>
@@ -166,16 +139,16 @@
         <div class="edition-badge">Edycja 2</div>
         <h1>PRIME <span>RP</span></h1>
         <p class="description">
-            Wracamy z nową energią. Odkryj najwyższy standard RolePlay na Prime RP Edycja 2.
+            Wracamy z nową energią. Zaloguj się, aby uzyskać dostęp do panelu obywatela i zarządzać swoją postacią.
         </p>
 
         <div class="nav-buttons">
-            <a href="#" class="btn btn-login">
-                <i class="fas fa-key"></i> Zaloguj do systemu
-            </a>
+            <button onclick="loginWithDiscord()" class="btn btn-login">
+                <i class="fab fa-discord"></i> Zaloguj przez Discord
+            </button>
 
-            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-discord">
-                <i class="fab fa-discord"></i> Dołącz na Discord
+            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn btn-prime">
+                <i class="fas fa-users"></i> Społeczność Discord
             </a>
             
             <a href="#" class="btn btn-prime">
@@ -183,7 +156,7 @@
             </a>
             
             <a href="#" class="btn btn-prime">
-                <i class="fas fa-book"></i> Regulamin
+                <i class="fas fa-book"></i> Regulamin Wyspy
             </a>
         </div>
 
@@ -192,5 +165,43 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // UWAGA: Tutaj wkleisz swoje klucze z Supabase po założeniu konta
+        const SUPABASE_URL = 'TWOJ_ADRES_URL_Z_SUPABASE';
+        const SUPABASE_ANON_KEY = 'TWOJ_KLUCZ_ANON_Z_SUPABASE';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loginWithDiscord() {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'discord',
+                options: {
+                    redirectTo: window.location.origin // Automatycznie wróci na Twoją stronę
+                }
+            });
+
+            if (error) {
+                console.error('Błąd logowania:', error.message);
+                alert('Wystąpił błąd podczas logowania przez Discord.');
+            }
+        }
+
+        // Sprawdzanie czy użytkownik jest już zalogowany
+        window.onload = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                console.log('Zalogowano użytkownika:', session.user);
+                document.querySelector('h1').innerHTML = "Witaj, <span>" + session.user.user_metadata.full_name + "</span>";
+                document.querySelector('.btn-login').innerHTML = '<i class="fas fa-sign-out-alt"></i> Wyloguj się';
+                document.querySelector('.btn-login').setAttribute('onclick', 'logout()');
+            }
+        };
+
+        async function logout() {
+            await supabase.auth.signOut();
+            window.location.reload();
+        }
+    </script>
 </body>
 </html>
