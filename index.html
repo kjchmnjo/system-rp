@@ -16,11 +16,9 @@
     </div>
 
     <div id="start-screen" class="card active glass">
-        <div class="card-glow"></div>
         <div class="badge">Sezon 2</div>
         <h1>PRIME RP</h1>
         <p class="desc">Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość.</p>
-        
         <div class="nav-buttons">
             <button id="go-to-login" class="btn btn-gold animated-hover">
                 <i class="fas fa-id-card"></i> ZALOGUJ DO SYSTEMU
@@ -32,64 +30,63 @@
     </div>
 
     <div id="login-screen" class="card glass">
-        <div class="card-glow"></div>
         <div class="badge">Autoryzacja</div>
         <h1>ZALOGUJ <span>SIĘ</span></h1>
         <div class="nav-buttons">
             <input type="text" id="auth-login" placeholder="Login">
             <input type="password" id="auth-password" placeholder="Hasło">
             <button id="login-btn" class="btn btn-gold animated-hover">WEJDŹ</button>
-            <button id="register-btn" class="btn btn-outline animated-hover">REJESTRACJA</button>
             <div id="go-to-start" class="back-link">POWRÓT</div>
         </div>
     </div>
 
-    <div id="user-view" class="full-dashboard">
-        <header class="dashboard-header">
-            <div class="logo-top">PRIME RP <span>SEZON 2</span></div>
-            <div class="user-info">
-                <span id="display-nick">...</span>
-                <button id="logout-btn" class="logout-mini" title="Wyloguj">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
+    <div id="user-view" class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-small">PRIME <span>RP</span></div>
             </div>
-        </header>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-group">
+                    <p class="group-title">Menu Główne</p>
+                    <div class="nav-item active"><i class="fas fa-home"></i> Przegląd</div>
+                    <div class="nav-item" onclick="alert('Sekcja O Nas w przygotowaniu!')">
+                        <i class="fas fa-info-circle"></i> O Nas
+                    </div>
+                </div>
 
-        <main class="dashboard-content">
-            <div class="welcome-section">
-                <h2>WITAJ W SYSTEMIE</h2>
-                <p>Zarządzaj swoją postacią i sprawdzaj aktualności serwerowe.</p>
-            </div>
+                <div class="nav-group">
+                    <p class="group-title">Konto</p>
+                    <div class="nav-item"><i class="fas fa-user"></i> Profil: <span id="display-nick">...</span></div>
+                    <div id="logout-btn" class="nav-item logout-item"><i class="fas fa-sign-out-alt"></i> Wyloguj</div>
+                </div>
+            </nav>
+        </aside>
 
+        <main class="main-content">
             <div class="grid-container">
-                <a href="fivem://connect/ADRES_IP_SERWERA" class="grid-item glass animated-hover">
-                    <i class="fas fa-play"></i>
+                <a href="fivem://connect/ADRES" class="grid-item glass-dark animated-hover">
+                    <i class="fas fa-play icon-gold"></i>
                     <h3>GRAJ</h3>
                     <p>Połącz z serwerem FiveM</p>
                 </a>
-                <div class="grid-item glass animated-hover" onclick="alert('Wkrótce!')">
-                    <i class="fas fa-user-shield"></i>
+                <div class="grid-item glass-dark animated-hover">
+                    <i class="fas fa-user-shield icon-gold"></i>
                     <h3>POSTAĆ</h3>
                     <p>Statystyki obywatela</p>
                 </div>
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="grid-item glass animated-hover">
-                    <i class="fab fa-discord"></i>
+                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="grid-item glass-dark animated-hover">
+                    <i class="fab fa-discord icon-gold"></i>
                     <h3>DISCORD</h3>
                     <p>Dołącz do społeczności</p>
                 </a>
-                <div class="grid-item glass animated-hover" onclick="alert('Na Discordzie!')">
-                    <i class="fas fa-file-invoice"></i>
+                <div class="grid-item glass-dark animated-hover">
+                    <i class="fas fa-file-invoice icon-gold"></i>
                     <h3>REGULAMIN</h3>
                     <p>Zasady wyspy</p>
                 </div>
             </div>
         </main>
-
-        <footer class="dashboard-footer">
-            <div class="status-bar">
-                <span class="dot pulse"></span> SERWER ONLINE | 2026 PRIME RP
-            </div>
-        </footer>
     </div>
 
     <script type="module" src="script.js"></script>
