@@ -4,31 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirtualny System RP | PrimeRP</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --gold: #ffc800;
+            --dark: #080808;
+            --card-bg: rgba(15, 15, 15, 0.98);
+            --border: rgba(255, 200, 0, 0.15);
+            --text-dim: #555;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--dark); 
+            color: white; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        .overlay-bg { 
+            position: fixed; 
+            inset: 0; 
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); 
+            z-index: -1; 
+        }
+
+        section { 
+            display: none; 
+            height: 100vh; 
+            width: 100%; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        section.active { display: flex; animation: fadeIn 0.5s forwards; }
+
+        /* --- HERO SECTION --- */
+        .container { width: 90%; max-width: 1000px; text-align: center; }
+        .main-header h1 { font-size: 4rem; font-weight: 900; letter-spacing: -2px; }
+        .main-header h1 span { color: var(--gold); }
+        .main-header p { color: var(--text-dim); font-size: 1.1rem; margin-bottom: 50px; }
+
+        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .main-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            padding: 50px 20px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            color: white; 
+            transition: 0.3s; 
+        }
+        .main-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; display: block; }
+        .main-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+        .main-card span { font-size: 0.8rem; color: #444; text-transform: uppercase; letter-spacing: 2px; }
+        .main-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+        /* --- AUTH BOX --- */
+        .auth-box { 
+            background: var(--card-bg); 
+            padding: 50px; 
+            border-radius: 30px; 
+            width: 100%; 
+            max-width: 420px; 
+            border: 1px solid var(--border); 
+            text-align: center; 
+        }
+        .btn-back { background: none; border: none; color: #444; cursor: pointer; margin-bottom: 20px; font-weight: 800; }
+        .btn-back:hover { color: var(--gold); }
+
+        .field { text-align: left; margin-top: 25px; }
+        .field label { font-size: 11px; font-weight: 800; color: var(--gold); margin-bottom: 8px; display: block; }
+        .input-icon { position: relative; }
+        .input-icon i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #333; }
+        .input-icon input { 
+            width: 100%; padding: 16px 16px 16px 45px; 
+            background: #000; border: 1px solid #222; 
+            border-radius: 15px; color: white; 
+        }
+        .btn-login { 
+            width: 100%; padding: 18px; background: var(--gold); 
+            border: none; border-radius: 15px; font-weight: 900; 
+            cursor: pointer; margin-top: 30px; 
+        }
+
+        /* --- DASHBOARD --- */
+        .dashboard-wrapper { display: flex; width: 100vw; height: 100vh; }
+        .sidebar { 
+            width: 300px; background: #0a0a0a; 
+            border-right: 1px solid var(--border); 
+            display: flex; flex-direction: column; padding: 40px 25px; 
+        }
+        .mini-logo { font-size: 28px; font-weight: 900; margin-bottom: 40px; text-align: center; }
+        .mini-logo span { color: var(--gold); }
+        .nav-item { 
+            padding: 16px; border-radius: 15px; color: #777; 
+            cursor: pointer; display: flex; align-items: center; 
+            gap: 15px; border: none; background: none; width: 100%; 
+            font-size: 15px; text-align: left;
+        }
+        .nav-item.active { background: rgba(255, 200, 0, 0.1); color: var(--gold); font-weight: 700; }
+        .logout { color: #ff4444 !important; margin-top: auto; font-weight: 700; }
+
+        .dash-main { flex: 1; display: flex; flex-direction: column; background: #050505; }
+        .dash-top-bar { padding: 50px 60px; border-bottom: 1px solid rgba(255,255,255,0.01); }
+        .welcome-card { margin: auto; max-width: 450px; text-align: center; padding: 60px; background: #0d0d0d; border-radius: 35px; border: 1px solid var(--border); }
+        .gold-icon { font-size: 50px; color: var(--gold); margin-bottom: 25px; }
+        .error-msg { color: #ff4444; font-size: 13px; margin-top: 15px; font-weight: 600; min-height: 20px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
 <body>
+
     <div class="overlay-bg"></div>
 
     <section id="hero-section" class="active">
         <div class="container">
             <header class="main-header">
                 <h1>PRIME<span>RP</span></h1>
-                <p>Witaj w oficjalnym systemie zarządzania obywatelami</p>
+                <p>Oficjalny system zarządzania obywatelami</p>
             </header>
             <div class="main-grid">
-                <a href="https://discord.gg/TWOJ_LINK" target="_blank" class="main-card discord">
+                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="main-card">
                     <i class="fab fa-discord"></i>
                     <h3>DISCORD</h3>
-                    <span>Społeczność</span>
+                    <span>Dołącz do nas</span>
                 </a>
-                <a href="#" class="main-card rules">
+                <div class="main-card" onclick="alert('Regulamin dostępny wkrótce!')">
                     <i class="fas fa-gavel"></i>
                     <h3>REGULAMIN</h3>
                     <span>Zasady wyspy</span>
-                </a>
-                <div id="trigger-login" class="main-card login">
+                </div>
+                <div id="trigger-login" class="main-card">
                     <i class="fas fa-user-shield"></i>
                     <h3>LOGIN</h3>
                     <span>Panel Obywatela</span>
@@ -40,15 +153,13 @@
     <section id="auth-section">
         <div class="auth-box">
             <button id="back-to-hero" class="btn-back"><i class="fas fa-chevron-left"></i> POWRÓT</button>
-            <div class="auth-title">
-                <h2>AUTORYZACJA <span>RP</span></h2>
-            </div>
+            <div class="auth-title"><h2>LOGOWANIE <span>RP</span></h2></div>
             <div class="auth-form">
                 <div class="field">
                     <label>NICK OBYWATELA</label>
                     <div class="input-icon">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="login-input" placeholder="np. Jan_Kowalski">
+                        <input type="text" id="login-input" placeholder="Twoja Nazwa">
                     </div>
                 </div>
                 <div class="field">
@@ -58,7 +169,7 @@
                         <input type="password" id="password-input" placeholder="••••••••">
                     </div>
                 </div>
-                <button id="login-execute" class="btn-login">ZALOGUJ</button>
+                <button id="login-execute" class="btn-login">ZALOGUJ SIĘ</button>
                 <div id="auth-error" class="error-msg"></div>
             </div>
         </div>
@@ -67,39 +178,99 @@
     <section id="dashboard-section">
         <div class="dashboard-wrapper">
             <aside class="sidebar">
-                <div class="sidebar-header"><div class="mini-logo">PRIME<span>RP</span></div></div>
-                <nav class="sidebar-nav">
-                    <div class="nav-group">
-                        <span class="group-label">GŁÓWNE</span>
-                        <div class="nav-item active" data-target="pulpit"><i class="fas fa-home"></i> Pulpit</div>
-                        <div class="nav-item" data-target="profil"><i class="fas fa-user"></i> Profil</div>
-                    </div>
-                    <div class="nav-group">
-                        <span class="group-label">SERWER</span>
-                        <div class="nav-item" data-target="regulamin"><i class="fas fa-book"></i> Regulamin</div>
-                        <div class="nav-item" data-target="frakcje"><i class="fas fa-users-cog"></i> Frakcje</div>
-                    </div>
+                <div class="mini-logo">PRIME<span>RP</span></div>
+                <nav>
+                    <div class="nav-item active"><i class="fas fa-home"></i> Pulpit</div>
+                    <div class="nav-item"><i class="fas fa-user"></i> Mój Profil</div>
+                    <div class="nav-item"><i class="fas fa-book"></i> Regulamin</div>
                     <button id="logout-btn" class="nav-item logout"><i class="fas fa-power-off"></i> Wyloguj</button>
                 </nav>
             </aside>
             <main class="dash-main">
                 <header class="dash-top-bar">
-                    <div class="welcome-text">
-                        <h1>Witamy w <span>PrimeRP</span></h1>
-                        <p>Zalogowano jako: <strong id="display-nick">...</strong></p>
-                    </div>
+                    <h1>Witamy w <span>PrimeRP</span></h1>
+                    <p id="display-nick">TRWA ŁADOWANIE...</p>
                 </header>
                 <div class="dash-content-area">
                     <div class="welcome-card">
-                        <i class="fas fa-star gold-icon"></i>
-                        <h2>Dostęp przyznany</h2>
-                        <p>Wybierz kategorię z menu po lewej.</p>
+                        <i class="fas fa-check-circle gold-icon"></i>
+                        <h2>Dostęp Autoryzowany</h2>
+                        <p>Zarządzaj swoją postacią używając menu po lewej stronie.</p>
                     </div>
                 </div>
             </main>
         </div>
     </section>
 
-    <script type="module" src="js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Twoja Konfiguracja
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
+            authDomain: "primerp-login.firebaseapp.com",
+            projectId: "primerp-login",
+            storageBucket: "primerp-login.firebasestorage.app",
+            messagingSenderId: "137742617587",
+            appId: "1:137742617587:web:be0b0cd85411f555f4a086"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Elementy DOM
+        const heroSec = document.getElementById('hero-section');
+        const authSec = document.getElementById('auth-section');
+        const dashSec = document.getElementById('dashboard-section');
+        const errorMsg = document.getElementById('auth-error');
+
+        // Nawigacja między sekcjami
+        function showSection(id) {
+            [heroSec, authSec, dashSec].forEach(s => s.style.display = 'none');
+            const target = document.getElementById(id + '-section');
+            target.style.display = (id === 'dashboard') ? 'flex' : 'flex';
+            target.classList.add('active');
+        }
+
+        document.getElementById('trigger-login').onclick = () => showSection('auth');
+        document.getElementById('back-to-hero').onclick = () => showSection('hero');
+
+        // Logowanie
+        document.getElementById('login-execute').onclick = async () => {
+            const login = document.getElementById('login-input').value.trim();
+            const pass = document.getElementById('password-input').value;
+            
+            if(!login || !pass) {
+                errorMsg.innerText = "Wypełnij wszystkie pola!";
+                return;
+            }
+
+            const email = login.includes('@') ? login : `${login.toLowerCase()}@primerp.pl`;
+            errorMsg.innerText = "Trwa weryfikacja...";
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                errorMsg.innerText = "Błędne dane logowania!";
+            }
+        };
+
+        // Wylogowanie
+        document.getElementById('logout-btn').onclick = () => {
+            signOut(auth).then(() => window.location.reload());
+        };
+
+        // Obsługa Stanu Zalogowania
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                showSection('dashboard');
+                const nick = user.email.split('@')[0].toUpperCase();
+                document.getElementById('display-nick').innerText = `STATUS: ZALOGOWANO JAKO ${nick}`;
+            } else {
+                showSection('hero');
+            }
+        });
+    </script>
 </body>
 </html>
