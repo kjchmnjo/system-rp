@@ -2,17 +2,135 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Pusta Strona</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeRP | Sezon 2</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
-        body {
-            background-color: white;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
+        :root {
+            --gold: #FFC800;
+            --bg: #050505;
+            --sidebar-bg: #080808;
+            --card-bg: #111111;
+            --text: #ffffff;
+            --border: rgba(255, 255, 255, 0.08);
         }
+
+        body, html { 
+            margin: 0; padding: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--bg); color: var(--text); 
+            height: 100vh; overflow: hidden; 
+        }
+
+        /* Główny kontener aplikacji */
+        #app-root {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* Sidebar generowany przez JS */
+        .sidebar {
+            width: 280px; background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; padding: 40px 20px;
+        }
+
+        .logo { font-size: 1.8rem; font-weight: 900; text-align: center; margin-bottom: 40px; text-transform: uppercase; }
+        .logo span { color: var(--gold); }
+
+        .nav-btn {
+            background: none; border: 1px solid transparent; color: #666;
+            padding: 15px; border-radius: 12px; text-align: left;
+            cursor: pointer; font-weight: 700; margin-bottom: 8px;
+            transition: 0.3s; display: flex; align-items: center; gap: 12px;
+            text-transform: uppercase; font-size: 0.85rem;
+        }
+
+        .nav-btn.active { background: rgba(255, 200, 0, 0.05); color: var(--gold); border-color: var(--gold); }
+
+        /* Obszar treści */
+        .main-content { flex: 1; padding: 60px; overflow-y: auto; }
+
+        .card { 
+            background: var(--card-bg); border: 1px solid var(--border); 
+            padding: 40px; border-radius: 20px; max-width: 800px;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Style profilu i formularza */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .stat-box { background: #000; padding: 15px; border-radius: 10px; border: 1px solid var(--border); }
+        .stat-label { color: var(--gold); font-size: 0.7rem; font-weight: 800; }
+
+        .bug-input {
+            width: 100%; height: 150px; background: #000; border: 2px solid #222;
+            border-radius: 12px; padding: 15px; color: white; margin: 15px 0; font-family: inherit; resize: none;
+        }
+
+        .send-btn {
+            background: var(--gold); color: black; border: none; padding: 15px 30px;
+            border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase;
+        }
+
+        .discord-btn { margin-top: auto; background: #5865F2; color: white; text-decoration: none; padding: 15px; border-radius: 10px; text-align: center; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; }
     </style>
 </head>
 <body>
-</body>
-</html>
+
+    <div id="app-root">
+        </div>
+
+    <script>
+        // 1. DANE I STAN APLIKACJI
+        const CONFIG = {
+            webhook: "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx",
+            serverName: "PrimeRP",
+            season: "Sezon 2"
+        };
+
+        let currentTab = 'home';
+
+        // 2. SZABLONY TREŚCI
+        const contentTemplates = {
+            home: () => `
+                <h2>Witaj w ${CONFIG.season}</h2>
+                <p>System PrimeRP został zaktualizowany do wersji JS Engine. Wszystkie dane są teraz ładowane dynamicznie.</p>
+                <p>Wybierz zakładkę z menu po lewej, aby zarządzać swoim profilem lub zgłosić błąd.</p>
+            `,
+            profile: () => `
+                <h2>Nasz Profil</h2>
+                <div class="stat-grid">
+                    <div class="stat-box"><div class="stat-label">OBYWATEL</div><div>Nieznany</div></div>
+                    <div class="stat-box"><div class="stat-label">ID</div><div>#00000</div></div>
+                    <div class="stat-box"><div class="stat-label">MAJĄTEK</div><div>$0</div></div>
+                    <div class="stat-box"><div class="stat-label">STATUS</div><div style="color:#44ff44">Aktywny</div></div>
+                </div>
+            `,
+            news: () => `
+                <h2>Nowości</h2>
+                <p>• Przepisano silnik strony na czysty JavaScript.<br>
+                   • Zoptymalizowano wysyłanie zgłoszeń do administracji.<br>
+                   • Dodano dynamiczny system zakładek.</p>
+            `,
+            bug: () => `
+                <h2>Zgłoś Błąd</h2>
+                <p>Opisz dokładnie co nie działa. Twoja wiadomość trafi na kanał Discord administracji.</p>
+                <textarea id="bug-desc" class="bug-input" placeholder="Np. Nie mogę otworzyć bagażnika..."></textarea>
+                <button class="send-btn" onclick="sendBugReport()">Wyślij Zgłoszenie</button>
+                <div id="status-msg" style="margin-top:15px; font-weight:800;"></div>
+            `
+        };
+
+        // 3. SILNIK RENDERUJĄCY
+        function renderApp() {
+            const root = document.getElementById('app-root');
+            
+            root.innerHTML = `
+                <aside class="sidebar">
+                    <div class="logo">${CONFIG.serverName}
