@@ -3,147 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Panel Gracza</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+    <title>JS App - Pełny Kod</title>
     <style>
-        :root {
-            --bg-body: #0a0a0b;
-            --bg-sidebar: #050505;
-            --bg-card: #151518;
-            --bg-button: #242426;
-            --bg-button-hover: #3a3a3d;
-            --text-main: #ffffff;
-            --text-sub: #a0a0a5;
-            --logo-accent: #fcd535;
-            --discord-accent: #5865F2;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
-
-        /* SIDEBAR */
-        .sidebar { width: 280px; background-color: var(--bg-sidebar); padding: 40px 20px; border-right: 1px solid #1a1a1c; flex-shrink: 0; }
-        .logo-container { text-align: center; margin-bottom: 60px; }
-        .logo-text { font-family: 'Saira Stencil One', cursive; font-size: 1.6rem; color: var(--logo-accent); text-shadow: 0 0 10px rgba(252, 213, 53, 0.5); line-height: 1.1; }
-        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 15px; }
-        .nav-item { display: flex; align-items: center; background-color: var(--bg-button); padding: 18px 25px; border-radius: 12px; cursor: pointer; color: var(--text-main); font-weight: 600; text-transform: uppercase; transition: 0.3s; border: 1px solid transparent; }
-        .nav-item:hover { background-color: var(--bg-button-hover); }
-        .nav-item.active { border-color: var(--text-main); }
-
-        /* CONTENT */
-        .main-content { flex-grow: 1; padding: 60px 80px; }
-        .welcome-header { font-size: 2.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 40px; }
-        
-        /* Ukrywanie sekcji */
-        .content-section { display: none; animation: fadeIn 0.5s ease; }
-        .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .report-card { background-color: var(--bg-card); border-radius: 20px; padding: 40px; border: 1px solid #1a1a1c; max-width: 700px; }
-        .report-title { font-size: 1.8rem; font-weight: 800; color: var(--logo-accent); margin-bottom: 20px; }
-        
-        textarea { width: 100%; height: 150px; background: #0a0a0b; border: 1px solid #333; border-radius: 10px; color: white; padding: 15px; font-size: 1rem; resize: none; margin-bottom: 20px; outline: none; }
-        .ticket-button { background-color: var(--discord-accent); color: white; padding: 18px 40px; border-radius: 10px; border: none; font-weight: 800; text-transform: uppercase; cursor: pointer; width: 100%; transition: 0.3s; }
-        
-        .soon-text { font-size: 2rem; font-weight: 800; color: var(--text-sub); text-align: center; margin-top: 50px; border: 2px dashed #333; padding: 50px; border-radius: 20px; }
+        :root { --primary: #6366f1; --bg: #f8fafc; --text: #1e293b; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; justify-content: center; padding: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 12px; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); width: 100%; max-width: 400px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        h2 { margin-top: 0; color: var(--primary); }
+        input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        ul { list-style: none; padding: 0; margin-top: 1.5rem; }
+        li { background: #f1f5f9; padding: 0.75rem; margin-bottom: 0.5rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .delete-btn { background: #ef4444; width: auto; padding: 0.25rem 0.5rem; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <nav class="sidebar">
-        <div class="logo-container"><div class="logo-text">PRIME<br><span>RP</span></div></div>
-        <ul class="nav-list">
-            <li onclick="showSection('nowosci', this)" class="nav-item">Nowości</li>
-            <li onclick="showSection('onas', this)" class="nav-item">O nas</li>
-            <li onclick="showSection('zglos-blad', this)" class="nav-item active">Zgłoś Błąd</li>
-            <li onclick="showSection('regulamin', this)" class="nav-item">Regulamin</li>
-        </ul>
-    </nav>
+<div class="card">
+    <h2>🚀 JS Core App</h2>
+    <input type="text" id="taskInput" placeholder="Co mamy do zrobienia?">
+    <button id="addBtn">Dodaj do listy</button>
+    <ul id="taskList"></ul>
+</div>
 
-    <main class="main-content">
-        <h1 class="welcome-header">WITAJ, Jakub Peno</h1>
+<script>
+    /**
+     * PEŁNA LOGIKA APLIKACJI
+     */
+    const App = {
+        // Stan aplikacji
+        state: {
+            tasks: JSON.parse(localStorage.getItem('myTasks')) || [],
+        },
 
-        <div id="zglos-blad" class="content-section active">
-            <div class="report-card">
-                <h2 class="report-title">Zgłoś Błąd</h2>
-                <textarea id="bugDescription" placeholder="Opisz tutaj błąd..."></textarea>
-                <button onclick="sendWebhook()" id="submitBtn" class="ticket-button">WYŚLIJ ZGŁOSZENIE</button>
-                <p id="statusMessage" style="margin-top: 15px; text-align: center;"></p>
-            </div>
-        </div>
+        // Inicjalizacja
+        init() {
+            this.cacheDOM();
+            this.bindEvents();
+            this.render();
+        },
 
-        <div id="onas" class="content-section">
-            <div class="soon-text">WKRÓTCE</div>
-        </div>
+        // Pobranie elementów DOM
+        cacheDOM() {
+            this.input = document.getElementById('taskInput');
+            this.button = document.getElementById('addBtn');
+            this.list = document.getElementById('taskList');
+        },
 
-        <div id="nowosci" class="content-section">
-            <div class="soon-text">WKRÓTCE</div>
-        </div>
+        // Podpięcie zdarzeń
+        bindEvents() {
+            this.button.addEventListener('click', () => this.addTask());
+            this.input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.addTask();
+            });
+        },
 
-        <div id="regulamin" class="content-section">
-            <div class="soon-text">WKRÓTCE</div>
-        </div>
+        // Metody logiki
+        addTask() {
+            const value = this.input.value.trim();
+            if (!value) return;
 
-    </main>
+            const newTask = {
+                id: crypto.randomUUID(),
+                text: value,
+                date: new Date().toLocaleTimeString()
+            };
 
-    <script>
-        // Funkcja do przełączania zakładek
-        function showSection(sectionId, element) {
-            // Ukryj wszystkie sekcje
-            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
-            // Usuń klasę active z przycisków
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            
-            // Pokaż wybraną sekcję i aktywuj przycisk
-            document.getElementById(sectionId).classList.add('active');
-            element.classList.add('active');
+            this.state.tasks = [...this.state.tasks, newTask];
+            this.saveAndRender();
+            this.input.value = '';
+        },
+
+        deleteTask(id) {
+            this.state.tasks = this.state.tasks.filter(t => t.id !== id);
+            this.saveAndRender();
+        },
+
+        saveAndRender() {
+            localStorage.setItem('myTasks', JSON.stringify(this.state.tasks));
+            this.render();
+        },
+
+        // Renderowanie interfejsu
+        render() {
+            this.list.innerHTML = this.state.tasks.map(task => `
+                <li>
+                    <span>${task.text} <small style="color: #64748b; font-size: 0.7rem;">(${task.date})</small></span>
+                    <button class="delete-btn" onclick="App.deleteTask('${task.id}')">X</button>
+                </li>
+            `).join('');
         }
+    };
 
-        // Twoja funkcja Webhooka
-        async function sendWebhook() {
-            const textarea = document.getElementById('bugDescription');
-            const button = document.getElementById('submitBtn');
-            const status = document.getElementById('statusMessage');
-            const message = textarea.value.trim();
+    // Startujemy!
+    App.init();
+</script>
 
-            if (message.length < 5) {
-                status.style.color = "#ff4444";
-                status.innerText = "Opis jest zbyt krótki!";
-                return;
-            }
-
-            button.disabled = true;
-            button.innerText = "WYSYŁANIE...";
-
-            const webhookURL = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
-
-            try {
-                await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: "System Zgłoszeń PrimeRP",
-                        embeds: [{
-                            title: "🚀 Nowe zgłoszenie błędu!",
-                            color: 16571701,
-                            fields: [{ name: "Zgłaszający", value: "Jakub Peno" }, { name: "Opis", value: message }],
-                            timestamp: new Date()
-                        }]
-                    })
-                });
-                status.style.color = "#44ff44";
-                status.innerText = "Zgłoszenie wysłane!";
-                textarea.value = "";
-            } catch (e) {
-                status.style.color = "#ff4444";
-                status.innerText = "Błąd wysyłki.";
-            } finally {
-                button.disabled = false;
-                button.innerText = "WYŚLIJ ZGŁOSZENIE";
-            }
-        }
-    </script>
 </body>
 </html>
