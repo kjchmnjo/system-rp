@@ -11,142 +11,97 @@
     <style>
         :root {
             --gold: #FFC800;
-            --gold-glow: rgba(255, 200, 0, 0.3);
-            --bg-dark: #050505;
-            --card-bg: rgba(15, 15, 15, 0.95);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #0a0a0a;
+            --sidebar-bg: #050505;
+            --card-bg: #111111;
             --text: #ffffff;
-            --text-dim: #a0a0a0;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         
         body { 
             font-family: 'Montserrat', sans-serif;
-            background: var(--bg-dark); 
+            background: var(--bg); 
             color: var(--text); 
             height: 100vh; 
-            overflow: hidden; 
-        }
-
-        /* TŁO ANIMOWANE */
-        .bg-overlay {
-            position: fixed;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(255, 200, 0, 0.03) 0%, transparent 30%),
-                radial-gradient(circle at 90% 90%, rgba(255, 200, 0, 0.03) 0%, transparent 30%),
-                #000;
-            z-index: -1;
-        }
-
-        /* UKŁAD STRONY */
-        .wrapper {
             display: flex;
-            height: 100vh;
-            width: 100%;
+            overflow: hidden;
         }
 
-        /* PASEK BOCZNY */
+        /* MENU BOCZNE */
         .sidebar {
-            width: 300px;
-            background: #080808;
+            width: 280px;
+            background: var(--sidebar-bg);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             padding: 40px 20px;
         }
 
-        .logo-area {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .logo-area h1 {
-            font-size: 2.2rem;
+        .logo {
+            font-size: 1.8rem;
             font-weight: 900;
-            letter-spacing: -2px;
+            text-align: center;
+            margin-bottom: 40px;
             text-transform: uppercase;
         }
 
-        .logo-area span {
-            color: var(--gold);
-            text-shadow: 0 0 15px var(--gold-glow);
-        }
+        .logo span { color: var(--gold); }
 
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            background: transparent;
+        .nav-link {
+            background: none;
             border: 1px solid transparent;
-            color: var(--text-dim);
-            padding: 16px 20px;
-            border-radius: 12px;
+            color: #777;
+            padding: 15px 20px;
+            border-radius: 10px;
             text-align: left;
             font-weight: 700;
-            font-size: 0.9rem;
             cursor: pointer;
+            margin-bottom: 8px;
             transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 12px;
-            text-transform: uppercase;
         }
 
-        .nav-btn i { width: 20px; text-align: center; font-size: 1.1rem; }
-
-        .nav-btn:hover, .nav-btn.active {
+        .nav-link:hover, .nav-link.active {
             background: rgba(255, 200, 0, 0.05);
-            border-color: var(--gold);
             color: var(--gold);
+            border-color: var(--gold);
         }
 
-        /* GŁÓWNA TREŚĆ */
-        .content-area {
+        /* GŁÓWNY PANEL */
+        .main-panel {
             flex: 1;
             padding: 60px;
             overflow-y: auto;
-            background: linear-gradient(135deg, rgba(10,10,10,0.5) 0%, transparent 100%);
         }
 
-        .view-section {
+        .tab-view {
             display: none;
-            animation: slideIn 0.4s ease-out forwards;
+            animation: fadeIn 0.4s ease;
         }
 
-        .view-section.active { display: block; }
+        .tab-view.active { display: block; }
 
-        @keyframes slideIn {
+        @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .card {
+        .content-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 50px;
-            border-radius: 30px;
-            max-width: 850px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
         }
 
-        .card h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
+        .content-card h2 {
+            font-size: 2.2rem;
             margin-bottom: 20px;
             color: var(--gold);
-            text-transform: uppercase;
-        }
-
-        .card p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text-dim);
-            margin-bottom: 20px;
         }
 
         /* FORMULARZ ZGŁOSZEŃ */
@@ -154,210 +109,162 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-top: 20px;
         }
 
-        .bug-input {
+        .bug-textarea {
+            width: 100%;
+            height: 180px;
             background: #000;
             border: 2px solid #222;
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 20px;
             color: white;
             font-family: inherit;
             font-size: 1rem;
-            min-height: 200px;
             resize: none;
-            transition: 0.3s;
         }
 
-        .bug-input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px var(--gold-glow);
-        }
+        .bug-textarea:focus { border-color: var(--gold); }
 
-        .send-btn {
+        .send-button {
             background: var(--gold);
-            color: #000;
+            color: black;
             border: none;
             padding: 18px;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 900;
-            font-size: 1rem;
             cursor: pointer;
             text-transform: uppercase;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
 
-        .send-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px var(--gold-glow);
-        }
+        .send-button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,200,0,0.3); }
 
-        .status-msg {
-            margin-top: 15px;
-            font-weight: 700;
-            text-align: center;
-        }
+        .status-info { margin-top: 15px; font-weight: 700; text-align: center; }
 
-        .social-footer {
+        .discord-btn {
             margin-top: auto;
-            padding-top: 20px;
-        }
-
-        .btn-discord {
             background: #5865F2;
             color: white;
             text-decoration: none;
             padding: 15px;
-            border-radius: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            font-weight: 800;
-            transition: 0.3s;
         }
-
-        .btn-discord:hover { filter: brightness(1.2); }
-
     </style>
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
+    <div class="sidebar">
+        <div class="logo">PRIME<span>RP</span></div>
+        
+        <button class="nav-link active" onclick="switchTab('start', this)">
+            <i class="fas fa-home"></i> START
+        </button>
+        <button class="nav-link" onclick="switchTab('news', this)">
+            <i class="fas fa-newspaper"></i> NOWOŚCI
+        </button>
+        <button class="nav-link" onclick="switchTab('bug', this)">
+            <i class="fas fa-bug"></i> ZGŁOŚ BŁĄD
+        </button>
 
-    <div class="wrapper">
-        <aside class="sidebar">
-            <div class="logo-area">
-                <h1>PRIME<span>RP</span></h1>
-                <p style="font-size: 0.7rem; letter-spacing: 3px; font-weight: 700; color: #444;">SEZON DRUGI</p>
+        <a href="https://discord.gg/MecNqskCTu" target="_blank" class="discord-btn">
+            <i class="fab fa-discord"></i> DISCORD
+        </a>
+    </div>
+
+    <div class="main-panel">
+        
+        <div id="tab-start" class="tab-view active">
+            <div class="content-card">
+                <h2>Witaj w Sezonie 2</h2>
+                <p>Oficjalna strona PrimeRP została zaktualizowana. Zapraszamy do wspólnej rozgrywki na najwyższym poziomie immersji.</p>
             </div>
+        </div>
 
-            <nav class="nav-menu">
-                <button class="nav-btn active" onclick="switchView('home', this)"><i class="fas fa-home"></i> Start</button>
-                <button class="nav-btn" onclick="switchView('news', this)"><i class="fas fa-newspaper"></i> Nowości</button>
-                <button class="nav-btn" onclick="switchView('rules', this)"><i class="fas fa-book"></i> Regulamin</button>
-                <button class="nav-btn" onclick="switchView('bug', this)"><i class="fas fa-bug"></i> Zgłoś Błąd</button>
-            </nav>
-
-            <div class="social-footer">
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn-discord">
-                    <i class="fab fa-discord"></i> DISCORD
-                </a>
+        <div id="tab-news" class="tab-view">
+            <div class="content-card">
+                <h2>Nowości</h2>
+                <p>• Nowy interfejs panelu WWW.<br>
+                   • Usprawniony system zgłoszeń błędów.<br>
+                   • Poprawiona optymalizacja strony.</p>
             </div>
-        </aside>
+        </div>
 
-        <main class="content-area">
-            
-            <section id="view-home" class="view-section active">
-                <div class="card">
-                    <h2>Witaj na PrimeRP</h2>
-                    <p>Przygotuj się na nową erę RolePlay. Sezon 2 to całkowicie odświeżona mapa, nowa ekonomia i systemy, których nie znajdziesz nigdzie indziej.</p>
-                    <p>Nasza społeczność stawia na jakość i profesjonalizm. Dołącz do nas już dzisiaj przez nasz serwer Discord.</p>
+        <div id="tab-bug" class="tab-view">
+            <div class="content-card">
+                <h2>Zgłoś Błąd</h2>
+                <p>Wpisz poniżej opis błędu, który napotkałeś. Wiadomość zostanie wysłana bezpośrednio na kanał administracji.</p>
+                
+                <div class="bug-form">
+                    <textarea id="bug-content" class="bug-textarea" placeholder="Opisz błąd tutaj..."></textarea>
+                    <button class="send-button" onclick="handleBugSend()">
+                        <i class="fas fa-paper-plane"></i> WYŚLIJ ZGŁOSZENIE
+                    </button>
+                    <div id="status-display" class="status-info"></div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <section id="view-news" class="view-section">
-                <div class="card">
-                    <h2>Co nowego?</h2>
-                    <p>• Nowy system mieszkań i urządzania wnętrz.<br>
-                       • Całkowicie przebudowana komenda policji i systemy frakcyjne.<br>
-                       • Zoptymalizowany silnik serwera dla płynniejszej rozgrywki.<br>
-                       • Nowe, unikalne prace dorywcze.</p>
-                </div>
-            </section>
-
-            <section id="view-rules" class="view-section">
-                <div class="card">
-                    <h2>Zasady Wyspy</h2>
-                    <p>1. Szanuj innych graczy i ich czas.<br>
-                       2. MetaGaming i PowerGaming są surowo zabronione.<br>
-                       3. Każda akcja RP musi mieć sens i podstawę fabularną.<br>
-                       4. Pełny regulamin znajdziesz na naszym kanale Discord.</p>
-                </div>
-            </section>
-
-            <section id="view-bug" class="view-section">
-                <div class="card">
-                    <h2>Zgłoś Błąd</h2>
-                    <p>Znalazłeś lukę w skrypcie? Coś nie działa tak, jak powinno? Opisz to tutaj, a nasi programiści zajmą się tym natychmiast.</p>
-                    
-                    <div class="bug-form">
-                        <textarea id="bug-text" class="bug-input" placeholder="Opisz błąd, podaj gdzie występuje..."></textarea>
-                        <button onclick="sendBug()" class="send-btn">
-                            <i class="fas fa-paper-plane"></i> WYŚLIJ DO ADMINISTRACJI
-                        </button>
-                        <div id="status-msg" class="status-msg"></div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
     </div>
 
     <script>
-        // PRZEŁĄCZANIE WIDOKÓW
-        function switchView(viewId, btn) {
-            // Ukryj wszystkie sekcje
-            document.querySelectorAll('.view-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            // Oznacz przycisk jako aktywny
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            // Pokaż wybraną
-            document.getElementById('view-' + viewId).classList.add('active');
+        function switchTab(id, btn) {
+            document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
             btn.classList.add('active');
         }
 
-        // WYSYŁANIE WEBHOOKA
-        async function sendBug() {
-            const text = document.getElementById('bug-text').value.trim();
-            const status = document.getElementById('status-msg');
+        async function handleBugSend() {
+            const msg = document.getElementById('bug-content').value.trim();
+            const status = document.getElementById('status-display');
             const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
 
-            if (!text) {
+            if (!msg) {
                 status.style.color = "#ff4444";
-                status.innerText = "Najpierw opisz błąd!";
+                status.innerText = "Najpierw wpisz treść błędu!";
                 return;
             }
 
             status.style.color = "var(--gold)";
             status.innerText = "WYSYŁANIE...";
 
-            const payload = {
-                username: "PrimeRP - Zgłoszenie",
-                embeds: [{
-                    title: "🚨 NOWY BŁĄD ZE STRONY",
-                    color: 16762880,
-                    description: text,
-                    fields: [
-                        { name: "Urządzenie", value: navigator.userAgent.slice(0, 100), inline: false }
-                    ],
-                    timestamp: new Date()
-                }]
-            };
-
             try {
-                const res = await fetch(webhookUrl, {
+                const response = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        username: "PrimeRP - Zgłoszenia",
+                        embeds: [{
+                            title: "🚨 NOWY BŁĄD ZE STRONY",
+                            color: 16762880,
+                            description: msg,
+                            footer: { text: "System PrimeRP Sezon 2" },
+                            timestamp: new Date()
+                        }]
+                    })
                 });
 
-                if (res.ok) {
+                if (response.ok) {
                     status.style.color = "#44ff44";
-                    status.innerText = "ZGŁOSZENIE WYSŁANE POMYŚLNIE!";
-                    document.getElementById('bug-text').value = "";
+                    status.innerText = "ZGŁOSZENIE WYSŁANE!";
+                    document.getElementById('bug-content').value = "";
                 } else {
-                    throw new Error();
+                    status.innerText = "BŁĄD WEBHOOKA!";
                 }
             } catch (e) {
                 status.style.color = "#ff4444";
-                status.innerText = "BŁĄD PODCZAS WYSYŁANIA!";
+                status.innerText = "BŁĄD POŁĄCZENIA!";
             }
         }
     </script>
