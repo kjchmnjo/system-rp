@@ -13,7 +13,7 @@
             --gold: #FFC800;
             --gold-glow: rgba(255, 200, 0, 0.4);
             --dark-pure: #050505;
-            --dark-card: rgba(13, 13, 13, 0.9);
+            --dark-card: rgba(13, 13, 13, 0.95);
             --border-color: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-dim: #b3b3b3;
@@ -30,7 +30,7 @@
             overflow: hidden; 
         }
 
-        /* Dynamiczne tło */
+        /* Tło */
         .bg-glow {
             position: fixed;
             inset: 0;
@@ -38,32 +38,24 @@
             z-index: -1;
         }
 
-        .bg-glow::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.1;
-        }
-
+        /* Animacje sekcji */
         section {
             display: none;
             height: 100vh;
             width: 100%;
             padding: 20px;
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeIn 0.4s ease-out forwards;
         }
 
         section.active { display: flex; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* HERO SECTION */
+        /* HERO / START */
         #hero-section { align-items: center; justify-content: center; }
-        
         .hero-card {
             background: var(--dark-card);
             backdrop-filter: blur(15px);
@@ -76,146 +68,63 @@
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
 
-        .edition-badge {
-            background: var(--gold);
-            color: black;
-            font-weight: 900;
-            font-size: 11px;
-            padding: 5px 15px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px var(--gold-glow);
-        }
+        .hero-logo-text { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase; }
+        .hero-logo-text span { color: var(--gold); }
 
-        .hero-logo-text { 
-            font-size: 3.5rem; 
-            font-weight: 900; 
-            letter-spacing: -2px; 
-            margin-bottom: 15px; 
-            text-transform: uppercase;
-        }
-        .hero-logo-text span { color: var(--gold); text-shadow: 0 0 20px var(--gold-glow); }
-
-        .hero-description { 
-            color: var(--text-dim); 
-            font-size: 0.95rem; 
-            line-height: 1.6;
-            margin-bottom: 35px; 
-        }
-
-        .btn-vertical-group { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .btn-vertical-group { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 30px; }
 
         .img-btn {
-            width: 100%;
-            padding: 18px;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            font-family: inherit;
+            width: 100%; padding: 16px; border-radius: 12px;
+            text-decoration: none; font-weight: 800; font-size: 0.85rem;
+            text-transform: uppercase; display: flex; align-items: center;
+            justify-content: center; gap: 10px; cursor: pointer;
+            transition: 0.3s; border: none; font-family: inherit;
         }
-
-        .img-btn:hover { transform: translateY(-3px); }
 
         .btn-discord-img { background: #5865F2; color: white; }
-        .btn-discord-img:hover { box-shadow: 0 15px 30px rgba(88, 101, 242, 0.3); }
-
-        .btn-shop-img, .btn-login-img { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid var(--border-color); 
-            color: white; 
-        }
-        .btn-shop-img:hover, .btn-login-img:hover { 
-            border-color: var(--gold); 
-            color: var(--gold);
-            background: rgba(255, 200, 0, 0.05);
-        }
-
-        .work-status {
-            margin-top: 30px;
-            font-size: 10px;
-            color: var(--gold);
-            letter-spacing: 2px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .status-dot {
-            height: 8px; width: 8px;
-            background: var(--gold);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 200, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0); }
-        }
-
-        /* AUTH SECTION */
-        #auth-section { align-items: center; justify-content: center; }
-        .auth-box {
-            background: var(--dark-card);
-            backdrop-filter: blur(20px);
-            width: 100%; max-width: 420px;
-            padding: 40px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .input-group { text-align: left; margin-bottom: 20px; }
-        .input-group label { font-size: 11px; color: var(--gold); font-weight: 800; margin-bottom: 8px; display: block; }
-        
-        .input-icon { position: relative; }
-        .input-icon i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #555; }
-        .input-icon input {
-            width: 100%; padding: 16px 16px 16px 50px;
-            background: rgba(0,0,0,0.5); border: 1px solid var(--border-color);
-            border-radius: 15px; color: white; transition: 0.3s;
-        }
-        .input-icon input:focus { border-color: var(--gold); }
-
-        .btn-submit {
-            width: 100%; padding: 18px; background: var(--gold);
-            border: none; border-radius: 15px; font-weight: 900;
-            color: black; cursor: pointer; transition: 0.3s;
-        }
+        .btn-login-img { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: white; }
+        .btn-login-img:hover, .btn-login-img.active { border-color: var(--gold); color: var(--gold); background: rgba(255, 200, 0, 0.05); }
 
         /* DASHBOARD */
         .dash-container { display: flex; width: 100%; height: 100vh; }
-        .sidebar {
-            width: 300px; background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .main-view { flex: 1; overflow-y: auto; background: rgba(5,5,5,0.6); }
-
-        .dash-content { display: none; animation: fadeIn 0.3s ease; }
-        .dash-content.active { display: block; }
         
-        .error-text { color: #ff4444; font-size: 13px; margin-top: 15px; font-weight: 600; min-height: 20px; }
-
-        .nav-btn.active {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(255, 200, 0, 0.05);
+        .sidebar {
+            width: 280px; background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 15px; display: flex; flex-direction: column; gap: 8px;
         }
+
+        .main-view { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 50px; }
+
+        /* FIX: Zakładki (Tabs) */
+        .dash-content { 
+            display: none; 
+            width: 100%;
+        }
+        .dash-content.active { 
+            display: block; 
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .content-card {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            padding: 40px; border-radius: 24px;
+            max-width: 900px; line-height: 1.8;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .content-card h2 { color: var(--gold); margin-bottom: 25px; font-weight: 900; text-transform: uppercase; border-bottom: 1px solid #222; padding-bottom: 10px; }
+
+        .logout-btn { color: #ff4444 !important; border-color: rgba(255,68,68,0.1) !important; margin-top: auto; }
+
+        /* AUTH BOX */
+        #auth-section { align-items: center; justify-content: center; }
+        .auth-box { background: var(--dark-card); padding: 40px; border-radius: 25px; border: 1px solid var(--border-color); width: 100%; max-width: 400px; text-align: center; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { font-size: 10px; color: var(--gold); font-weight: 800; display: block; margin-bottom: 5px; letter-spacing: 1px; }
+        .input-group input { width: 100%; padding: 14px; background: #000; border: 1px solid #222; border-radius: 10px; color: white; }
+        .input-group input:focus { border-color: var(--gold); }
     </style>
 </head>
 <body>
@@ -224,119 +133,94 @@
 
     <section id="hero-section" class="active">
         <div class="hero-card">
-            <div class="edition-badge">EDYCJA 2</div>
             <div class="hero-logo-text">PRIME <span>RP</span></div>
-            <div class="hero-description">
-                Witamy w <b>Wirtualnym Systemie RP</b>. Sezon 2 to nowa jakość rozgrywki, zaawansowane systemy i Twoja nowa tożsamość.
-            </div>
-            
+            <p style="color: var(--text-dim); letter-spacing: 1px;">Wirtualny System Zarządzania Obywatelem</p>
             <div class="btn-vertical-group">
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="img-btn btn-discord-img">
-                    <i class="fab fa-discord"></i> DOŁĄCZ NA DISCORD
-                </a>
-                
-                <a href="#" class="img-btn btn-shop-img">
-                    <i class="fas fa-shopping-cart"></i> SKLEP SERWERA
-                </a>
-                
-                <button class="img-btn btn-login-img" id="go-to-login">
-                    <i class="fas fa-fingerprint"></i> PANEL OBYWATELA
-                </button>
-            </div>
-            
-            <div class="work-status">
-                <div class="status-dot"></div>
-                PRACE KONFIGURACYJNE: SEZON 2
+                <a href="https://discord.gg/MecNqskCTu" class="img-btn btn-discord-img"><i class="fab fa-discord"></i> DOŁĄCZ NA DISCORD</a>
+                <button class="img-btn btn-login-img" id="go-to-login"><i class="fas fa-fingerprint"></i> PANEL OBYWATELA</button>
             </div>
         </div>
     </section>
 
     <section id="auth-section">
         <div class="auth-box">
-            <button class="btn-login-img img-btn" style="width: auto; padding: 10px 20px; margin-bottom: 20px;" id="go-back">
-                <i class="fas fa-arrow-left"></i> POWRÓT
-            </button>
-            <h2 style="margin-bottom: 25px;">Autoryzacja</h2>
+            <h2 style="margin-bottom: 20px; font-weight: 900;">LOGOWANIE</h2>
             <div class="input-group">
-                <label>IDENTYFIKATOR (NICK)</label>
-                <div class="input-icon">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
-                </div>
+                <label>IDENTYFIKATOR OBYWATELA</label>
+                <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
             </div>
             <div class="input-group">
                 <label>HASŁO DOSTĘPU</label>
-                <div class="input-icon">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="pass-input" placeholder="••••••••">
-                </div>
+                <input type="password" id="pass-input" placeholder="••••••••">
             </div>
-            <button class="btn-submit" id="do-login">ZALOGUJ DO SYSTEMU</button>
-            <div class="error-text" id="login-err"></div>
+            <button class="img-btn btn-discord-img" style="width: 100%;" id="do-login">AUTORYZUJ WEJŚCIE</button>
+            <button id="go-back" style="background: none; border: none; color: #555; margin-top: 20px; cursor: pointer; font-weight: 800; font-size: 12px;"> <i class="fas fa-arrow-left"></i> POWRÓT</button>
+            <div id="login-err" style="color: #ff4444; font-size: 12px; margin-top: 15px; font-weight: 600;"></div>
         </div>
     </section>
 
     <section id="dashboard-section">
         <div class="dash-container">
             <aside class="sidebar">
-                <div class="hero-logo-text" style="font-size: 1.5rem; text-align: center;">PRIME <span>RP</span></div>
+                <div class="hero-logo-text" style="font-size: 1.2rem; text-align: center; margin-bottom: 30px;">PRIME<span>RP</span></div>
                 
-                <div style="margin-top: 40px;">
-                    <button class="img-btn btn-login-img nav-btn active" onclick="showTab('tab-sezon')">
-                        <i class="fas fa-star" style="color: var(--gold);"></i> SEZON 2
-                    </button>
-                    
-                    <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-postac')">
-                        <i class="fas fa-user"></i> MOJA POSTAĆ
-                    </button>
-                    
-                    <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-regulamin')">
-                        <i class="fas fa-gavel"></i> REGULAMIN
-                    </button>
-                    
-                    <button class="img-btn logout-btn" id="do-logout" style="color: #ff4444; border-color: rgba(255,68,68,0.2); margin-top: 100px;">
-                        <i class="fas fa-power-off"></i> WYLOGUJ
-                    </button>
-                </div>
+                <button class="img-btn btn-login-img nav-btn active" onclick="showTab('tab-news')"><i class="fas fa-star"></i> NOWOŚCI</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-about')"><i class="fas fa-users"></i> O NAS</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-map')"><i class="fas fa-map-marked-alt"></i> MAPA</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-bug')"><i class="fas fa-bug"></i> ZGŁOŚ BŁĄD</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-rules')"><i class="fas fa-book"></i> REGULAMIN</button>
+                
+                <button class="img-btn logout-btn" id="do-logout"><i class="fas fa-power-off"></i> WYLOGUJ</button>
             </aside>
             
             <main class="main-view">
-                <div style="padding: 60px;">
-                    <h1 id="user-display" style="margin-bottom: 30px;">Witaj!</h1>
-                    
-                    <div id="tab-sezon" class="dash-content active">
-                        <div class="hero-card" style="max-width: 100%; text-align: left;">
-                            <h3 style="color: var(--gold);">Informacje o Sezonie 2</h3>
-                            <p style="margin-top: 15px; color: var(--text-dim); line-height: 1.8;">
-                                • <b>Nowa Mapa:</b> Zaktualizowane Los Santos z nowymi interiorami.<br>
-                                • <b>Ekonomia:</b> Całkowity reset gotówki – każdy zaczyna z czystą kartą.<br>
-                                • <b>Systemy:</b> Wprowadziliśmy nowy system frakcji oraz ulepszony crafting.<br>
-                                • <b>Start:</b> Już wkrótce! Śledź komunikaty na naszym Discordzie.
-                            </p>
-                        </div>
-                    </div>
+                <h1 id="user-display" style="margin-bottom: 40px; font-weight: 900; text-transform: uppercase; font-size: 2rem;"></h1>
 
-                    <div id="tab-postac" class="dash-content">
-                        <div class="hero-card" style="max-width: 100%; text-align: left;">
-                            <h3 style="color: var(--gold);">Dane Postaci</h3>
-                            <p style="margin-top: 15px; color: var(--text-dim);">
-                                Trwa pobieranie danych z bazy serwera...
-                            </p>
-                        </div>
+                <div id="tab-news" class="dash-content active">
+                    <div class="content-card">
+                        <h2>Aktualności - Sezon 2</h2>
+                        <p>• <b>Reset Ekonomii:</b> Wszyscy obywatele zaczynają od zera. To szansa na zbudowanie imperium od nowa!<br>
+                           • <b>Nowe Prace:</b> Dodaliśmy zawód nurka oraz odświeżyliśmy logistykę.<br>
+                           • <b>Frakcje:</b> Nowe systemy dla LSPD i EMS już działają.</p>
                     </div>
+                </div>
 
-                    <div id="tab-regulamin" class="dash-content">
-                        <div class="hero-card" style="max-width: 100%; text-align: left;">
-                            <h3 style="color: var(--gold);">Regulamin Rozgrywki</h3>
-                            <p style="margin-top: 15px; color: var(--text-dim); font-size: 0.9rem;">
-                                1. Zakaz RDM / VDM.<br>
-                                2. Obowiązek posiadania sprawnego mikrofonu.<br>
-                                3. Poszanowanie życia swojej postaci (FearRP).<br><br>
-                                Pełny regulamin dostępny na kanale #regulamin.
-                            </p>
+                <div id="tab-about" class="dash-content">
+                    <div class="content-card">
+                        <h2>Witaj w PrimeRP</h2>
+                        <p>Jesteśmy projektem stworzonym przez graczy dla graczy. Naszym celem jest zapewnienie najwyższego poziomu RolePlay w Polsce. <br><br>
+                        Strona <b>WirtualnySystemRP.pl</b> jest sercem naszej infrastruktury, łącząc bazę danych serwera z panelem użytkownika.</p>
+                    </div>
+                </div>
+
+                <div id="tab-map" class="dash-content">
+                    <div class="content-card">
+                        <h2>Mapa Los Santos</h2>
+                        <p>Poniżej znajdziesz orientacyjną mapę wyspy. Niebawem pojawi się tutaj w pełni interaktywny system GPS.</p>
+                        <div style="width: 100%; height: 350px; background: #000; border-radius: 15px; margin-top: 25px; border: 2px dashed #222; display: flex; align-items: center; justify-content: center; color: #444; font-weight: 900;">
+                            <i class="fas fa-satellite"></i> &nbsp; ŁADOWANIE SATELITY...
                         </div>
                     </div>
                 </div>
+
+                <div id="tab-bug" class="dash-content">
+                    <div class="content-card">
+                        <h2>Znalazłeś błąd?</h2>
+                        <p>Jeżeli zauważyłeś nieprawidłowe działanie skryptu, błąd w tłumaczeniu lub problem z teksturami, prosimy o zgłoszenie tego administracji.</p>
+                        <a href="https://discord.gg/MecNqskCTu" target="_blank" class="img-btn btn-discord-img" style="margin-top: 30px; width: auto; padding: 15px 40px;">OTWÓRZ TICKET (BUG REPORT)</a>
+                    </div>
+                </div>
+
+                <div id="tab-rules" class="dash-content">
+                    <div class="content-card">
+                        <h2>Zasady Obywatelskie</h2>
+                        <p>Pamiętaj, że nieznajomość regulaminu nie zwalnia z jego przestrzegania.<br><br>
+                        1. <b>Respect:</b> Szanuj innych graczy poza RP.<br>
+                        2. <b>Fair Play:</b> Nie wykorzystuj błędów gry (Bug Abusing).<br>
+                        3. <b>Immersja:</b> Zawsze staraj się pozostać w roli, nawet w trudnych sytuacjach.</p>
+                    </div>
+                </div>
+
             </main>
         </div>
     </section>
@@ -345,6 +229,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+        // Konfiguracja Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
             authDomain: "primerp-login.firebaseapp.com",
@@ -357,27 +242,32 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Nawigacja między sekcjami
+        // Nawigacja między sekcjami głównymi
         const hero = document.getElementById('hero-section');
         const authSec = document.getElementById('auth-section');
         const dash = document.getElementById('dashboard-section');
 
         function switchSection(to) {
-            hero.classList.remove('active');
-            authSec.classList.remove('active');
-            dash.classList.remove('active');
+            [hero, authSec, dash].forEach(s => s.classList.remove('active'));
             to.classList.add('active');
         }
 
-        // Nawigacja między zakładkami (Tabsy)
+        // Przełączanie zakładek w panelu
         window.showTab = function(tabId) {
-            document.querySelectorAll('.dash-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            
+            // Ukryj wszystkie treści
+            document.querySelectorAll('.dash-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // Dezaktywuj wszystkie przyciski
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Pokaż wybraną treść i przycisk
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
+        // Eventy przycisków
         document.getElementById('go-to-login').onclick = () => switchSection(authSec);
         document.getElementById('go-back').onclick = () => switchSection(hero);
 
@@ -386,27 +276,31 @@
             const pass = document.getElementById('pass-input').value;
             const err = document.getElementById('login-err');
 
-            if(!login || !pass) return err.innerText = "Uzupełnij wszystkie pola!";
-            
-            const email = login.includes('@') ? login : `${login.toLowerCase()}@primerp.pl`;
+            if(!login || !pass) {
+                err.innerText = "PODAJ DANE LOGOWANIA!";
+                return;
+            }
+
+            const email = `${login.toLowerCase()}@primerp.pl`;
             err.style.color = "var(--gold)";
-            err.innerText = "Łączenie z bazą...";
+            err.innerText = "WERYFIKACJA...";
 
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
             } catch (e) {
                 err.style.color = "#ff4444";
-                err.innerText = "Błąd: Nieprawidłowe dane!";
+                err.innerText = "NIEPRAWIDŁOWY IDENTYFIKATOR LUB HASŁO!";
             }
         };
 
         document.getElementById('do-logout').onclick = () => signOut(auth);
 
+        // Obserwator stanu zalogowania
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 switchSection(dash);
                 const nick = user.email.split('@')[0].toUpperCase();
-                document.getElementById('user-display').innerHTML = `Witaj, <span>${nick}</span>`;
+                document.getElementById('user-display').innerHTML = `WITAJ, <span>${nick}</span>`;
             } else {
                 switchSection(hero);
             }
