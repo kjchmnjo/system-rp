@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Panel Gracza - Zgłoś Błąd</title>
+    <title>PrimeRP | Panel Gracza</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Saira+Stencil+One&display=swap" rel="stylesheet">
@@ -18,154 +18,90 @@
             --text-sub: #a0a0a5;
             --logo-accent: #fcd535;
             --discord-accent: #5865F2;
-            --success: #44ff44;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 280px;
-            background-color: var(--bg-sidebar);
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #1a1a1c;
-            flex-shrink: 0;
-        }
-
+        /* SIDEBAR */
+        .sidebar { width: 280px; background-color: var(--bg-sidebar); padding: 40px 20px; border-right: 1px solid #1a1a1c; flex-shrink: 0; }
         .logo-container { text-align: center; margin-bottom: 60px; }
-        .logo-text {
-            font-family: 'Saira Stencil One', cursive;
-            font-size: 1.6rem;
-            color: var(--logo-accent);
-            text-shadow: 0 0 10px rgba(252, 213, 53, 0.5);
-            line-height: 1.1;
-        }
-        .logo-text span { color: var(--text-main); }
-
+        .logo-text { font-family: 'Saira Stencil One', cursive; font-size: 1.6rem; color: var(--logo-accent); text-shadow: 0 0 10px rgba(252, 213, 53, 0.5); line-height: 1.1; }
         .nav-list { list-style: none; display: flex; flex-direction: column; gap: 15px; }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            background-color: var(--bg-button);
-            padding: 18px 25px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .nav-item.active { border: 1px solid var(--text-main); }
+        .nav-item { display: flex; align-items: center; background-color: var(--bg-button); padding: 18px 25px; border-radius: 12px; cursor: pointer; color: var(--text-main); font-weight: 600; text-transform: uppercase; transition: 0.3s; border: 1px solid transparent; }
+        .nav-item:hover { background-color: var(--bg-button-hover); }
+        .nav-item.active { border-color: var(--text-main); }
 
-        /* --- MAIN CONTENT --- */
+        /* CONTENT */
         .main-content { flex-grow: 1; padding: 60px 80px; }
         .welcome-header { font-size: 2.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 40px; }
+        
+        /* Ukrywanie sekcji */
+        .content-section { display: none; animation: fadeIn 0.5s ease; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .report-card {
-            background-color: var(--bg-card);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid #1a1a1c;
-            max-width: 700px;
-        }
-
-        .report-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--logo-accent);
-            margin-bottom: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            background: #0a0a0b;
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: white;
-            padding: 15px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            resize: none;
-            margin-bottom: 20px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        textarea:focus { border-color: var(--logo-accent); }
-
-        .ticket-button {
-            background-color: var(--discord-accent);
-            color: var(--text-main);
-            padding: 18px 40px;
-            border-radius: 10px;
-            border: none;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .ticket-button:hover { filter: brightness(1.2); transform: translateY(-2px); }
-        .ticket-button:disabled { background-color: #444; cursor: not-allowed; }
-
-        #statusMessage {
-            margin-top: 15px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        @media (max-width: 1024px) {
-            .main-content { padding: 30px; }
-            .sidebar { width: 100px; }
-            .sidebar span, .logo-text, .nav-item { font-size: 0; padding: 15px; justify-content: center; }
-        }
+        .report-card { background-color: var(--bg-card); border-radius: 20px; padding: 40px; border: 1px solid #1a1a1c; max-width: 700px; }
+        .report-title { font-size: 1.8rem; font-weight: 800; color: var(--logo-accent); margin-bottom: 20px; }
+        
+        textarea { width: 100%; height: 150px; background: #0a0a0b; border: 1px solid #333; border-radius: 10px; color: white; padding: 15px; font-size: 1rem; resize: none; margin-bottom: 20px; outline: none; }
+        .ticket-button { background-color: var(--discord-accent); color: white; padding: 18px 40px; border-radius: 10px; border: none; font-weight: 800; text-transform: uppercase; cursor: pointer; width: 100%; transition: 0.3s; }
+        
+        .soon-text { font-size: 2rem; font-weight: 800; color: var(--text-sub); text-align: center; margin-top: 50px; border: 2px dashed #333; padding: 50px; border-radius: 20px; }
     </style>
 </head>
 <body>
 
     <nav class="sidebar">
-        <div class="logo-container">
-            <div class="logo-text">PRIME<br><span>RP</span></div>
-        </div>
+        <div class="logo-container"><div class="logo-text">PRIME<br><span>RP</span></div></div>
         <ul class="nav-list">
-            <li><a href="#" class="nav-item">Nowości</a></li>
-            <li><a href="#" class="nav-item">O nas</a></li>
-            <li><a href="#" class="nav-item active">Zgłoś Błąd</a></li>
-            <li><a href="#" class="nav-item">Regulamin</a></li>
+            <li onclick="showSection('nowosci', this)" class="nav-item">Nowości</li>
+            <li onclick="showSection('onas', this)" class="nav-item">O nas</li>
+            <li onclick="showSection('zglos-blad', this)" class="nav-item active">Zgłoś Błąd</li>
+            <li onclick="showSection('regulamin', this)" class="nav-item">Regulamin</li>
         </ul>
     </nav>
 
     <main class="main-content">
         <h1 class="welcome-header">WITAJ, Jakub Peno</h1>
 
-        <div class="report-card">
-            <h2 class="report-title">Zgłoś Błąd</h2>
-            <p style="color: #888; margin-bottom: 20px;">Opisz błąd, który znalazłeś na serwerze. Twoje zgłoszenie trafi prosto do administracji.</p>
-            
-            <textarea id="bugDescription" placeholder="Opisz tutaj błąd (np. co się stało, jak go wywołać)..."></textarea>
-            
-            <button onclick="sendWebhook()" id="submitBtn" class="ticket-button">WYŚLIJ ZGŁOSZENIE</button>
-            
-            <p id="statusMessage"></p>
+        <div id="zglos-blad" class="content-section active">
+            <div class="report-card">
+                <h2 class="report-title">Zgłoś Błąd</h2>
+                <textarea id="bugDescription" placeholder="Opisz tutaj błąd..."></textarea>
+                <button onclick="sendWebhook()" id="submitBtn" class="ticket-button">WYŚLIJ ZGŁOSZENIE</button>
+                <p id="statusMessage" style="margin-top: 15px; text-align: center;"></p>
+            </div>
         </div>
+
+        <div id="onas" class="content-section">
+            <div class="soon-text">WKRÓTCE</div>
+        </div>
+
+        <div id="nowosci" class="content-section">
+            <div class="soon-text">WKRÓTCE</div>
+        </div>
+
+        <div id="regulamin" class="content-section">
+            <div class="soon-text">WKRÓTCE</div>
+        </div>
+
     </main>
 
     <script>
+        // Funkcja do przełączania zakładek
+        function showSection(sectionId, element) {
+            // Ukryj wszystkie sekcje
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            // Usuń klasę active z przycisków
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            // Pokaż wybraną sekcję i aktywuj przycisk
+            document.getElementById(sectionId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // Twoja funkcja Webhooka
         async function sendWebhook() {
             const textarea = document.getElementById('bugDescription');
             const button = document.getElementById('submitBtn');
@@ -174,7 +110,7 @@
 
             if (message.length < 5) {
                 status.style.color = "#ff4444";
-                status.innerText = "Opis błędu jest zbyt krótki!";
+                status.innerText = "Opis jest zbyt krótki!";
                 return;
             }
 
@@ -183,37 +119,26 @@
 
             const webhookURL = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
 
-            const data = {
-                username: "System Zgłoszeń PrimeRP",
-                avatar_url: "https://i.imgur.com/vHqR87v.png",
-                embeds: [{
-                    title: "🚀 Nowe zgłoszenie błędu!",
-                    color: 16571701, // Kolor żółty
-                    fields: [
-                        { name: "Zgłaszający", value: "Jakub Peno", inline: true },
-                        { name: "Opis błędu", value: message }
-                    ],
-                    timestamp: new Date()
-                }]
-            };
-
             try {
-                const response = await fetch(webhookURL, {
+                await fetch(webhookURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({
+                        username: "System Zgłoszeń PrimeRP",
+                        embeds: [{
+                            title: "🚀 Nowe zgłoszenie błędu!",
+                            color: 16571701,
+                            fields: [{ name: "Zgłaszający", value: "Jakub Peno" }, { name: "Opis", value: message }],
+                            timestamp: new Date()
+                        }]
+                    })
                 });
-
-                if (response.ok) {
-                    status.style.color = "#44ff44";
-                    status.innerText = "Zgłoszenie zostało wysłane pomyślnie!";
-                    textarea.value = "";
-                } else {
-                    throw new Error();
-                }
-            } catch (error) {
+                status.style.color = "#44ff44";
+                status.innerText = "Zgłoszenie wysłane!";
+                textarea.value = "";
+            } catch (e) {
                 status.style.color = "#ff4444";
-                status.innerText = "Błąd podczas wysyłania. Spróbuj ponownie.";
+                status.innerText = "Błąd wysyłki.";
             } finally {
                 button.disabled = false;
                 button.innerText = "WYŚLIJ ZGŁOSZENIE";
