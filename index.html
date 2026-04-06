@@ -63,6 +63,8 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -102,7 +104,46 @@
             font-size: 2.2rem;
             margin-bottom: 20px;
             color: var(--gold);
+            text-transform: uppercase;
         }
+
+        /* STYL PROFILU */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: black;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label { font-size: 0.7rem; color: var(--gold); font-weight: 800; text-transform: uppercase; }
+        .stat-value { font-size: 1.1rem; font-weight: 700; margin-top: 5px; }
 
         /* FORMULARZ ZGŁOSZEŃ */
         .bug-form {
@@ -125,8 +166,6 @@
             resize: none;
         }
 
-        .bug-textarea:focus { border-color: var(--gold); }
-
         .send-button {
             background: var(--gold);
             color: black;
@@ -138,13 +177,8 @@
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            justify-content: center; gap: 10px;
         }
-
-        .send-button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,200,0,0.3); }
-
-        .status-info { margin-top: 15px; font-weight: 700; text-align: center; }
 
         .discord-btn {
             margin-top: auto;
@@ -157,8 +191,7 @@
             font-weight: 800;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            justify-content: center; gap: 10px;
         }
     </style>
 </head>
@@ -169,6 +202,9 @@
         
         <button class="nav-link active" onclick="switchTab('start', this)">
             <i class="fas fa-home"></i> START
+        </button>
+        <button class="nav-link" onclick="switchTab('profile', this)">
+            <i class="fas fa-user-circle"></i> NASZ PROFIL
         </button>
         <button class="nav-link" onclick="switchTab('news', this)">
             <i class="fas fa-newspaper"></i> NOWOŚCI
@@ -187,30 +223,60 @@
         <div id="tab-start" class="tab-view active">
             <div class="content-card">
                 <h2>Witaj w Sezonie 2</h2>
-                <p>Oficjalna strona PrimeRP została zaktualizowana. Zapraszamy do wspólnej rozgrywki na najwyższym poziomie immersji.</p>
+                <p>PrimeRP powraca z nową energią. Sprawdź swój profil oraz najnowsze zmiany na wyspie w zakładkach obok.</p>
+            </div>
+        </div>
+
+        <div id="tab-profile" class="tab-view">
+            <div class="content-card">
+                <h2>Profil Obywatela</h2>
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-user"></i></div>
+                    <div>
+                        <h3 style="font-size: 1.5rem;">Twoja Postać</h3>
+                        <p style="color: #44ff44; font-weight: 700; font-size: 0.8rem;">STATUS: ONLINE</p>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Imię i Nazwisko</div>
+                        <div class="stat-value">Nieznany Obywatel</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Numer Obywatela (ID)</div>
+                        <div class="stat-value">#12345</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Praca</div>
+                        <div class="stat-value">Bezrobotny</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Portfel</div>
+                        <div class="stat-value">5,000$</div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="tab-news" class="tab-view">
             <div class="content-card">
                 <h2>Nowości</h2>
-                <p>• Nowy interfejs panelu WWW.<br>
-                   • Usprawniony system zgłoszeń błędów.<br>
-                   • Poprawiona optymalizacja strony.</p>
+                <p>• Dodano zakładkę profilu.<br>
+                   • Ulepszono nawigację boczną.<br>
+                   • Zmieniono system zgłoszeń.</p>
             </div>
         </div>
 
         <div id="tab-bug" class="tab-view">
             <div class="content-card">
                 <h2>Zgłoś Błąd</h2>
-                <p>Wpisz poniżej opis błędu, który napotkałeś. Wiadomość zostanie wysłana bezpośrednio na kanał administracji.</p>
-                
+                <p>Napotkałeś problem? Napisz do nas.</p>
                 <div class="bug-form">
-                    <textarea id="bug-content" class="bug-textarea" placeholder="Opisz błąd tutaj..."></textarea>
+                    <textarea id="bug-content" class="bug-textarea" placeholder="Opisz błąd..."></textarea>
                     <button class="send-button" onclick="handleBugSend()">
-                        <i class="fas fa-paper-plane"></i> WYŚLIJ ZGŁOSZENIE
+                        <i class="fas fa-paper-plane"></i> WYŚLIJ
                     </button>
-                    <div id="status-display" class="status-info"></div>
+                    <div id="status-display" style="margin-top:10px; font-weight:700; text-align:center;"></div>
                 </div>
             </div>
         </div>
@@ -230,14 +296,8 @@
             const status = document.getElementById('status-display');
             const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
 
-            if (!msg) {
-                status.style.color = "#ff4444";
-                status.innerText = "Najpierw wpisz treść błędu!";
-                return;
-            }
-
-            status.style.color = "var(--gold)";
-            status.innerText = "WYSYŁANIE...";
+            if (!msg) { status.innerText = "Wpisz treść!"; status.style.color = "red"; return; }
+            status.innerText = "Wysyłanie..."; status.style.color = "white";
 
             try {
                 const response = await fetch(webhookUrl, {
@@ -245,27 +305,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         username: "PrimeRP - Zgłoszenia",
-                        embeds: [{
-                            title: "🚨 NOWY BŁĄD ZE STRONY",
-                            color: 16762880,
-                            description: msg,
-                            footer: { text: "System PrimeRP Sezon 2" },
-                            timestamp: new Date()
-                        }]
+                        embeds: [{ title: "🚨 NOWY BŁĄD", color: 16762880, description: msg, timestamp: new Date() }]
                     })
                 });
-
                 if (response.ok) {
-                    status.style.color = "#44ff44";
-                    status.innerText = "ZGŁOSZENIE WYSŁANE!";
+                    status.innerText = "WYSŁANO!"; status.style.color = "#44ff44";
                     document.getElementById('bug-content').value = "";
-                } else {
-                    status.innerText = "BŁĄD WEBHOOKA!";
                 }
-            } catch (e) {
-                status.style.color = "#ff4444";
-                status.innerText = "BŁĄD POŁĄCZENIA!";
-            }
+            } catch (e) { status.innerText = "BŁĄD!"; status.style.color = "red"; }
         }
     </script>
 </body>
