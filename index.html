@@ -5,197 +5,358 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirtualny System RP | PrimeRP</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         :root {
-            --gold: #ffc800;
-            --dark: #080808;
-            --card-bg: rgba(15, 15, 15, 0.98);
-            --border: rgba(255, 200, 0, 0.15);
-            --text-dim: #555;
+            --gold: #FFC800; /* Kolor ze zdjęcia */
+            --gold-glow: rgba(255, 200, 0, 0.2);
+            --dark-pure: #000000;
+            --dark-card: #0D0D0D;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-dim: #777777; /* Kolor opisu */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        
         body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--dark); 
-            color: white; 
+            font-family: 'Montserrat', sans-serif; /* Bardziej agresywna czcionka pod RP */
+            background: var(--dark-pure); 
+            color: var(--text-main); 
             height: 100vh; 
             overflow: hidden; 
         }
 
-        .overlay-bg { 
-            position: fixed; 
-            inset: 0; 
-            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); 
-            z-index: -1; 
+        /* Tło z gradientem identyczne jak na zdjęciu */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            z-index: -1;
         }
 
-        section { 
-            display: none; 
-            height: 100vh; 
-            width: 100%; 
+        section {
+            display: none;
+            height: 100vh;
+            width: 100%;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        section.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* =========================================
+           NOWE STYLE EKRANU STARTOWEGO (HERO) - ZE ZDJĘCIA
+           ========================================= */
+        #hero-section { 
             align-items: center; 
             justify-content: center; 
-        }
-
-        section.active { display: flex; animation: fadeIn 0.5s forwards; }
-
-        /* --- HERO SECTION --- */
-        .container { width: 90%; max-width: 1000px; text-align: center; }
-        .main-header h1 { font-size: 4rem; font-weight: 900; letter-spacing: -2px; }
-        .main-header h1 span { color: var(--gold); }
-        .main-header p { color: var(--text-dim); font-size: 1.1rem; margin-bottom: 50px; }
-
-        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .main-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            padding: 50px 20px; 
-            border-radius: 25px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            color: white; 
-            transition: 0.3s; 
-        }
-        .main-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; display: block; }
-        .main-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
-        .main-card span { font-size: 0.8rem; color: #444; text-transform: uppercase; letter-spacing: 2px; }
-        .main-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-
-        /* --- AUTH BOX --- */
-        .auth-box { 
-            background: var(--card-bg); 
-            padding: 50px; 
-            border-radius: 30px; 
-            width: 100%; 
-            max-width: 420px; 
-            border: 1px solid var(--border); 
             text-align: center; 
         }
-        .btn-back { background: none; border: none; color: #444; cursor: pointer; margin-bottom: 20px; font-weight: 800; }
+        
+        /* Centralna karta */
+        .hero-card {
+            background: #080808; /* Bardzo ciemna karta */
+            border: 1px solid var(--border-color);
+            padding: 60px 50px;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 500px; /* Szerokość karty ze zdjęcia */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Odznaka EDYCJA 2 */
+        .edition-badge {
+            background: var(--gold);
+            color: black;
+            font-weight: 900;
+            font-size: 10px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* Logo PRIME RP */
+        .hero-logo-text { 
+            font-size: 3rem; 
+            font-weight: 900; 
+            letter-spacing: -2px; 
+            margin-bottom: 25px; 
+            text-transform: uppercase;
+        }
+        .hero-logo-text span { color: var(--gold); }
+
+        /* Opis */
+        .hero-description { 
+            color: var(--text-dim); 
+            font-size: 0.85rem; 
+            line-height: 1.6;
+            font-weight: 400;
+            margin-bottom: 40px; 
+            max-width: 400px;
+        }
+
+        /* Grupa przycisków w pionie */
+        .btn-vertical-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Odstęp między przyciskami */
+            width: 100%;
+        }
+
+        /* Bazowe style przycisków */
+        .img-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* Efekt uniesienia na hover */
+        .img-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        /* PRZYCISK 1: DISCORD (Fioletowy) */
+        .btn-discord-img {
+            background: #5865F2;
+            color: white;
+        }
+        .btn-discord-img:hover {
+            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
+        }
+
+        /* PRZYCISK 2: SKLEP (Złota obramówka) */
+        .btn-shop-img {
+            background: none;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+        .btn-shop-img:hover {
+            background: rgba(255, 200, 0, 0.03);
+            box-shadow: 0 10px 20px var(--gold-glow);
+        }
+
+        /* PRZYCISK 3: LOGIN/REGULAMIN (Podmieniony pod LOGIN) */
+        .btn-login-img {
+            background: none;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+        .btn-login-img:hover {
+            background: rgba(255, 200, 0, 0.03);
+            box-shadow: 0 10px 20px var(--gold-glow);
+        }
+
+        /* Status pracy */
+        .work-status {
+            color: var(--text-dim);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 35px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        .status-dot {
+            height: 6px; width: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        /* =========================================
+           KONIEC NOWYCH STYLÓW ZE ZDJĘCIA
+           ========================================= */
+
+        /* --- STYLE LOGOWANIA (Pozostawione) --- */
+        #auth-section { align-items: center; justify-content: center; }
+        .auth-box {
+            background: var(--dark-card);
+            width: 100%;
+            max-width: 400px;
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .btn-back { background: none; border: none; color: #444; font-weight: 800; cursor: pointer; margin-bottom: 25px; font-size: 12px; }
         .btn-back:hover { color: var(--gold); }
 
-        .field { text-align: left; margin-top: 25px; }
-        .field label { font-size: 11px; font-weight: 800; color: var(--gold); margin-bottom: 8px; display: block; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { font-size: 10px; color: var(--gold); font-weight: 900; letter-spacing: 1px; margin-bottom: 8px; display: block; }
         .input-icon { position: relative; }
-        .input-icon i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #333; }
-        .input-icon input { 
-            width: 100%; padding: 16px 16px 16px 45px; 
-            background: #000; border: 1px solid #222; 
-            border-radius: 15px; color: white; 
+        .input-icon i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #333; }
+        .input-icon input {
+            width: 100%; padding: 16px 16px 16px 50px;
+            background: #000; border: 1px solid #1a1a1a;
+            border-radius: 14px; color: white; font-size: 15px;
+            transition: 0.3s;
         }
-        .btn-login { 
-            width: 100%; padding: 18px; background: var(--gold); 
-            border: none; border-radius: 15px; font-weight: 900; 
-            cursor: pointer; margin-top: 30px; 
-        }
+        .input-icon input:focus { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); }
 
-        /* --- DASHBOARD --- */
-        .dashboard-wrapper { display: flex; width: 100vw; height: 100vh; }
-        .sidebar { 
-            width: 300px; background: #0a0a0a; 
-            border-right: 1px solid var(--border); 
-            display: flex; flex-direction: column; padding: 40px 25px; 
+        .btn-submit {
+            width: 100%; padding: 18px; background: var(--gold);
+            border: none; border-radius: 14px; font-weight: 900;
+            color: black; cursor: pointer; margin-top: 10px; transition: 0.3s;
         }
-        .mini-logo { font-size: 28px; font-weight: 900; margin-bottom: 40px; text-align: center; }
-        .mini-logo span { color: var(--gold); }
-        .nav-item { 
-            padding: 16px; border-radius: 15px; color: #777; 
-            cursor: pointer; display: flex; align-items: center; 
-            gap: 15px; border: none; background: none; width: 100%; 
-            font-size: 15px; text-align: left;
+        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 10px 20px var(--gold-glow); }
+
+        /* --- STYLE DASHBOARDU (Pozostawione) --- */
+        .dash-container { display: flex; width: 100vw; height: 100vh; }
+        
+        .sidebar {
+            width: 280px; background: #080808;
+            border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; padding: 40px 20px;
         }
-        .nav-item.active { background: rgba(255, 200, 0, 0.1); color: var(--gold); font-weight: 700; }
-        .logout { color: #ff4444 !important; margin-top: auto; font-weight: 700; }
+        .side-logo { font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 40px; }
+        .side-logo span { color: var(--gold); }
+        
+        .nav-label { font-size: 10px; color: #333; font-weight: 800; letter-spacing: 2px; margin: 25px 10px 10px; }
+        .nav-btn {
+            padding: 15px 20px; border-radius: 12px; color: #666;
+            display: flex; align-items: center; gap: 15px;
+            cursor: pointer; transition: 0.2s; border: none; background: none;
+            width: 100%; text-align: left; font-size: 14px;
+        }
+        .nav-btn.active { background: rgba(255, 200, 0, 0.1); color: var(--gold); font-weight: 700; }
+        .nav-btn:hover:not(.active) { color: white; background: rgba(255,255,255,0.02); }
+        .logout-btn { color: #ff4444 !important; margin-top: auto; }
 
-        .dash-main { flex: 1; display: flex; flex-direction: column; background: #050505; }
-        .dash-top-bar { padding: 50px 60px; border-bottom: 1px solid rgba(255,255,255,0.01); }
-        .welcome-card { margin: auto; max-width: 450px; text-align: center; padding: 60px; background: #0d0d0d; border-radius: 35px; border: 1px solid var(--border); }
-        .gold-icon { font-size: 50px; color: var(--gold); margin-bottom: 25px; }
-        .error-msg { color: #ff4444; font-size: 13px; margin-top: 15px; font-weight: 600; min-height: 20px; }
+        .main-view { flex: 1; display: flex; flex-direction: column; background: var(--dark-pure); }
+        .top-nav { padding: 40px 60px; border-bottom: 1px solid var(--border-color); }
+        .top-nav h2 { font-size: 28px; font-weight: 900; }
+        .top-nav h2 span { color: var(--gold); }
+        .top-nav p { color: #444; font-size: 14px; margin-top: 5px; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .content-body { flex: 1; padding: 60px; display: flex; align-items: center; justify-content: center; }
+        .welcome-card {
+            background: var(--dark-card); padding: 60px; border-radius: 40px;
+            border: 1px solid var(--border-color); text-align: center; max-width: 500px;
+        }
+        .welcome-card i { font-size: 4rem; color: var(--gold); margin-bottom: 25px; display: block; }
+        .welcome-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .welcome-card p { color: #555; line-height: 1.6; }
+
+        .error-text { color: #ff4444; font-size: 12px; margin-top: 15px; font-weight: 600; min-height: 18px; }
     </style>
 </head>
 <body>
 
-    <div class="overlay-bg"></div>
+    <div class="bg-glow"></div>
 
     <section id="hero-section" class="active">
-        <div class="container">
-            <header class="main-header">
-                <h1>PRIME<span>RP</span></h1>
-                <p>Oficjalny system zarządzania obywatelami</p>
-            </header>
-            <div class="main-grid">
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="main-card">
-                    <i class="fab fa-discord"></i>
-                    <h3>DISCORD</h3>
-                    <span>Dołącz do nas</span>
-                </a>
-                <div class="main-card" onclick="alert('Regulamin dostępny wkrótce!')">
-                    <i class="fas fa-gavel"></i>
-                    <h3>REGULAMIN</h3>
-                    <span>Zasady wyspy</span>
-                </div>
-                <div id="trigger-login" class="main-card">
-                    <i class="fas fa-user-shield"></i>
-                    <h3>LOGIN</h3>
-                    <span>Panel Obywatela</span>
-                </div>
+        <div class="hero-card">
+            
+            <div class="edition-badge">EDYCJA 2</div>
+            
+            <div class="hero-logo-text">PRIME <span>RP</span></div>
+            
+            <div class="hero-description">
+                Wracamy z podwójną siłą. Nowe skrypty, dopracowana ekonomia i najwyższy poziom RolePlay. Twoja historia zaczyna się tutaj na nowo.
             </div>
+            
+            <div class="btn-vertical-group">
+                
+                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="img-btn btn-discord-img">
+                    <i class="fab fa-discord"></i>
+                    DOŁĄCZ NA DISCORD
+                </a>
+                
+                <a href="#" target="_blank" class="img-btn btn-shop-img">
+                    <i class="fas fa-shopping-cart"></i>
+                    SKLEP SERWERA
+                </a>
+                
+                <button class="img-btn btn-login-img" id="go-to-login">
+                    <i class="fas fa-fingerprint"></i>
+                    LOGIN DO SYSTEMU
+                </button>
+                
+            </div>
+            
+            <div class="work-status">
+                <div class="status-dot"></div>
+                STATUS: TRWAJĄ PRACE KONFIGURACYJNE
+            </div>
+            
         </div>
     </section>
-
     <section id="auth-section">
         <div class="auth-box">
-            <button id="back-to-hero" class="btn-back"><i class="fas fa-chevron-left"></i> POWRÓT</button>
-            <div class="auth-title"><h2>LOGOWANIE <span>RP</span></h2></div>
-            <div class="auth-form">
-                <div class="field">
-                    <label>NICK OBYWATELA</label>
-                    <div class="input-icon">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="login-input" placeholder="Twoja Nazwa">
-                    </div>
+            <button class="btn-back" id="go-back"><i class="fas fa-arrow-left"></i> POWRÓT</button>
+            <div class="input-group">
+                <label>IDENTYFIKATOR OBYWATELA</label>
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
                 </div>
-                <div class="field">
-                    <label>HASŁO</label>
-                    <div class="input-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password-input" placeholder="••••••••">
-                    </div>
-                </div>
-                <button id="login-execute" class="btn-login">ZALOGUJ SIĘ</button>
-                <div id="auth-error" class="error-msg"></div>
             </div>
+            <div class="input-group">
+                <label>KLUCZ DOSTĘPU</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="pass-input" placeholder="••••••••">
+                </div>
+            </div>
+            <button class="btn-submit" id="do-login">AUTORYZUJ WEJŚCIE</button>
+            <div class="error-text" id="login-err"></div>
         </div>
     </section>
 
     <section id="dashboard-section">
-        <div class="dashboard-wrapper">
+        <div class="dash-container">
             <aside class="sidebar">
-                <div class="mini-logo">PRIME<span>RP</span></div>
-                <nav>
-                    <div class="nav-item active"><i class="fas fa-home"></i> Pulpit</div>
-                    <div class="nav-item"><i class="fas fa-user"></i> Mój Profil</div>
-                    <div class="nav-item"><i class="fas fa-book"></i> Regulamin</div>
-                    <button id="logout-btn" class="nav-item logout"><i class="fas fa-power-off"></i> Wyloguj</button>
-                </nav>
+                <div class="side-logo">PRIME<span>RP</span></div>
+                
+                <div class="nav-label">ZARZĄDZANIE</div>
+                <button class="nav-btn active"><i class="fas fa-th-large"></i> Pulpit</button>
+                <button class="nav-btn"><i class="fas fa-user-circle"></i> Moja Postać</button>
+                
+                <div class="nav-label">INFORMACJE</div>
+                <button class="nav-btn"><i class="fas fa-shield-alt"></i> Regulamin</button>
+                <button class="nav-btn"><i class="fas fa-map-marked-alt"></i> Mapa Wyspy</button>
+                
+                <button class="nav-btn logout-btn" id="do-logout"><i class="fas fa-power-off"></i> Wyloguj się</button>
             </aside>
-            <main class="dash-main">
-                <header class="dash-top-bar">
-                    <h1>Witamy w <span>PrimeRP</span></h1>
-                    <p id="display-nick">TRWA ŁADOWANIE...</p>
+            
+            <main class="main-view">
+                <header class="top-nav">
+                    <h2>Witamy w <span>PrimeRP</span></h2>
+                    <p id="user-display">Trwa identyfikacja...</p>
                 </header>
-                <div class="dash-content-area">
+                <div class="content-body">
                     <div class="welcome-card">
-                        <i class="fas fa-check-circle gold-icon"></i>
-                        <h2>Dostęp Autoryzowany</h2>
-                        <p>Zarządzaj swoją postacią używając menu po lewej stronie.</p>
+                        <i class="fas fa-user-check"></i>
+                        <h3>Dostęp Przyznany</h3>
+                        <p>Twój profil obywatela został pomyślnie wczytany. Użyj menu po lewej stronie, aby zarządzać danymi lub sprawdzić aktualności z wyspy.</p>
                     </div>
                 </div>
             </main>
@@ -206,7 +367,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Twoja Konfiguracja
+        // Twoja Konfiguracja Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
             authDomain: "primerp-login.firebaseapp.com",
@@ -219,56 +380,54 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Elementy DOM
-        const heroSec = document.getElementById('hero-section');
+        // Nawigacja
+        const hero = document.getElementById('hero-section');
         const authSec = document.getElementById('auth-section');
-        const dashSec = document.getElementById('dashboard-section');
-        const errorMsg = document.getElementById('auth-error');
+        const dash = document.getElementById('dashboard-section');
 
-        // Nawigacja między sekcjami
-        function showSection(id) {
-            [heroSec, authSec, dashSec].forEach(s => s.style.display = 'none');
-            const target = document.getElementById(id + '-section');
-            target.style.display = (id === 'dashboard') ? 'flex' : 'flex';
-            target.classList.add('active');
+        function switchSection(to) {
+            hero.classList.remove('active');
+            authSec.classList.remove('active');
+            dash.classList.remove('active');
+            to.classList.add('active');
         }
 
-        document.getElementById('trigger-login').onclick = () => showSection('auth');
-        document.getElementById('back-to-hero').onclick = () => showSection('hero');
+        document.getElementById('go-to-login').onclick = () => switchSection(authSec);
+        document.getElementById('go-back').onclick = () => switchSection(hero);
 
         // Logowanie
-        document.getElementById('login-execute').onclick = async () => {
-            const login = document.getElementById('login-input').value.trim();
-            const pass = document.getElementById('password-input').value;
-            
-            if(!login || !pass) {
-                errorMsg.innerText = "Wypełnij wszystkie pola!";
-                return;
-            }
+        document.getElementById('do-login').onclick = async () => {
+            const login = document.getElementById('user-input').value.trim();
+            const pass = document.getElementById('pass-input').value;
+            const err = document.getElementById('login-err');
 
+            if(!login || !pass) return err.innerText = "Podaj dane logowania!";
+            
+            // Podmieniłem domenę na @primerp.pl, żeby pasowała do loga. 
+            // Jeśli Twoje konta w Firebase używają starej domeny, zmień 'primerp.pl' na 'wirtualnysystemrp.pl' poniżej.
             const email = login.includes('@') ? login : `${login.toLowerCase()}@primerp.pl`;
-            errorMsg.innerText = "Trwa weryfikacja...";
+            err.innerText = "Weryfikacja...";
 
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-            } catch (err) {
-                errorMsg.innerText = "Błędne dane logowania!";
+            } catch (e) {
+                err.innerText = "Nieprawidłowy nick lub hasło!";
             }
         };
 
         // Wylogowanie
-        document.getElementById('logout-btn').onclick = () => {
+        document.getElementById('do-logout').onclick = () => {
             signOut(auth).then(() => window.location.reload());
         };
 
-        // Obsługa Stanu Zalogowania
+        // Stan zalogowania
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                showSection('dashboard');
+                switchSection(dash);
                 const nick = user.email.split('@')[0].toUpperCase();
-                document.getElementById('display-nick').innerText = `STATUS: ZALOGOWANO JAKO ${nick}`;
+                document.getElementById('user-display').innerText = `Zalogowano jako obywatel: ${nick}`;
             } else {
-                showSection('hero');
+                switchSection(hero);
             }
         });
     </script>
