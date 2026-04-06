@@ -1,0 +1,20 @@
+<div class="report-container">
+    <h3>🛠️ Centrum Zgłoszeń Primerp</h3>
+    
+    <label for="issueType">Typ zgłoszenia:</label>
+    <select id="issueType">
+        <option value="bug">Błąd w grze (Bug)</option>
+        <option value="ui">Problem z interfejsem</option>
+        <option value="feedback">Sugestia / Pomysł</option>
+        <option value="other">Inne</option>
+    </select>
+
+    <label for="issueDesc">Opis problemu:</label>
+    <textarea id="issueDesc" placeholder="Opisz dokładnie, co się stało..."></textarea>
+
+    <button id="submitReport">Wyślij zgłoszenie</button>
+    
+    <p id="statusMsg"></p>
+</div>
+
+<script src="primerp_system.js"></script>
