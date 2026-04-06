@@ -11,12 +11,13 @@
     <style>
         :root {
             --gold: #FFC800;
-            --gold-glow: rgba(255, 200, 0, 0.5);
-            --dark-pure: #030303;
-            --dark-card: rgba(10, 10, 10, 0.9);
+            --gold-glow: rgba(255, 200, 0, 0.4);
+            --dark-pure: #050505;
+            --dark-card: rgba(13, 13, 13, 0.95);
             --border-color: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
-            --text-dim: #999999;
+            --text-dim: #b3b3b3;
+            --sidebar-bg: #080808;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
@@ -32,10 +33,7 @@
         .bg-glow {
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 200, 0, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 200, 0, 0.05) 0%, transparent 40%),
-                linear-gradient(180deg, #0a0a0a 0%, #000 100%);
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
             z-index: -1;
         }
 
@@ -44,105 +42,99 @@
             height: 100vh;
             width: 100%;
             padding: 20px;
-            animation: sectionIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            animation: fadeIn 0.4s ease-out forwards;
         }
 
         section.active { display: flex; }
 
-        @keyframes sectionIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* HERO CARD */
+        /* HERO / START */
         #hero-section { align-items: center; justify-content: center; }
         .hero-card {
             background: var(--dark-card);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border-color);
-            padding: 60px 50px;
-            border-radius: 40px;
+            padding: 50px 40px;
+            border-radius: 32px;
             width: 100%;
-            max-width: 520px;
+            max-width: 480px;
             text-align: center;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            position: relative;
         }
 
-        .hero-logo-text { font-size: 4rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 15px; text-transform: uppercase; line-height: 0.9; }
-        .hero-logo-text span { color: var(--gold); display: block; font-size: 4.5rem; text-shadow: 0 0 30px var(--gold-glow); }
+        .hero-logo-text { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 15px; text-transform: uppercase; }
+        .hero-logo-text span { color: var(--gold); }
 
-        /* BUTTONS */
-        .btn-vertical-group { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .btn-vertical-group { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 
         .img-btn {
-            width: 100%; padding: 20px; border-radius: 16px;
-            text-decoration: none; font-weight: 800; font-size: 0.9rem;
-            text-transform: uppercase; letter-spacing: 1px; display: flex;
-            align-items: center; justify-content: center; gap: 12px;
-            cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent;
-            font-family: inherit;
+            width: 100%; padding: 16px; border-radius: 12px;
+            text-decoration: none; font-weight: 800; font-size: 0.85rem;
+            text-transform: uppercase; display: flex; align-items: center;
+            justify-content: center; gap: 10px; cursor: pointer;
+            transition: 0.3s; border: 1px solid transparent; font-family: inherit;
         }
 
-        .img-btn:hover { transform: translateY(-3px); }
         .btn-discord-img { background: #5865F2; color: white; }
         .btn-login-img { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: white; }
         .btn-login-img:hover, .btn-login-img.active { border-color: var(--gold); color: var(--gold); background: rgba(255, 200, 0, 0.05); }
 
-        /* DASHBOARD LAYOUT */
+        /* DASHBOARD */
         .dash-container { display: flex; width: 100%; height: 100vh; }
+        
         .sidebar {
-            width: 300px; background: #070707;
+            width: 280px; background: var(--sidebar-bg);
             border-right: 1px solid var(--border-color);
-            padding: 40px 20px; display: flex; flex-direction: column; gap: 10px;
+            padding: 30px 15px; display: flex; flex-direction: column; gap: 8px;
         }
 
-        .main-view { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 60px; }
+        .main-view { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 50px; }
+
         .dash-content { display: none; }
-        .dash-content.active { display: block; animation: sectionIn 0.4s ease; }
+        .dash-content.active { display: block; animation: fadeIn 0.3s ease; }
 
         .content-card {
             background: var(--dark-card);
             border: 1px solid var(--border-color);
-            padding: 45px; border-radius: 30px;
-            max-width: 850px;
+            padding: 40px; border-radius: 24px;
+            max-width: 900px;
         }
-        
-        .content-card h2 { font-size: 2rem; font-weight: 900; margin-bottom: 20px; color: var(--gold); }
+
+        .content-card h2 { color: var(--gold); margin-bottom: 20px; font-weight: 900; text-transform: uppercase; }
 
         /* FORMULARZ BŁĘDU */
-        .bug-form {
+        .bug-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
         }
 
         .bug-textarea {
             width: 100%;
             height: 180px;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid #222;
+            background: #000;
+            border: 1px solid #333;
             border-radius: 15px;
             padding: 20px;
             color: white;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            font-size: 14px;
             resize: none;
             transition: 0.3s;
         }
 
-        .bug-textarea:focus {
-            border-color: var(--gold);
-            outline: none;
-        }
+        .bug-textarea:focus { border-color: var(--gold); }
 
-        /* AUTH BOX */
+        /* AUTH */
         #auth-section { align-items: center; justify-content: center; }
-        .auth-box { background: var(--dark-card); padding: 50px; border-radius: 35px; border: 1px solid var(--border-color); width: 100%; max-width: 440px; text-align: center; }
-        .input-group { text-align: left; margin-bottom: 20px; }
-        .input-group label { font-size: 11px; color: var(--gold); font-weight: 800; display: block; margin-bottom: 8px; }
-        .input-group input { width: 100%; padding: 18px; background: #000; border: 1px solid #222; border-radius: 14px; color: white; }
+        .auth-box { background: var(--dark-card); padding: 40px; border-radius: 25px; border: 1px solid var(--border-color); width: 100%; max-width: 400px; text-align: center; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { font-size: 10px; color: var(--gold); font-weight: 800; display: block; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 14px; background: #000; border: 1px solid #222; border-radius: 10px; color: white; }
 
         .logout-btn { color: #ff4444 !important; border-color: rgba(255,68,68,0.1) !important; margin-top: auto; }
     </style>
@@ -163,70 +155,70 @@
 
     <section id="auth-section">
         <div class="auth-box">
-            <h2 style="margin-bottom: 30px; font-weight: 900;">LOGOWANIE</h2>
+            <h2 style="margin-bottom: 20px;">LOGOWANIE</h2>
             <div class="input-group">
-                <label>NICK OBYWATELA</label>
-                <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
+                <label>IDENTYFIKATOR</label>
+                <input type="text" id="user-input" placeholder="Jan_Kowalski">
             </div>
             <div class="input-group">
                 <label>HASŁO</label>
                 <input type="password" id="pass-input" placeholder="••••••••">
             </div>
-            <button class="img-btn btn-discord-img" style="width: 100%;" id="do-login">ZALOGUJ SIĘ</button>
-            <button id="go-back" style="background: none; border: none; color: #444; margin-top: 20px; cursor: pointer; font-weight: 800;">POWRÓT</button>
-            <div id="login-err" style="color: #ff4444; font-size: 13px; margin-top: 15px;"></div>
+            <button class="img-btn btn-discord-img" style="width: 100%;" id="do-login">AUTORYZUJ</button>
+            <button id="go-back" style="background: none; border: none; color: #444; margin-top: 15px; cursor: pointer;">Powrót</button>
+            <div id="login-err" style="color: #ff4444; font-size: 12px; margin-top: 10px;"></div>
         </div>
     </section>
 
     <section id="dashboard-section">
         <div class="dash-container">
             <aside class="sidebar">
-                <div class="hero-logo-text" style="font-size: 1.5rem; text-align: center; margin-bottom: 40px;">PRIME<span>RP</span></div>
+                <div class="hero-logo-text" style="font-size: 1.2rem; text-align: center; margin-bottom: 30px;">PRIME<span>RP</span></div>
                 
-                <button class="img-btn btn-login-img active" onclick="showTab('tab-news')"><i class="fas fa-newspaper"></i> NOWOŚCI</button>
-                <button class="img-btn btn-login-img" onclick="showTab('tab-about')"><i class="fas fa-users"></i> O NAS</button>
-                <button class="img-btn btn-login-img" onclick="showTab('tab-map')"><i class="fas fa-map-marked-alt"></i> MAPA</button>
-                <button class="img-btn btn-login-img" onclick="showTab('tab-bug')"><i class="fas fa-bug"></i> ZGŁOŚ BŁĄD</button>
-                <button class="img-btn btn-login-img" onclick="showTab('tab-rules')"><i class="fas fa-book"></i> REGULAMIN</button>
+                <button class="img-btn btn-login-img nav-btn active" onclick="showTab('tab-news')"><i class="fas fa-newspaper"></i> NOWOŚCI</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-about')"><i class="fas fa-info-circle"></i> O NAS</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-map')"><i class="fas fa-map-marked-alt"></i> MAPA</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-bug')"><i class="fas fa-bug"></i> ZGŁOŚ BŁĄD</button>
+                <button class="img-btn btn-login-img nav-btn" onclick="showTab('tab-rules')"><i class="fas fa-gavel"></i> REGULAMIN</button>
                 
                 <button class="img-btn logout-btn" id="do-logout"><i class="fas fa-power-off"></i> WYLOGUJ</button>
             </aside>
             
             <main class="main-view">
-                <h1 id="user-display" style="margin-bottom: 40px; font-weight: 900; font-size: 2.5rem;"></h1>
+                <h1 id="user-display" style="margin-bottom: 40px; font-weight: 900; font-size: 2rem;"></h1>
 
                 <div id="tab-news" class="dash-content active">
                     <div class="content-card">
-                        <h2>Nowości Sezonu 2</h2>
-                        <p style="color: var(--text-dim);">Witaj w nowym systemie PrimeRP.</p>
+                        <h2>Nowości</h2>
+                        <p style="color: var(--text-dim);">Zapraszamy do zapoznania się z listą zmian w Sezonie 2 na naszym Discordzie.</p>
                     </div>
                 </div>
 
                 <div id="tab-about" class="dash-content">
                     <div class="content-card">
-                        <h2>O Projekcie</h2>
-                        <p style="color: var(--text-dim);">Informacje o serwerze PrimeRP.</p>
+                        <h2>O PrimeRP</h2>
+                        <p style="color: var(--text-dim);">Najlepszy RolePlay tworzony z pasją.</p>
                     </div>
                 </div>
 
                 <div id="tab-map" class="dash-content">
                     <div class="content-card">
-                        <h2>Mapa Los Santos</h2>
-                        <p style="color: var(--text-dim);">Lokalizacje ważne dla graczy.</p>
+                        <h2>Mapa Wyspy</h2>
+                        <p style="color: var(--text-dim);">Mapa interaktywna w przygotowaniu.</p>
                     </div>
                 </div>
 
                 <div id="tab-bug" class="dash-content">
                     <div class="content-card">
                         <h2>Zgłoś Błąd</h2>
-                        <p style="color: var(--text-dim);">Opisz dokładnie napotkany problem. Zgłoszenie zostanie wysłane do administracji wraz z Twoim nickiem.</p>
+                        <p style="color: var(--text-dim);">Opisz szczegółowo błąd. Twoje zgłoszenie trafi bezpośrednio do administracji.</p>
                         
-                        <div class="bug-form">
-                            <textarea id="bug-message" class="bug-textarea" placeholder="Wpisz treść błędu..."></textarea>
-                            <button id="send-bug-btn" class="img-btn btn-discord-img" style="width: auto; align-self: flex-start; padding: 15px 40px;">
+                        <div class="bug-container">
+                            <textarea id="bug-desc" class="bug-textarea" placeholder="Napisz tutaj, co nie działa..."></textarea>
+                            <button id="submit-bug-btn" class="img-btn btn-discord-img" style="width: auto; padding: 15px 30px;">
                                 <i class="fas fa-paper-plane"></i> WYŚLIJ ZGŁOSZENIE
                             </button>
-                            <p id="bug-status" style="font-weight: 700; margin-top: 10px;"></p>
+                            <p id="bug-info" style="margin-top: 10px; font-weight: 700;"></p>
                         </div>
                     </div>
                 </div>
@@ -234,9 +226,10 @@
                 <div id="tab-rules" class="dash-content">
                     <div class="content-card">
                         <h2>Regulamin</h2>
-                        <p style="color: var(--text-dim);">Zasady obowiązujące na wyspie.</p>
+                        <p style="color: var(--text-dim);">Regulamin dostępny jest na kanale #regulamin na Discordzie.</p>
                     </div>
                 </div>
+
             </main>
         </div>
     </section>
@@ -256,9 +249,9 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        let playerNick = "Nieznany";
 
-        let userNick = "Nieznajomy";
-
+        // Przełączanie sekcji
         const hero = document.getElementById('hero-section');
         const authSec = document.getElementById('auth-section');
         const dash = document.getElementById('dashboard-section');
@@ -268,86 +261,80 @@
             to.classList.add('active');
         }
 
+        // Przełączanie TABS
         window.showTab = function(tabId) {
             document.querySelectorAll('.dash-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.sidebar .img-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
-        // --- OBSŁUGA WEBHOOKA ---
-        document.getElementById('send-bug-btn').onclick = async () => {
-            const message = document.getElementById('bug-message').value.trim();
-            const status = document.getElementById('bug-status');
-            const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
+        // WEBHOOK DISCORD
+        document.getElementById('submit-bug-btn').onclick = async () => {
+            const desc = document.getElementById('bug-desc').value.trim();
+            const info = document.getElementById('bug-info');
+            const webhook = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
 
-            if (!message) {
-                status.style.color = "#ff4444";
-                status.innerText = "Nie możesz wysłać pustej wiadomości!";
+            if(!desc) {
+                info.style.color = "#ff4444";
+                info.innerText = "Wpisz opis błędu!";
                 return;
             }
 
-            status.style.color = "var(--gold)";
-            status.innerText = "TRWA WYSYŁANIE...";
+            info.style.color = "var(--gold)";
+            info.innerText = "Wysyłanie...";
 
             const payload = {
-                username: "PrimeRP - Zgłoszenie Błędu",
+                username: "PrimeRP - Logi Błędów",
                 embeds: [{
-                    title: "🐞 NOWE ZGŁOSZENIE BŁĘDU",
+                    title: "🚨 Nowy Błąd",
                     color: 16762880,
                     fields: [
-                        { name: "👤 Obywatel", value: userNick, inline: true },
-                        { name: "🕒 Czas", value: new Date().toLocaleString(), inline: true },
-                        { name: "📝 Treść błędu", value: message }
+                        { name: "Obywatel", value: playerNick, inline: true },
+                        { name: "Opis", value: desc }
                     ],
-                    footer: { text: "WirtualnySystemRP.pl | System Webhook" }
+                    footer: { text: "Zgłoszenie z panelu WWW" }
                 }]
             };
 
             try {
-                const response = await fetch(webhookUrl, {
+                const res = await fetch(webhook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
-                if (response.ok) {
-                    status.style.color = "#44ff44";
-                    status.innerText = "POMYŚLNIE WYSŁANO ZGŁOSZENIE!";
-                    document.getElementById('bug-message').value = "";
-                } else {
-                    throw new Error();
+                if(res.ok) {
+                    info.style.color = "#44ff44";
+                    info.innerText = "Pomyślnie wysłano!";
+                    document.getElementById('bug-desc').value = "";
                 }
-            } catch (e) {
-                status.style.color = "#ff4444";
-                status.innerText = "BŁĄD PODCZAS ŁĄCZENIA Z DISCORDEM!";
+            } catch(e) {
+                info.innerText = "Błąd wysyłki!";
             }
         };
 
-        // --- FIREBASE AUTH ---
+        // AUTH EVENTS
         document.getElementById('go-to-login').onclick = () => switchSection(authSec);
         document.getElementById('go-back').onclick = () => switchSection(hero);
+        document.getElementById('do-logout').onclick = () => signOut(auth);
 
         document.getElementById('do-login').onclick = async () => {
             const login = document.getElementById('user-input').value.trim();
             const pass = document.getElementById('pass-input').value;
             if(!login || !pass) return;
-
             const email = `${login.toLowerCase()}@primerp.pl`;
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
             } catch (e) {
-                document.getElementById('login-err').innerText = "Nieprawidłowe dane logowania!";
+                document.getElementById('login-err').innerText = "Błąd logowania!";
             }
         };
-
-        document.getElementById('do-logout').onclick = () => signOut(auth);
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 switchSection(dash);
-                userNick = user.email.split('@')[0].toUpperCase();
-                document.getElementById('user-display').innerHTML = `WITAJ, <span>${userNick}</span>`;
+                playerNick = user.email.split('@')[0].toUpperCase();
+                document.getElementById('user-display').innerHTML = `WITAJ, <span>${playerNick}</span>`;
             } else {
                 switchSection(hero);
             }
