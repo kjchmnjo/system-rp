@@ -72,7 +72,7 @@
         .hero-logo-text { font-size: 4rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 15px; text-transform: uppercase; line-height: 0.9; }
         .hero-logo-text span { color: var(--gold); display: block; font-size: 4.5rem; text-shadow: 0 0 30px var(--gold-glow); }
 
-        /* PRZYCISKI */
+        /* BUTTONS */
         .btn-vertical-group { display: flex; flex-direction: column; gap: 15px; width: 100%; }
 
         .img-btn {
@@ -89,7 +89,7 @@
         .btn-login-img { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: white; }
         .btn-login-img:hover, .btn-login-img.active { border-color: var(--gold); color: var(--gold); background: rgba(255, 200, 0, 0.05); }
 
-        /* DASHBOARD */
+        /* DASHBOARD LAYOUT */
         .dash-container { display: flex; width: 100%; height: 100vh; }
         .sidebar {
             width: 300px; background: #070707;
@@ -110,18 +110,18 @@
         
         .content-card h2 { font-size: 2rem; font-weight: 900; margin-bottom: 20px; color: var(--gold); }
 
-        /* NOWY STYL POLA TEKSTOWEGO */
-        .bug-form-container {
-            margin-top: 25px;
+        /* FORMULARZ BŁĘDU */
+        .bug-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .bug-textarea {
             width: 100%;
-            height: 200px;
-            background: rgba(0,0,0,0.8);
+            height: 180px;
+            background: rgba(0,0,0,0.5);
             border: 2px solid #222;
             border-radius: 15px;
             padding: 20px;
@@ -134,7 +134,7 @@
 
         .bug-textarea:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(255, 200, 0, 0.1);
+            outline: none;
         }
 
         /* AUTH BOX */
@@ -166,13 +166,13 @@
             <h2 style="margin-bottom: 30px; font-weight: 900;">LOGOWANIE</h2>
             <div class="input-group">
                 <label>NICK OBYWATELA</label>
-                <input type="text" id="user-input" placeholder="Jan_Kowalski">
+                <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
             </div>
             <div class="input-group">
                 <label>HASŁO</label>
                 <input type="password" id="pass-input" placeholder="••••••••">
             </div>
-            <button class="img-btn btn-discord-img" style="width: 100%;" id="do-login">WEJDŹ DO SYSTEMU</button>
+            <button class="img-btn btn-discord-img" style="width: 100%;" id="do-login">ZALOGUJ SIĘ</button>
             <button id="go-back" style="background: none; border: none; color: #444; margin-top: 20px; cursor: pointer; font-weight: 800;">POWRÓT</button>
             <div id="login-err" style="color: #ff4444; font-size: 13px; margin-top: 15px;"></div>
         </div>
@@ -198,37 +198,35 @@
                 <div id="tab-news" class="dash-content active">
                     <div class="content-card">
                         <h2>Nowości Sezonu 2</h2>
-                        <p style="color: var(--text-dim);">Systemy zostały zaktualizowane. Miłej gry!</p>
+                        <p style="color: var(--text-dim);">Witaj w nowym systemie PrimeRP.</p>
                     </div>
                 </div>
 
                 <div id="tab-about" class="dash-content">
                     <div class="content-card">
-                        <h2>O PrimeRP</h2>
-                        <p style="color: var(--text-dim);">Największy i najbardziej stabilny projekt RolePlay.</p>
+                        <h2>O Projekcie</h2>
+                        <p style="color: var(--text-dim);">Informacje o serwerze PrimeRP.</p>
                     </div>
                 </div>
 
                 <div id="tab-map" class="dash-content">
                     <div class="content-card">
-                        <h2>Mapa</h2>
-                        <p style="color: var(--text-dim);">Mapa wkrótce będzie dostępna w tym miejscu.</p>
+                        <h2>Mapa Los Santos</h2>
+                        <p style="color: var(--text-dim);">Lokalizacje ważne dla graczy.</p>
                     </div>
                 </div>
 
                 <div id="tab-bug" class="dash-content">
                     <div class="content-card">
                         <h2>Zgłoś Błąd</h2>
-                        <p style="color: var(--text-dim); margin-bottom: 10px;">Opisz błąd, który napotkałeś na wyspie lub w panelu.</p>
+                        <p style="color: var(--text-dim);">Opisz dokładnie napotkany problem. Zgłoszenie zostanie wysłane do administracji wraz z Twoim nickiem.</p>
                         
-                        <div class="bug-form-container">
-                            <textarea id="bug-description" class="bug-textarea" placeholder="Wpisz treść zgłoszenia tutaj..."></textarea>
-                            
-                            <button class="img-btn btn-discord-img" style="width: 100%; border-radius: 12px;" id="submit-bug">
-                                <i class="fas fa-paper-plane"></i> WYŚLIJ DO ADMINISTRACJI
+                        <div class="bug-form">
+                            <textarea id="bug-message" class="bug-textarea" placeholder="Wpisz treść błędu..."></textarea>
+                            <button id="send-bug-btn" class="img-btn btn-discord-img" style="width: auto; align-self: flex-start; padding: 15px 40px;">
+                                <i class="fas fa-paper-plane"></i> WYŚLIJ ZGŁOSZENIE
                             </button>
-                            
-                            <p id="bug-status-msg" style="text-align: center; font-weight: 700; margin-top: 10px; min-height: 20px;"></p>
+                            <p id="bug-status" style="font-weight: 700; margin-top: 10px;"></p>
                         </div>
                     </div>
                 </div>
@@ -236,7 +234,7 @@
                 <div id="tab-rules" class="dash-content">
                     <div class="content-card">
                         <h2>Regulamin</h2>
-                        <p style="color: var(--text-dim);">Zapoznaj się z aktualnym regulaminem na Discordzie.</p>
+                        <p style="color: var(--text-dim);">Zasady obowiązujące na wyspie.</p>
                     </div>
                 </div>
             </main>
@@ -277,57 +275,56 @@
             event.currentTarget.classList.add('active');
         }
 
-        // OBSŁUGA WYSYŁANIA BŁĘDU (WEBHOOK)
-        document.getElementById('submit-bug').onclick = async () => {
-            const description = document.getElementById('bug-description').value.trim();
-            const statusMsg = document.getElementById('bug-status-msg');
+        // --- OBSŁUGA WEBHOOKA ---
+        document.getElementById('send-bug-btn').onclick = async () => {
+            const message = document.getElementById('bug-message').value.trim();
+            const status = document.getElementById('bug-status');
             const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
 
-            if (!description) {
-                statusMsg.style.color = "#ff4444";
-                statusMsg.innerText = "Najpierw wpisz opis błędu!";
+            if (!message) {
+                status.style.color = "#ff4444";
+                status.innerText = "Nie możesz wysłać pustej wiadomości!";
                 return;
             }
 
-            statusMsg.style.color = "var(--gold)";
-            statusMsg.innerText = "WYSYŁANIE...";
+            status.style.color = "var(--gold)";
+            status.innerText = "TRWA WYSYŁANIE...";
 
             const payload = {
-                username: "System Zgłoszeń PrimeRP",
-                avatar_url: "https://i.imgur.com/AfFp7pu.png",
+                username: "PrimeRP - Zgłoszenie Błędu",
                 embeds: [{
-                    title: "🚨 NOWE ZGŁOSZENIE BŁĘDU",
+                    title: "🐞 NOWE ZGŁOSZENIE BŁĘDU",
                     color: 16762880,
                     fields: [
                         { name: "👤 Obywatel", value: userNick, inline: true },
                         { name: "🕒 Czas", value: new Date().toLocaleString(), inline: true },
-                        { name: "📝 Opis problemu", value: description }
+                        { name: "📝 Treść błędu", value: message }
                     ],
-                    footer: { text: "Panel PrimeRP Sezon 2" }
+                    footer: { text: "WirtualnySystemRP.pl | System Webhook" }
                 }]
             };
 
             try {
-                const res = await fetch(webhookUrl, {
+                const response = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                if (res.ok) {
-                    statusMsg.style.color = "#44ff44";
-                    statusMsg.innerText = "ZGŁOSZENIE ZOSTAŁO WYSŁANE!";
-                    document.getElementById('bug-description').value = "";
+                if (response.ok) {
+                    status.style.color = "#44ff44";
+                    status.innerText = "POMYŚLNIE WYSŁANO ZGŁOSZENIE!";
+                    document.getElementById('bug-message').value = "";
                 } else {
                     throw new Error();
                 }
             } catch (e) {
-                statusMsg.style.color = "#ff4444";
-                statusMsg.innerText = "BŁĄD POŁĄCZENIA Z DISCORDEM!";
+                status.style.color = "#ff4444";
+                status.innerText = "BŁĄD PODCZAS ŁĄCZENIA Z DISCORDEM!";
             }
         };
 
-        // FIREBASE AUTH
+        // --- FIREBASE AUTH ---
         document.getElementById('go-to-login').onclick = () => switchSection(authSec);
         document.getElementById('go-back').onclick = () => switchSection(hero);
 
@@ -340,7 +337,7 @@
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
             } catch (e) {
-                document.getElementById('login-err').innerText = "Błędne dane!";
+                document.getElementById('login-err').innerText = "Nieprawidłowe dane logowania!";
             }
         };
 
