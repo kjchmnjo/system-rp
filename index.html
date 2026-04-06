@@ -3,332 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System PrimeRP | Sezon 2</title>
+    <title>PrimeRP | Sezon 2</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         :root {
             --gold: #FFC800;
-            --gold-glow: rgba(255, 200, 0, 0.4);
-            --dark-pure: #050505;
-            --dark-card: rgba(13, 13, 13, 0.98);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-dim: #b3b3b3;
+            --gold-glow: rgba(255, 200, 0, 0.3);
+            --bg-dark: #050505;
+            --card-bg: rgba(15, 15, 15, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --text-dim: #a0a0a0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         
         body { 
             font-family: 'Montserrat', sans-serif;
-            background: var(--dark-pure); 
-            color: var(--text-main); 
+            background: var(--bg-dark); 
+            color: var(--text); 
             height: 100vh; 
             overflow: hidden; 
         }
 
-        .bg-glow {
+        /* TŁO ANIMOWANE */
+        .bg-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(255, 200, 0, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 90% 90%, rgba(255, 200, 0, 0.03) 0%, transparent 30%),
+                #000;
             z-index: -1;
         }
 
-        section {
-            display: none;
+        /* UKŁAD STRONY */
+        .wrapper {
+            display: flex;
             height: 100vh;
             width: 100%;
-            padding: 20px;
-            animation: fadeIn 0.4s ease-out forwards;
         }
 
-        section.active { display: flex; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.99); }
-            to { opacity: 1; transform: scale(1); }
+        /* PASEK BOCZNY */
+        .sidebar {
+            width: 300px;
+            background: #080808;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 20px;
         }
 
-        /* --- LOGOWANIE I START --- */
-        #hero-section, #auth-section { align-items: center; justify-content: center; }
-        .hero-card, .auth-box {
-            background: var(--dark-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
+        .logo-area {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-area h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        .logo-area span {
+            color: var(--gold);
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-dim);
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+        }
+
+        .nav-btn i { width: 20px; text-align: center; font-size: 1.1rem; }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 200, 0, 0.05);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* GŁÓWNA TREŚĆ */
+        .content-area {
+            flex: 1;
+            padding: 60px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, rgba(10,10,10,0.5) 0%, transparent 100%);
+        }
+
+        .view-section {
+            display: none;
+            animation: slideIn 0.4s ease-out forwards;
+        }
+
+        .view-section.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             padding: 50px;
             border-radius: 30px;
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            max-width: 850px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .hero-logo-text { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px; text-transform: uppercase; }
-        .hero-logo-text span { color: var(--gold); }
-
-        .img-btn {
-            width: 100%; padding: 18px; border-radius: 12px;
-            text-decoration: none; font-weight: 800; font-size: 0.85rem;
-            text-transform: uppercase; display: flex; align-items: center;
-            justify-content: center; gap: 10px; cursor: pointer;
-            transition: 0.2s; border: 1px solid transparent; font-family: inherit;
+        .card h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-transform: uppercase;
         }
 
-        .btn-discord { background: #5865F2; color: white; margin-bottom: 10px; }
-        .btn-panel { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: white; }
-        .btn-panel:hover { border-color: var(--gold); color: var(--gold); }
-
-        /* --- DASHBOARD --- */
-        .dash-container { display: flex; width: 100%; height: 100vh; }
-        
-        .sidebar {
-            width: 280px; background: #080808;
-            border-right: 1px solid var(--border-color);
-            padding: 40px 20px; display: flex; flex-direction: column; gap: 10px;
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-dim);
+            margin-bottom: 20px;
         }
 
-        .main-view { flex: 1; overflow-y: auto; padding: 60px; background: rgba(0,0,0,0.2); }
-
-        .dash-content { display: none; }
-        .dash-content.active { display: block; }
-
-        .card-box {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            padding: 40px; border-radius: 25px;
-            max-width: 800px;
-        }
-
-        .card-box h2 { color: var(--gold); font-size: 2rem; font-weight: 900; margin-bottom: 15px; }
-
-        /* --- NOWY FORMULARZ BŁĘDU --- */
-        .report-form {
+        /* FORMULARZ ZGŁOSZEŃ */
+        .bug-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 20px;
         }
 
-        .report-input {
-            width: 100%;
-            height: 200px;
+        .bug-input {
             background: #000;
             border: 2px solid #222;
             border-radius: 15px;
             padding: 20px;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 15px;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            min-height: 200px;
             resize: none;
             transition: 0.3s;
         }
 
-        .report-input:focus { border-color: var(--gold); background: #050505; }
+        .bug-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
 
-        .btn-send { background: var(--gold); color: #000; font-weight: 900; }
-        .btn-send:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--gold-glow); }
+        .send-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-        /* AUTH INPUTS */
-        .input-group { text-align: left; margin-bottom: 15px; }
-        .input-group label { font-size: 11px; color: var(--gold); font-weight: 800; display: block; margin-bottom: 5px; }
-        .input-group input { width: 100%; padding: 15px; background: #000; border: 1px solid #222; border-radius: 10px; color: white; }
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px var(--gold-glow);
+        }
 
-        .logout-btn { color: #ff4444 !important; border-color: rgba(255,68,68,0.1) !important; margin-top: auto; }
+        .status-msg {
+            margin-top: 15px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .social-footer {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+
+        .btn-discord:hover { filter: brightness(1.2); }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div class="bg-overlay"></div>
 
-    <section id="hero-section" class="active">
-        <div class="hero-card">
-            <div class="hero-logo-text">PRIME <span>RP</span></div>
-            <a href="https://discord.gg/MecNqskCTu" target="_blank" class="img-btn btn-discord"><i class="fab fa-discord"></i> DOŁĄCZ NA DISCORD</a>
-            <button class="img-btn btn-panel" id="open-login"><i class="fas fa-fingerprint"></i> PANEL OBYWATELA</button>
-        </div>
-    </section>
-
-    <section id="auth-section">
-        <div class="auth-box">
-            <h2 style="margin-bottom: 25px; font-weight: 900;">ZALOGUJ SIĘ</h2>
-            <div class="input-group">
-                <label>IDENTYFIKATOR (NICK)</label>
-                <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PRIME<span>RP</span></h1>
+                <p style="font-size: 0.7rem; letter-spacing: 3px; font-weight: 700; color: #444;">SEZON DRUGI</p>
             </div>
-            <div class="input-group">
-                <label>HASŁO DOSTĘPU</label>
-                <input type="password" id="pass-input" placeholder="••••••••">
-            </div>
-            <button class="img-btn btn-discord" style="width: 100%;" id="btn-login-action">AUTORYZUJ WEJŚCIE</button>
-            <button id="btn-back" style="background: none; border: none; color: #444; margin-top: 20px; cursor: pointer; font-weight: 700;">POWRÓT</button>
-            <div id="login-error-msg" style="color: #ff4444; font-size: 13px; margin-top: 15px;"></div>
-        </div>
-    </section>
 
-    <section id="dashboard-section">
-        <div class="dash-container">
-            <aside class="sidebar">
-                <div class="hero-logo-text" style="font-size: 1.5rem; text-align: center; margin-bottom: 30px;">PRIME<span>RP</span></div>
-                <button class="img-btn btn-panel nav-link active" onclick="tabMsg('t-news')"><i class="fas fa-newspaper"></i> NOWOŚCI</button>
-                <button class="img-btn btn-panel nav-link" onclick="tabMsg('t-about')"><i class="fas fa-info-circle"></i> O NAS</button>
-                <button class="img-btn btn-panel nav-link" onclick="tabMsg('t-map')"><i class="fas fa-map"></i> MAPA</button>
-                <button class="img-btn btn-panel nav-link" onclick="tabMsg('t-bug')"><i class="fas fa-bug"></i> ZGŁOŚ BŁĄD</button>
-                <button class="img-btn btn-panel nav-link" onclick="tabMsg('t-rules')"><i class="fas fa-book"></i> REGULAMIN</button>
-                <button class="img-btn logout-btn" id="btn-logout-action"><i class="fas fa-power-off"></i> WYLOGUJ</button>
-            </aside>
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="switchView('home', this)"><i class="fas fa-home"></i> Start</button>
+                <button class="nav-btn" onclick="switchView('news', this)"><i class="fas fa-newspaper"></i> Nowości</button>
+                <button class="nav-btn" onclick="switchView('rules', this)"><i class="fas fa-book"></i> Regulamin</button>
+                <button class="nav-btn" onclick="switchView('bug', this)"><i class="fas fa-bug"></i> Zgłoś Błąd</button>
+            </nav>
+
+            <div class="social-footer">
+                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="btn-discord">
+                    <i class="fab fa-discord"></i> DISCORD
+                </a>
+            </div>
+        </aside>
+
+        <main class="content-area">
             
-            <main class="main-view">
-                <h1 id="display-nick" style="margin-bottom: 40px; font-weight: 900; font-size: 2.5rem;"></h1>
+            <section id="view-home" class="view-section active">
+                <div class="card">
+                    <h2>Witaj na PrimeRP</h2>
+                    <p>Przygotuj się na nową erę RolePlay. Sezon 2 to całkowicie odświeżona mapa, nowa ekonomia i systemy, których nie znajdziesz nigdzie indziej.</p>
+                    <p>Nasza społeczność stawia na jakość i profesjonalizm. Dołącz do nas już dzisiaj przez nasz serwer Discord.</p>
+                </div>
+            </section>
 
-                <div id="t-news" class="dash-content active">
-                    <div class="card-box">
-                        <h2>Aktualności</h2>
-                        <p style="color: var(--text-dim);">Witaj w Sezonie 2 PrimeRP. Sprawdź discorda po więcej info!</p>
+            <section id="view-news" class="view-section">
+                <div class="card">
+                    <h2>Co nowego?</h2>
+                    <p>• Nowy system mieszkań i urządzania wnętrz.<br>
+                       • Całkowicie przebudowana komenda policji i systemy frakcyjne.<br>
+                       • Zoptymalizowany silnik serwera dla płynniejszej rozgrywki.<br>
+                       • Nowe, unikalne prace dorywcze.</p>
+                </div>
+            </section>
+
+            <section id="view-rules" class="view-section">
+                <div class="card">
+                    <h2>Zasady Wyspy</h2>
+                    <p>1. Szanuj innych graczy i ich czas.<br>
+                       2. MetaGaming i PowerGaming są surowo zabronione.<br>
+                       3. Każda akcja RP musi mieć sens i podstawę fabularną.<br>
+                       4. Pełny regulamin znajdziesz na naszym kanale Discord.</p>
+                </div>
+            </section>
+
+            <section id="view-bug" class="view-section">
+                <div class="card">
+                    <h2>Zgłoś Błąd</h2>
+                    <p>Znalazłeś lukę w skrypcie? Coś nie działa tak, jak powinno? Opisz to tutaj, a nasi programiści zajmą się tym natychmiast.</p>
+                    
+                    <div class="bug-form">
+                        <textarea id="bug-text" class="bug-input" placeholder="Opisz błąd, podaj gdzie występuje..."></textarea>
+                        <button onclick="sendBug()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i> WYŚLIJ DO ADMINISTRACJI
+                        </button>
+                        <div id="status-msg" class="status-msg"></div>
                     </div>
                 </div>
+            </section>
 
-                <div id="t-about" class="dash-content">
-                    <div class="card-box">
-                        <h2>O nas</h2>
-                        <p style="color: var(--text-dim);">PrimeRP to projekt skupiony na wysokim poziomie immersji.</p>
-                    </div>
-                </div>
+        </main>
+    </div>
 
-                <div id="t-map" class="dash-content">
-                    <div class="card-box">
-                        <h2>Mapa Wyspy</h2>
-                        <div style="width: 100%; height: 300px; background: #000; border-radius: 15px; border: 1px dashed #222;"></div>
-                    </div>
-                </div>
-
-                <div id="t-bug" class="dash-content">
-                    <div class="card-box">
-                        <h2>Zgłoś Błąd</h2>
-                        <p style="color: var(--text-dim);">Opisz problem poniżej. Zgłoszenie trafi prosto na nasz kanał Discord.</p>
-                        <div class="report-form">
-                            <textarea id="report-text" class="report-input" placeholder="Np. Nie działa system garaży w centrum..."></textarea>
-                            <button id="btn-send-report" class="img-btn btn-send">
-                                <i class="fas fa-paper-plane"></i> WYŚLIJ ZGŁOSZENIE
-                            </button>
-                            <div id="report-status" style="margin-top: 10px; font-weight: 800;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="t-rules" class="dash-content">
-                    <div class="card-box">
-                        <h2>Regulamin</h2>
-                        <p style="color: var(--text-dim);">Regulamin znajduje się na naszym serwerze Discord.</p>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </section>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAJoJjugpKxRm-kfWm_BaSuDzdF2YyPQZE",
-            authDomain: "primerp-login.firebaseapp.com",
-            projectId: "primerp-login",
-            storageBucket: "primerp-login.firebasestorage.app",
-            messagingSenderId: "137742617587",
-            appId: "1:137742617587:web:be0b0cd85411f555f4a086"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        let userNickName = "Obywatel";
-
-        // Nawigacja
-        const sHero = document.getElementById('hero-section');
-        const sAuth = document.getElementById('auth-section');
-        const sDash = document.getElementById('dashboard-section');
-
-        function showSec(target) {
-            [sHero, sAuth, sDash].forEach(s => s.classList.remove('active'));
-            target.classList.add('active');
+    <script>
+        // PRZEŁĄCZANIE WIDOKÓW
+        function switchView(viewId, btn) {
+            // Ukryj wszystkie sekcje
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Oznacz przycisk jako aktywny
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Pokaż wybraną
+            document.getElementById('view-' + viewId).classList.add('active');
+            btn.classList.add('active');
         }
 
-        window.tabMsg = function(id) {
-            document.querySelectorAll('.dash-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+        // WYSYŁANIE WEBHOOKA
+        async function sendBug() {
+            const text = document.getElementById('bug-text').value.trim();
+            const status = document.getElementById('status-msg');
+            const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
 
-        // DISCORD WEBHOOK LOGIC
-        document.getElementById('btn-send-report').onclick = async () => {
-            const msg = document.getElementById('report-text').value.trim();
-            const status = document.getElementById('report-status');
-            const hook = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
-
-            if(!msg) {
+            if (!text) {
                 status.style.color = "#ff4444";
-                status.innerText = "WPISZ TREŚĆ BŁĘDU!";
+                status.innerText = "Najpierw opisz błąd!";
                 return;
             }
 
             status.style.color = "var(--gold)";
             status.innerText = "WYSYŁANIE...";
 
+            const payload = {
+                username: "PrimeRP - Zgłoszenie",
+                embeds: [{
+                    title: "🚨 NOWY BŁĄD ZE STRONY",
+                    color: 16762880,
+                    description: text,
+                    fields: [
+                        { name: "Urządzenie", value: navigator.userAgent.slice(0, 100), inline: false }
+                    ],
+                    timestamp: new Date()
+                }]
+            };
+
             try {
-                const response = await fetch(hook, {
+                const res = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: "PrimeRP Bot",
-                        embeds: [{
-                            title: "🚨 NOWY BŁĄD ZE STRONY",
-                            color: 16762880,
-                            fields: [
-                                { name: "Obywatel", value: userNickName, inline: true },
-                                { name: "Treść", value: msg }
-                            ],
-                            timestamp: new Date()
-                        }]
-                    })
+                    body: JSON.stringify(payload)
                 });
 
-                if(response.ok) {
+                if (res.ok) {
                     status.style.color = "#44ff44";
-                    status.innerText = "WYSŁANO POMYŚLNIE!";
-                    document.getElementById('report-text').value = "";
+                    status.innerText = "ZGŁOSZENIE WYSŁANE POMYŚLNIE!";
+                    document.getElementById('bug-text').value = "";
+                } else {
+                    throw new Error();
                 }
-            } catch(e) {
-                status.innerText = "BŁĄD SIECI!";
-            }
-        };
-
-        // FIREBASE ACTIONS
-        document.getElementById('open-login').onclick = () => showSec(sAuth);
-        document.getElementById('btn-back').onclick = () => showSec(sHero);
-        document.getElementById('btn-logout-action').onclick = () => signOut(auth);
-
-        document.getElementById('btn-login-action').onclick = async () => {
-            const l = document.getElementById('user-input').value.trim();
-            const p = document.getElementById('pass-input').value;
-            if(!l || !p) return;
-            try {
-                await signInWithEmailAndPassword(auth, `${l.toLowerCase()}@primerp.pl`, p);
             } catch (e) {
-                document.getElementById('login-error-msg').innerText = "BŁĄD LOGOWANIA!";
+                status.style.color = "#ff4444";
+                status.innerText = "BŁĄD PODCZAS WYSYŁANIA!";
             }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                userNickName = user.email.split('@')[0].toUpperCase();
-                document.getElementById('display-nick').innerHTML = `WITAJ, <span>${userNickName}</span>`;
-                showSec(sDash);
-            } else {
-                showSec(sHero);
-            }
-        });
+        }
     </script>
 </body>
 </html>
