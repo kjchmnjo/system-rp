@@ -29,7 +29,6 @@
             overflow: hidden; 
         }
 
-        /* ULEPSZONE TŁO: Gradient + Animowane Cząsteczki */
         .bg-glow {
             position: fixed;
             inset: 0;
@@ -40,7 +39,6 @@
             z-index: -1;
         }
 
-        /* Sekcje */
         section {
             display: none;
             height: 100vh;
@@ -56,7 +54,7 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* ULEPSZONY HERO CARD */
+        /* HERO CARD */
         #hero-section { align-items: center; justify-content: center; }
         
         .hero-card {
@@ -68,30 +66,16 @@
             width: 100%;
             max-width: 520px;
             text-align: center;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.5);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
             position: relative;
             overflow: hidden;
         }
 
-        /* Efekt dekoracyjny w karcie */
         .hero-card::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 4px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        .edition-badge {
-            background: var(--gold);
-            color: black;
-            font-weight: 900;
-            font-size: 10px;
-            padding: 6px 18px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            box-shadow: 0 0 20px var(--gold-glow);
         }
 
         .hero-logo-text { 
@@ -107,14 +91,6 @@
             display: block; 
             font-size: 4.5rem;
             text-shadow: 0 0 30px var(--gold-glow);
-        }
-
-        .hero-description { 
-            color: var(--text-dim); 
-            font-size: 0.9rem; 
-            line-height: 1.6;
-            margin: 20px 0 40px; 
-            font-weight: 400;
         }
 
         /* PRZYCISKI */
@@ -140,24 +116,9 @@
         }
 
         .img-btn:hover { transform: translateY(-5px) scale(1.02); }
-
-        .btn-discord-img { 
-            background: #5865F2; 
-            color: white; 
-            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4);
-        }
-
-        .btn-login-img { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid var(--border-color); 
-            color: white; 
-        }
-        .btn-login-img:hover { 
-            border-color: var(--gold); 
-            color: var(--gold);
-            background: rgba(255, 200, 0, 0.05);
-            box-shadow: 0 10px 30px var(--gold-glow);
-        }
+        .btn-discord-img { background: #5865F2; color: white; }
+        .btn-login-img { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: white; }
+        .btn-login-img:hover, .btn-login-img.active { border-color: var(--gold); color: var(--gold); background: rgba(255, 200, 0, 0.05); }
 
         /* DASHBOARD */
         .dash-container { display: flex; width: 100%; height: 100vh; }
@@ -169,9 +130,8 @@
         }
 
         .main-view { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 60px; }
-        
         .dash-content { display: none; }
-        .dash-content.active { display: block; animation: fadeIn 0.4s ease; }
+        .dash-content.active { display: block; animation: sectionIn 0.4s ease; }
 
         .content-card {
             background: var(--dark-card);
@@ -182,6 +142,22 @@
         
         .content-card h2 { font-size: 2rem; font-weight: 900; margin-bottom: 20px; color: var(--gold); }
 
+        /* FORMULARZ BŁĘDU */
+        .bug-textarea {
+            width: 100%;
+            height: 150px;
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            font-family: inherit;
+            resize: none;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .bug-textarea:focus { border-color: var(--gold); }
+
         /* AUTH BOX */
         #auth-section { align-items: center; justify-content: center; }
         .auth-box { 
@@ -191,20 +167,12 @@
             border: 1px solid var(--border-color); 
             width: 100%; max-width: 440px; 
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
         .input-group { text-align: left; margin-bottom: 20px; }
         .input-group label { font-size: 11px; color: var(--gold); font-weight: 800; display: block; margin-bottom: 8px; letter-spacing: 1px; }
-        .input-group input { 
-            width: 100%; padding: 18px; 
-            background: #000; border: 1px solid #222; 
-            border-radius: 14px; color: white;
-            transition: 0.3s;
-        }
-        .input-group input:focus { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); }
+        .input-group input { width: 100%; padding: 18px; background: #000; border: 1px solid #222; border-radius: 14px; color: white; }
 
         .logout-btn { color: #ff4444 !important; border-color: rgba(255,68,68,0.1) !important; margin-top: auto; }
-        
     </style>
 </head>
 <body>
@@ -213,42 +181,28 @@
 
     <section id="hero-section" class="active">
         <div class="hero-card">
-            <div class="edition-badge">SEZON DRUGI</div>
             <div class="hero-logo-text">PRIME <span>RP</span></div>
-            <div class="hero-description">
-                Wkrocz do świata, gdzie każda decyzja kształtuje Twoją przyszłość. Najbardziej zaawansowany system RolePlay w zasięgu Twojej ręki.
-            </div>
-            
             <div class="btn-vertical-group">
-                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="img-btn btn-discord-img">
-                    <i class="fab fa-discord"></i> DOŁĄCZ DO SPOŁECZNOŚCI
-                </a>
-                
-                <button class="img-btn btn-login-img" id="go-to-login">
-                    <i class="fas fa-fingerprint"></i> PANEL OBYWATELA
-                </button>
-            </div>
-
-            <div style="margin-top: 40px; font-size: 11px; color: #444; font-weight: 700; letter-spacing: 1px;">
-                STATUS: <span style="color: var(--gold); text-shadow: 0 0 10px var(--gold-glow);">ONLINE / PRACE KOŃCOWE</span>
+                <a href="https://discord.gg/MecNqskCTu" target="_blank" class="img-btn btn-discord-img"><i class="fab fa-discord"></i> DISCORD</a>
+                <button class="img-btn btn-login-img" id="go-to-login"><i class="fas fa-fingerprint"></i> PANEL OBYWATELA</button>
             </div>
         </div>
     </section>
 
     <section id="auth-section">
         <div class="auth-box">
-            <h2 style="margin-bottom: 30px; font-weight: 900; letter-spacing: -1px;">AUTORYZACJA</h2>
+            <h2 style="margin-bottom: 30px; font-weight: 900;">LOGOWANIE</h2>
             <div class="input-group">
                 <label>IDENTYFIKATOR (NICK)</label>
                 <input type="text" id="user-input" placeholder="np. Jan_Kowalski">
             </div>
             <div class="input-group">
-                <label>KLUCZ DOSTĘPU (HASŁO)</label>
+                <label>HASŁO</label>
                 <input type="password" id="pass-input" placeholder="••••••••">
             </div>
-            <button class="img-btn btn-discord-img" style="width: 100%; border-radius: 14px;" id="do-login">ZALOGUJ SIĘ</button>
-            <button id="go-back" style="background: none; border: none; color: #555; margin-top: 25px; cursor: pointer; font-weight: 800; font-size: 12px; text-transform: uppercase;">Wróć do startu</button>
-            <div id="login-err" style="color: #ff4444; font-size: 13px; margin-top: 20px; font-weight: 600;"></div>
+            <button class="img-btn btn-discord-img" style="width: 100%;" id="do-login">ZALOGUJ SIĘ</button>
+            <button id="go-back" style="background: none; border: none; color: #444; margin-top: 20px; cursor: pointer; font-weight: 800;">POWRÓT</button>
+            <div id="login-err" style="color: #ff4444; font-size: 13px; margin-top: 15px;"></div>
         </div>
     </section>
 
@@ -271,44 +225,41 @@
 
                 <div id="tab-news" class="dash-content active">
                     <div class="content-card">
-                        <h2>Aktualności - Sezon 2</h2>
-                        <p style="color: var(--text-dim); line-height: 1.8;">
-                            • <b>Reset Świata:</b> Rozpoczynamy nową historię. Każdy obywatel ma równe szanse.<br>
-                            • <b>Nowe Prace:</b> Wprowadziliśmy zawód kuriera medycznego oraz nurka głębinowego.<br>
-                            • <b>System Garaży:</b> Całkowicie nowy interfejs zarządzania pojazdami.<br>
-                            • <b>Optymalizacja:</b> Serwer działa teraz na stabilniejszym silniku.
-                        </p>
+                        <h2>Aktualności</h2>
+                        <p style="color: var(--text-dim);">Witamy w nowym systemie zarządzania Sezonu 2!</p>
                     </div>
                 </div>
 
                 <div id="tab-about" class="dash-content">
                     <div class="content-card">
                         <h2>O PrimeRP</h2>
-                        <p style="color: var(--text-dim);">Jesteśmy społecznością nastawioną na jakość RolePlay. Nasz serwer oferuje zaawansowane skrypty, stabilną ekonomię oraz profesjonalną administrację.</p>
+                        <p style="color: var(--text-dim);">Najlepszy RolePlay w Polsce.</p>
                     </div>
                 </div>
 
                 <div id="tab-map" class="dash-content">
                     <div class="content-card">
                         <h2>Mapa Los Santos</h2>
-                        <div style="width: 100%; height: 400px; background: #000; border-radius: 20px; border: 1px solid #222; display: flex; align-items: center; justify-content: center;">
-                            <span style="color: #444; font-weight: 800; font-size: 0.8rem; letter-spacing: 2px;">POŁĄCZENIE SATELITARNE...</span>
-                        </div>
+                        <div style="width: 100%; height: 300px; background: #000; border: 1px solid #222; border-radius: 15px;"></div>
                     </div>
                 </div>
 
                 <div id="tab-bug" class="dash-content">
                     <div class="content-card">
-                        <h2>Zgłoś Błąd</h2>
-                        <p style="color: var(--text-dim); margin-bottom: 20px;">Twój feedback pomaga nam ulepszać wyspę. Opisz problem dokładnie na naszym kanale Discord.</p>
-                        <a href="https://discord.gg/MecNqskCTu" class="img-btn btn-discord-img" style="width: auto; padding: 15px 30px;">OTWÓRZ TICKET</a>
+                        <h2>Centrum Zgłoszeń</h2>
+                        <p style="color: var(--text-dim); margin-bottom: 20px;">Twój nick zostanie automatycznie dołączony do zgłoszenia.</p>
+                        <textarea id="bug-text" class="bug-textarea" placeholder="Opisz dokładnie błąd, który zauważyłeś..."></textarea>
+                        <button class="img-btn btn-discord-img" style="width: auto; padding: 15px 40px;" id="send-bug-btn">
+                            <i class="fas fa-paper-plane"></i> WYŚLIJ ZGŁOSZENIE
+                        </button>
+                        <div id="bug-status" style="margin-top: 15px; font-weight: 700; font-size: 14px;"></div>
                     </div>
                 </div>
 
                 <div id="tab-rules" class="dash-content">
                     <div class="content-card">
-                        <h2>Regulamin Obywatelski</h2>
-                        <p style="color: var(--text-dim);">1. Zakaz MetaGamingu.<br>2. Zakaz PowerGamingu.<br>3. Zakaz RDM / VDM.<br>4. Poszanowanie życia postaci jest priorytetem.</p>
+                        <h2>Zasady</h2>
+                        <p style="color: var(--text-dim);">1. RP przede wszystkim.</p>
                     </div>
                 </div>
             </main>
@@ -331,6 +282,8 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        let currentUserNick = "Nieznany";
+
         const hero = document.getElementById('hero-section');
         const authSec = document.getElementById('auth-section');
         const dash = document.getElementById('dashboard-section');
@@ -347,6 +300,56 @@
             event.currentTarget.classList.add('active');
         }
 
+        // --- OBSŁUGA WEBHOOKA DISCORD ---
+        document.getElementById('send-bug-btn').onclick = async () => {
+            const text = document.getElementById('bug-text').value.trim();
+            const status = document.getElementById('bug-status');
+            const webhookURL = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
+
+            if (!text) {
+                status.style.color = "#ff4444";
+                status.innerText = "Nie możesz wysłać pustego zgłoszenia!";
+                return;
+            }
+
+            status.style.color = "var(--gold)";
+            status.innerText = "Wysyłanie...";
+
+            const payload = {
+                username: "PrimeRP System",
+                embeds: [{
+                    title: "🚀 Nowe Zgłoszenie Błędu",
+                    color: 16762880, // Kolor złoty
+                    fields: [
+                        { name: "Obywatel", value: currentUserNick, inline: true },
+                        { name: "Data", value: new Date().toLocaleString(), inline: true },
+                        { name: "Opis Błędu", value: text }
+                    ],
+                    footer: { text: "WirtualnySystemRP.pl - Sezon 2" }
+                }]
+            };
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    status.style.color = "#44ff44";
+                    status.innerText = "Pomyślnie wysłano zgłoszenie!";
+                    document.getElementById('bug-text').value = "";
+                } else {
+                    throw new Error();
+                }
+            } catch (e) {
+                status.style.color = "#ff4444";
+                status.innerText = "Błąd podczas wysyłania na Discord!";
+            }
+        };
+
+        // --- LOGOWANIE I AUTH ---
         document.getElementById('go-to-login').onclick = () => switchSection(authSec);
         document.getElementById('go-back').onclick = () => switchSection(hero);
 
@@ -354,17 +357,13 @@
             const login = document.getElementById('user-input').value.trim();
             const pass = document.getElementById('pass-input').value;
             const err = document.getElementById('login-err');
-            if(!login || !pass) { err.innerText = "Podaj dane!"; return; }
+            if(!login || !pass) return;
 
             const email = `${login.toLowerCase()}@primerp.pl`;
-            err.style.color = "var(--gold)";
-            err.innerText = "Trwa weryfikacja...";
-
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
             } catch (e) {
-                err.style.color = "#ff4444";
-                err.innerText = "Błąd logowania!";
+                err.innerText = "Błąd danych!";
             }
         };
 
@@ -373,7 +372,8 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 switchSection(dash);
-                document.getElementById('user-display').innerHTML = `WITAJ, <span>${user.email.split('@')[0].toUpperCase()}</span>`;
+                currentUserNick = user.email.split('@')[0].toUpperCase();
+                document.getElementById('user-display').innerHTML = `WITAJ, <span>${currentUserNick}</span>`;
             } else {
                 switchSection(hero);
             }
